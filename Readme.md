@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Зобнин](https://up.htmlacademy.ru/react/4/user/799155).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Цапко](https://up.htmlacademy.ru/react/4/user/1350525).
 
 ---
 
