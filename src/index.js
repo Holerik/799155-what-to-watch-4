@@ -10,7 +10,6 @@ const promoData = {
 
 const init = () => {
   ReactDom.render(
-      // eslint-disable-next-line no-trailing-spaces
       <App
         genre={promoData.genre}
         year={promoData.year}
