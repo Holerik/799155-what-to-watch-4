@@ -3,16 +3,22 @@ import ReactDom from 'react-dom';
 import React from 'react';
 import App from '../src/components/app/app.jsx';
 
-const promoData = {
+const promoMovie = {
   genre: `Drama`,
   year: 2014,
 };
 
+const movieTitles = [
+  `Fantastic Beasts`,
+  `Bohemian Rhapsody`,
+  `Macbeth`
+];
+
 const init = () => {
   ReactDom.render(
       <App
-        genre={promoData.genre}
-        year={promoData.year}
+        promoMovie={promoMovie}
+        movieTitles={movieTitles}
       />,
       document.querySelector(`#root`)
   );
