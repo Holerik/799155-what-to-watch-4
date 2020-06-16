@@ -11,6 +11,7 @@ const Movielist = (props) => {
           <Moviecard
             key={item + index}
             title={item}
+            onTitleClickHandler={props.onMovieTitleClickHandler}
           />
         ))
       }
@@ -20,6 +21,7 @@ const Movielist = (props) => {
 
 Movielist.propTypes = {
   titles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onMovieTitleClickHandler: PropTypes.func.isRequired,
 };
 
 export default Movielist;

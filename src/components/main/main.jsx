@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Movielist from '../movielist/movielist.jsx';
 
-const Main = ({promoMovie, movieTitles}) => {
+const Main = ({promoMovie, movieTitles, onMovieTitleClickHandler}) => {
   return <React.Fragment>
     <div className="visually-hidden">
       <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -128,6 +128,7 @@ const Main = ({promoMovie, movieTitles}) => {
         {
           <Movielist
             titles={movieTitles}
+            onMovieTitleClickHandler={onMovieTitleClickHandler}
           />
         }
         <div className="catalog__more">
@@ -158,6 +159,7 @@ Main.propTypes = {
     year: PropTypes.number,
   }).isRequired,
   movieTitles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onMovieTitleClickHandler: PropTypes.func.isRequired,
 };
 
 export default Main;
