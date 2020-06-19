@@ -44,7 +44,7 @@ describe(`Main tests`, () => {
         <Main
           promoMovie={promoMovie}
           filmsInfo={filmsInfo}
-          onMovieTitleClickHandler={onMovieTitleClickHandler}
+          onMovieTitleClick={onMovieTitleClickHandler}
         />
     ).toJSON();
     expect(tree).toMatchSnapshot();
