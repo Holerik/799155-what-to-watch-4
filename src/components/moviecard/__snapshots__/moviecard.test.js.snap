@@ -6,11 +6,14 @@ exports[`Moviecard tests Moviecard should render poster 1`] = `
 >
   <div
     className="small-movie-card__image"
+    id="0"
+    onMouseOut={[MockFunction]}
+    onMouseOver={[MockFunction]}
   >
     <img
-      alt="Fantastic Beasts: The Crimes of Grindelwald"
+      alt="Joker poster"
       height="175"
-      src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+      src="img/joker.jpg"
       width="280"
     />
   </div>
@@ -22,7 +25,7 @@ exports[`Moviecard tests Moviecard should render poster 1`] = `
       href=""
       onClick={[MockFunction]}
     >
-      Terminator
+      Joker
     </a>
   </h3>
 </article>

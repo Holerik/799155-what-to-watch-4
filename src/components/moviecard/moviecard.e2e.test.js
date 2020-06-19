@@ -1,7 +1,12 @@
-// moviecard.test.js
+// moviecard.e2e.test.js
 import React from 'react';
-import renderer from 'react-test-renderer';
-import Moviecard from '../moviecard/moviecard.jsx';
+import Enzyme, {shallow} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import Moviecard from './moviecard.jsx';
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 const filmInfo = {
   id: 0,
@@ -16,18 +21,20 @@ const onMovieTitleClick = jest.fn();
 const onMovieCardActivate = jest.fn();
 const onMovieCardOut = jest.fn();
 
-describe(`Moviecard tests`, () => {
-  it(`Moviecard should render poster`, () => {
-    const tree = renderer
-    .create(
+describe(`Moviecard e2e tests`, () => {
+  it(`Should moviecard be mouse over`, () => {
+    const movieCard = shallow(
         <Moviecard
           movie={filmInfo}
           onMovieCardActivate={onMovieCardActivate}
           onMovieCardOut={onMovieCardOut}
           onMovieTitleClick={onMovieTitleClick}
         />
-    ).toJSON();
-    expect(tree).toMatchSnapshot();
+    );
+    const poster = movieCard.find(`.small-movie-card__image`);
+    poster.simulate(`mouseover`);
+    expect(onMovieCardActivate.mock.calls.length).toBe(1);
+    poster.simulate(`mouseout`);
+    expect(onMovieCardOut.mock.calls.length).toBe(1);
   });
 });
-

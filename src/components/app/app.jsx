@@ -2,15 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Main from '../main/main.jsx';
+import {shortInfo} from '../../mocks/films.js';
 
-const onMovieTitleClickHandler = () => {};
+const onMovieTitleClick = () => {};
 
 const App = (props) => {
   return (
     <Main
       promoMovie={props.promoMovie}
-      movieTitles={props.movieTitles}
-      onMovieTitleClickHandler={onMovieTitleClickHandler}
+      filmsInfo={props.filmsInfo}
+      onMovieTitleClick={onMovieTitleClick}
     />);
 };
 
@@ -19,7 +20,8 @@ App.propTypes = {
     genre: PropTypes.string,
     year: PropTypes.number,
   }).isRequired,
-  movieTitles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  filmsInfo: PropTypes.arrayOf(
+      PropTypes.exact(shortInfo)).isRequired,
 };
 
 export default App;

@@ -370,11 +370,14 @@ Array [
         >
           <div
             className="small-movie-card__image"
+            id="0"
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
           >
             <img
-              alt="Fantastic Beasts: The Crimes of Grindelwald"
+              alt="Joker poster"
               height="175"
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              src="img/joker.jpg"
               width="280"
             />
           </div>
@@ -384,9 +387,9 @@ Array [
             <a
               className="small-movie-card__link"
               href=""
-              onClick={[MockFunction]}
+              onClick={[Function]}
             >
-              Fantastic Beasts
+              Joker
             </a>
           </h3>
         </article>
@@ -395,11 +398,14 @@ Array [
         >
           <div
             className="small-movie-card__image"
+            id="1"
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
           >
             <img
-              alt="Fantastic Beasts: The Crimes of Grindelwald"
+              alt="Commuter poster"
               height="175"
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              src="img/commuter.jpg"
               width="280"
             />
           </div>
@@ -409,9 +415,9 @@ Array [
             <a
               className="small-movie-card__link"
               href=""
-              onClick={[MockFunction]}
+              onClick={[Function]}
             >
-              Bohemian Rhapsody
+              The Commuter
             </a>
           </h3>
         </article>
@@ -420,11 +426,14 @@ Array [
         >
           <div
             className="small-movie-card__image"
+            id="2"
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
           >
             <img
-              alt="Fantastic Beasts: The Crimes of Grindelwald"
+              alt="Game poster"
               height="175"
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              src="img/mollys-game.jpg"
               width="280"
             />
           </div>
@@ -434,9 +443,9 @@ Array [
             <a
               className="small-movie-card__link"
               href=""
-              onClick={[MockFunction]}
+              onClick={[Function]}
             >
-              Macbeth
+              Molly's Game
             </a>
           </h3>
         </article>

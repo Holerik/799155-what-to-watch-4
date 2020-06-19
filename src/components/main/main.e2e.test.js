@@ -13,10 +13,31 @@ const promoMovie = {
   year: 2014,
 };
 
-const movieTitles = [
-  `Fantastic Beasts`,
-  `Bohemian Rhapsody`,
-  `Macbeth`
+const filmsInfo = [
+  {
+    id: 0,
+    title: `Joker`,
+    poster: `img/joker.jpg`,
+    altPoster: `Joker poster`,
+    src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+  },
+  {
+    id: 1,
+    title: `The Commuter`,
+    poster: `img/commuter.jpg`,
+    altPoster: `Commuter poster`,
+    src: `https://media.w3.org/2010/05/sintel/trailer.mp4`,
+    preview: `https://media.w3.org/2010/05/sintel/trailer.mp4`,
+  },
+  {
+    id: 2,
+    title: `Molly's Game`,
+    poster: `img/mollys-game.jpg`,
+    altPoster: `Game poster`,
+    src: `https://media.w3.org/2010/05/sintel/trailer.mp4`,
+    preview: `https://media.w3.org/2010/05/sintel/trailer.mp4`,
+  },
 ];
 
 describe(`Main e2e tests`, () => {
@@ -25,12 +46,12 @@ describe(`Main e2e tests`, () => {
     const mainScreen = mount(
         <Main
           promoMovie={promoMovie}
-          movieTitles={movieTitles}
-          onMovieTitleClickHandler={onMovieTitleClickHandler}
+          filmsInfo={filmsInfo}
+          onMovieTitleClick={onMovieTitleClickHandler}
         />
     );
     const titles = mainScreen.find(`.small-movie-card__link`);
-    expect(titles).toHaveLength(movieTitles.length);
+    expect(titles).toHaveLength(filmsInfo.length);
     titles.at(0).simulate(`click`);
     expect(onMovieTitleClickHandler.mock.calls.length).toBe(1);
   });
