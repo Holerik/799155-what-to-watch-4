@@ -1,24 +1,28 @@
 // moviecard.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
+import {shortInfo} from '../../mocks/films.js';
 
 const Moviecard = (props) => {
-  return <React.Fragment>
+  return (
     <article className="small-movie-card catalog__movies-card">
-      <div className="small-movie-card__image">
-        <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
+      <div onMouseOver={props.onMovieCardActivate} onMouseOut={props.onMovieCardOut}
+        className="small-movie-card__image">
+        <img src={props.movie.poster} alt={props.movie.altPoster} width="280" height="175" />
       </div>
       <h3 className="small-movie-card__title">
         <a className="small-movie-card__link"
-          href="" onClick={props.onTitleClickHandler}>{props.title}</a>
+          href="" onClick={props.onMovieTitleClick}>{props.movie.title}</a>
       </h3>
     </article>
-  </React.Fragment>;
+  );
 };
 
 Moviecard.propTypes = {
-  title: PropTypes.string.isRequired,
-  onTitleClickHandler: PropTypes.func.isRequired,
+  movie: PropTypes.exact(shortInfo),
+  onMovieTitleClick: PropTypes.func.isRequired,
+  onMovieCardActivate: PropTypes.func.isRequired,
+  onMovieCardOut: PropTypes.func.isRequired,
 };
 
 export default Moviecard;

@@ -9,11 +9,13 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
   >
     <div
       className="small-movie-card__image"
+      onMouseOut={[Function]}
+      onMouseOver={[Function]}
     >
       <img
-        alt="Fantastic Beasts: The Crimes of Grindelwald"
+        alt="Joker poster"
         height="175"
-        src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+        src="img/joker.jpg"
         width="280"
       />
     </div>
@@ -23,9 +25,9 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
       <a
         className="small-movie-card__link"
         href=""
-        onClick={[MockFunction]}
+        onClick={[Function]}
       >
-        Fantastic Beasts
+        Joker
       </a>
     </h3>
   </article>
@@ -34,11 +36,13 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
   >
     <div
       className="small-movie-card__image"
+      onMouseOut={[Function]}
+      onMouseOver={[Function]}
     >
       <img
-        alt="Fantastic Beasts: The Crimes of Grindelwald"
+        alt="Commuter poster"
         height="175"
-        src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+        src="img/commuter.jpg"
         width="280"
       />
     </div>
@@ -48,9 +52,9 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
       <a
         className="small-movie-card__link"
         href=""
-        onClick={[MockFunction]}
+        onClick={[Function]}
       >
-        Bohemian Rhapsody
+        The Commuter
       </a>
     </h3>
   </article>
@@ -59,11 +63,13 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
   >
     <div
       className="small-movie-card__image"
+      onMouseOut={[Function]}
+      onMouseOver={[Function]}
     >
       <img
-        alt="Fantastic Beasts: The Crimes of Grindelwald"
+        alt="Game poster"
         height="175"
-        src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+        src="img/mollys-game.jpg"
         width="280"
       />
     </div>
@@ -73,9 +79,9 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
       <a
         className="small-movie-card__link"
         href=""
-        onClick={[MockFunction]}
+        onClick={[Function]}
       >
-        Macbeth
+        Molly's Game
       </a>
     </h3>
   </article>
