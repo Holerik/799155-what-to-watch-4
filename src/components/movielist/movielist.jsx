@@ -24,7 +24,7 @@ class Movielist extends React.PureComponent {
   }
 
   _getClickedFilmCard(evt) {
-    const target = evt.target;
+    const {target} = evt;
     const filmCard = this.props.filmsInfo.find((filmInfo) => {
       return filmInfo.title === target.text;
     });
@@ -49,7 +49,7 @@ class Movielist extends React.PureComponent {
   }
 
   render() {
-    return <React.Fragment>
+    return (
       <div className="catalog__movies-list">
         {
           this.props.filmsInfo
@@ -64,7 +64,7 @@ class Movielist extends React.PureComponent {
           ))
         }
       </div>
-    </React.Fragment>;
+    );
   }
 }
 
