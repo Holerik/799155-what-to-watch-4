@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Moviecard from '../moviecard/moviecard.jsx';
-import {shortInfo} from '../../mocks/films.js';
+import {fullInfo} from '../../mocks/films.js';
 
 class Movielist extends React.PureComponent {
   constructor(props) {
@@ -70,7 +70,7 @@ class Movielist extends React.PureComponent {
 
 Movielist.propTypes = {
   filmsInfo: PropTypes.arrayOf(
-      PropTypes.exact(shortInfo)
+      PropTypes.exact(fullInfo)
   ),
   onMovieTitleClick: PropTypes.func.isRequired,
 };

@@ -40,7 +40,7 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
       onMouseOver={[Function]}
     >
       <img
-        alt="Commuter poster"
+        alt="The Commuter poster"
         height="175"
         src="img/commuter.jpg"
         width="280"
@@ -67,7 +67,7 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
       onMouseOver={[Function]}
     >
       <img
-        alt="Game poster"
+        alt="Molly game poster"
         height="175"
         src="img/mollys-game.jpg"
         width="280"

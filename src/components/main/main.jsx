@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Movielist from '../movielist/movielist.jsx';
-import {shortInfo} from '../../mocks/films.js';
+import {fullInfo} from '../../mocks/films.js';
 
 class Main extends React.PureComponent {
   constructor(props) {
@@ -44,7 +44,7 @@ class Main extends React.PureComponent {
             <div className="movie-card__desc">
               <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{promoMovie.genre}</span>
+                <span className="movie-card__genre">{promoMovie.genre[0]}</span>
                 <span className="movie-card__year">{promoMovie.year}</span>
               </p>
 
@@ -133,12 +133,9 @@ class Main extends React.PureComponent {
 }
 
 Main.propTypes = {
-  promoMovie: PropTypes.shape({
-    genre: PropTypes.string,
-    year: PropTypes.number,
-  }).isRequired,
+  promoMovie: PropTypes.exact(fullInfo).isRequired,
   filmsInfo: PropTypes.arrayOf(
-      PropTypes.exact(shortInfo)).isRequired,
+      PropTypes.exact(fullInfo)).isRequired,
   onMovieTitleClick: PropTypes.func.isRequired,
 };
 

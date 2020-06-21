@@ -1,7 +1,7 @@
 // moviecard.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
-import {shortInfo} from '../../mocks/films.js';
+import {fullInfo} from '../../mocks/films.js';
 
 const Moviecard = (props) => {
   return (
@@ -19,7 +19,7 @@ const Moviecard = (props) => {
 };
 
 Moviecard.propTypes = {
-  movie: PropTypes.exact(shortInfo),
+  movie: PropTypes.exact(fullInfo),
   onMovieTitleClick: PropTypes.func.isRequired,
   onMovieCardActivate: PropTypes.func.isRequired,
   onMovieCardOut: PropTypes.func.isRequired,

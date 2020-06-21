@@ -89,12 +89,12 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Drama
+              Thriller
             </span>
             <span
               className="movie-card__year"
             >
-              2014
+              2019
             </span>
           </p>
           <div
@@ -293,7 +293,7 @@ Array [
             onMouseOver={[Function]}
           >
             <img
-              alt="Commuter poster"
+              alt="The Commuter poster"
               height="175"
               src="img/commuter.jpg"
               width="280"
@@ -320,7 +320,7 @@ Array [
             onMouseOver={[Function]}
           >
             <img
-              alt="Game poster"
+              alt="Molly game poster"
               height="175"
               src="img/mollys-game.jpg"
               width="280"
