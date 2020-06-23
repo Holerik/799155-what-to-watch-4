@@ -1,9 +1,9 @@
-// moviecard.test.js
+// moviecard-details.test.js
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Moviecard from './moviecard.jsx';
+import MoviecardDetails from './moviecard-details.jsx';
 
-const filmInfo = {
+const movie = {
   id: 1,
   title: `Joker`,
   poster: `img/joker.jpg`,
@@ -18,21 +18,14 @@ const filmInfo = {
   preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
 };
 
-describe(`Moviecard tests`, () => {
-  it(`Moviecard should render poster`, () => {
-    const onMovieTitleClick = jest.fn();
-    const onMovieCardActivate = jest.fn();
-    const onMovieCardOut = jest.fn();
+describe(`MoviecardDetails tests`, () => {
+  it(`MoviecardDetails should render movie details`, () => {
     const tree = renderer
     .create(
-        <Moviecard
-          movie={filmInfo}
-          onMovieCardActivate={onMovieCardActivate}
-          onMovieCardOut={onMovieCardOut}
-          onMovieTitleClick={onMovieTitleClick}
+        <MoviecardDetails
+          movieInfo={movie}
         />
     ).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
-

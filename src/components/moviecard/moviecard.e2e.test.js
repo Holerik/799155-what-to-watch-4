@@ -13,8 +13,14 @@ const filmInfo = {
   title: `Joker`,
   poster: `img/joker.jpg`,
   altPoster: `Joker poster`,
-  src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
-  preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+  background: `img/joker-bg.jpg`,
+  altBackground: `Gotham City`,
+  genre: [`Thriller`, `Crime`, `Drama`],
+  year: 2019,
+  duration: `2h 2min`,
+  age: `18+`,
+  src: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+  preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
 };
 
 describe(`Moviecard e2e tests`, () => {

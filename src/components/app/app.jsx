@@ -1,27 +1,61 @@
 // app.jsx
-import React from 'react';
+import React, {Component} from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Main from '../main/main.jsx';
-import {shortInfo} from '../../mocks/films.js';
+import MoviecardDetails from '../moviecard-details/moviecard-details.jsx';
+import {fullInfo} from '../../mocks/films.js';
 
-const onMovieTitleClick = () => {};
 
-const App = (props) => {
-  return (
-    <Main
-      promoMovie={props.promoMovie}
-      filmsInfo={props.filmsInfo}
-      onMovieTitleClick={onMovieTitleClick}
-    />);
-};
+class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedMovie: undefined,
+    };
+    this._onMovieTitleClick = this._onMovieTitleClick.bind(this);
+  }
+
+  _onMovieTitleClick(movie) {
+    this.setState({selectedMovie: movie});
+  }
+
+  _renderApp() {
+    if (this.state.selectedMovie === undefined) {
+      return (
+        <Main
+          promoMovie={this.props.promoMovie}
+          filmsInfo={this.props.filmsInfo}
+          onMovieTitleClick={this._onMovieTitleClick}
+        />);
+    }
+    return (
+      <MoviecardDetails
+        movieInfo={this.state.selectedMovie}
+      />
+    );
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {this._renderApp()}
+          </Route>
+          <Route exact path="/dev-component">
+            <Component />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
 
 App.propTypes = {
-  promoMovie: PropTypes.shape({
-    genre: PropTypes.string,
-    year: PropTypes.number,
-  }).isRequired,
+  promoMovie: PropTypes.exact(fullInfo).isRequired,
   filmsInfo: PropTypes.arrayOf(
-      PropTypes.exact(shortInfo)).isRequired,
+      PropTypes.exact(fullInfo)).isRequired,
 };
 
 export default App;
