@@ -28,6 +28,8 @@ describe(`Moviecard e2e tests`, () => {
     const onMovieTitleClick = jest.fn();
     const onMovieCardActivate = jest.fn();
     const onMovieCardOut = jest.fn();
+    let canPlayVideo = false;
+    let activeMovieId = -1;
 
     const movieCard = shallow(
         <Moviecard
@@ -35,6 +37,8 @@ describe(`Moviecard e2e tests`, () => {
           onMovieCardActivate={onMovieCardActivate}
           onMovieCardOut={onMovieCardOut}
           onMovieTitleClick={onMovieTitleClick}
+          canPlayVideo={canPlayVideo}
+          activeMovieId={activeMovieId}
         />
     );
     const poster = movieCard.find(`.small-movie-card__image`);
