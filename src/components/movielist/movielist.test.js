@@ -1,7 +1,7 @@
 // movielist.test.js
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Movielist from '../movielist/movielist.jsx';
+import Movielist from './movielist.jsx';
 
 const filmsInfo = [
   {

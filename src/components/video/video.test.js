@@ -1,9 +1,9 @@
-// moviecard.test.js
+// video.test.js
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Moviecard from './moviecard.jsx';
+import Video from './video.jsx';
 
-const filmInfo = {
+const movie = {
   id: 1,
   title: `Joker`,
   poster: `img/joker.jpg`,
@@ -18,21 +18,31 @@ const filmInfo = {
   preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
 };
 
-describe(`Moviecard tests`, () => {
-  it(`Moviecard should render poster`, () => {
-    const onMovieTitleClick = jest.fn();
-    const onMovieCardActivate = jest.fn();
-    const onMovieCardOut = jest.fn();
+const MockComponent = () => {
+  return (
+    <div>
+      <Video
+        isPlaying={false}
+        src={movie.preview}
+        isMuted={true}
+        poster={movie.poster}
+        width={280}
+        onExitButtonClick={() => {}}
+      />
+    </div>
+  );
+};
+
+describe(`Video tests`, () => {
+  it(`Moviecard should rendered as video`, () => {
     const tree = renderer
-    .create(
-        <Moviecard
-          movie={filmInfo}
-          onMovieCardActivate={onMovieCardActivate}
-          onMovieCardOut={onMovieCardOut}
-          onMovieTitleClick={onMovieTitleClick}
-          canPlayVideo={false}
-          activeMovieId={-1}
-        />
+    .create((
+      <MockComponent
+      />), {
+      createNodeMock() {
+        return {};
+      }
+    }
     ).toJSON();
     expect(tree).toMatchSnapshot();
   });
