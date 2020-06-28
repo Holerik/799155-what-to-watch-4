@@ -105,8 +105,7 @@ describe(`MoviecardOverview tests`, () => {
   it(`MoviecardOverview should render movie details`, () => {
     const setActiveItem = jest.fn();
     const onMovieTitleClick = jest.fn();
-    const tree = renderer
-    .create(
+    const tree = renderer.create(
         <MoviecardOverview
           movieInfo={movie}
           filmsInfo={filmsInfo}
