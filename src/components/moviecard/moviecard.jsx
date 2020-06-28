@@ -9,16 +9,14 @@ const Moviecard = (props) => {
     return (
       <article className="small-movie-card catalog__movies-card">
         <div className="small-movie-card__image" onMouseOut={props.onMovieCardOut}>
-          {
-            <Video
-              isPlaying={true}
-              src={props.movie.preview}
-              isMuted={true}
-              poster={props.movie.poster}
-              width={280}
-              onExitButtonClick={() => {}}
-            />
-          }
+          <Video
+            isPlaying={true}
+            src={props.movie.preview}
+            isMuted={true}
+            poster={props.movie.poster}
+            width={280}
+            onExitButtonClick={() => {}}
+          />
         </div>
       </article>
     );
@@ -26,7 +24,7 @@ const Moviecard = (props) => {
   return (
     <article className="small-movie-card catalog__movies-card">
       <div onMouseOver={props.onMovieCardActivate} onMouseOut={props.onMovieCardOut}
-        className="small-movie-card__image" id={`${props.movie.id }`}>
+        className="small-movie-card__image" id={`${props.movie.id }`} onClick={props.onMovieTitleClick}>
         <img src={props.movie.poster} alt={props.movie.altPoster} width="280" height="175" />
       </div>
       <h3 className="small-movie-card__title">

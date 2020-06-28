@@ -10,6 +10,7 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
     <div
       className="small-movie-card__image"
       id="1"
+      onClick={[Function]}
       onMouseOut={[Function]}
       onMouseOver={[Function]}
     >
@@ -38,6 +39,7 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
     <div
       className="small-movie-card__image"
       id="2"
+      onClick={[Function]}
       onMouseOut={[Function]}
       onMouseOver={[Function]}
     >
@@ -66,6 +68,7 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
     <div
       className="small-movie-card__image"
       id="3"
+      onClick={[Function]}
       onMouseOut={[Function]}
       onMouseOver={[Function]}
     >

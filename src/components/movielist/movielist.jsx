@@ -5,6 +5,7 @@ import Moviecard from '../moviecard/moviecard.jsx';
 import {fullInfo} from '../../mocks/films.js';
 
 const TIME_INTERVAL = 1000; // ms
+const MOVIE_CARDS_ON_PAGE = 8;
 
 class Movielist extends React.PureComponent {
   constructor(props) {
@@ -19,6 +20,8 @@ class Movielist extends React.PureComponent {
     };
     this._lastTimeOut = null;
     this._activeMovieId = -1;
+    this._movieCardFirstOnPage = 0;
+    this._movieCardLastOnPage = this._movieCardFirstOnPage + MOVIE_CARDS_ON_PAGE;
   }
 
   componentWillUnmount() {
@@ -76,10 +79,9 @@ class Movielist extends React.PureComponent {
   }
 
   render() {
-    return (
+    return <React.Fragment>
       <div className="catalog__movies-list">
-        {
-          this.props.filmsInfo
+        { this.props.filmsInfo.slice(this._movieCardFirstOnPage, this._movieCardLastOnPage)
           .map((filmInfo) => (
             <Moviecard
               movie={filmInfo}
@@ -90,10 +92,9 @@ class Movielist extends React.PureComponent {
               activeMovieId={this._activeMovieId}
               key={filmInfo.id}
             />
-          ))
-        }
+          ))}
       </div>
-    );
+    </React.Fragment>;
   }
 }
 

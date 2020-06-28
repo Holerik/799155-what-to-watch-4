@@ -1,31 +1,35 @@
-// moviecard-details.jsx
+// moviecard-overview.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
 import {fullInfo} from '../../mocks/films.js';
 import Tabs from '../tabs/tabs.jsx';
-import {selectMoviesByGenre} from '../moviecard-overview/moviecard-overview.jsx';
 import Movielist from '../movielist/movielist.jsx';
 
-const setStarringList = (stars) => {
-  return (
-    <React.Fragment>
-      {
-        stars.map((item, index) => {
-          return (
-            <React.Fragment key={index}>
-              {item} <br />
-            </React.Fragment>
-
-          );
-        })
-      }
-    </React.Fragment>
-  );
+export const getFullString = (data, delimiter) => {
+  let result = ``;
+  for (let item of data) {
+    result += String.fromCharCode(delimiter) + item;
+  }
+  return result.slice(1);
 };
 
-const MoviecardDetails = (props) => {
-  const {movieInfo, filmsInfo} = props;
-  const selectedMovies = selectMoviesByGenre(movieInfo, filmsInfo);
+export const selectMoviesByGenre = (movie, filmsInfo) => {
+  for (let genre of movie.genre) {
+    const movies = filmsInfo.filter((film) => {
+      return (film.id !== movie.id && film.genre.findIndex((item) => {
+        return item === genre;
+      }) > -1);
+    });
+    if (movies.length > 0) {
+      return movies.slice(0, 3);
+    }
+  }
+  return null;
+};
+
+const MoviecardOverview = (props) => {
+  const {movieInfo} = props;
+  const selectedMovies = selectMoviesByGenre(movieInfo, props.filmsInfo);
   return <React.Fragment>
     <section className="movie-card movie-card--full">
       <div className="movie-card__hero">
@@ -86,37 +90,23 @@ const MoviecardDetails = (props) => {
 
           <div className="movie-card__desc">
             <Tabs
-              activeItem={1}
+              activeItem={0}
               setActiveItem={props.setActiveItem}
               tabItems={props.tabItems}
             />
-            <div className="movie-card__text movie-card__row">
-              <div className="movie-card__text-col">
-                <p className="movie-card__details-item">
-                  <strong className="movie-card__details-name">Director</strong>
-                  <span className="movie-card__details-value">{movieInfo.director}</span>
-                </p>
-                <p className="movie-card__details-item">
-                  <strong className="movie-card__details-name">Starring</strong>
-                  <span className="movie-card__details-value">
-                    {setStarringList(movieInfo.starring)}                  </span>
-                </p>
-              </div>
+            <div className="movie-rating">
+              <div className="movie-rating__score">{movieInfo.rating.score}</div>
+              <p className="movie-rating__meta">
+                <span className="movie-rating__level">{movieInfo.rating.level}</span>
+                <span className="movie-rating__count">{`${movieInfo.rating.count} ratings`}</span>
+              </p>
+            </div>
 
-              <div className="movie-card__text-col">
-                <p className="movie-card__details-item">
-                  <strong className="movie-card__details-name">Run Time</strong>
-                  <span className="movie-card__details-value">{movieInfo.duration}</span>
-                </p>
-                <p className="movie-card__details-item">
-                  <strong className="movie-card__details-name">Genre</strong>
-                  <span className="movie-card__details-value">{movieInfo.genre[0]}</span>
-                </p>
-                <p className="movie-card__details-item">
-                  <strong className="movie-card__details-name">Released</strong>
-                  <span className="movie-card__details-value">{movieInfo.year}</span>
-                </p>
-              </div>
+            <div className="movie-card__text">
+              <p>{movieInfo.description}</p>
+              <p>{movieInfo.review}</p>
+              <p className="movie-card__director"><strong>{`Director: ${movieInfo.director}`}</strong></p>
+              <p className="movie-card__starring"><strong>{`Starring: ${getFullString(movieInfo.starring, 44)}`}</strong></p>
             </div>
           </div>
         </div>
@@ -149,7 +139,7 @@ const MoviecardDetails = (props) => {
   </React.Fragment>;
 };
 
-MoviecardDetails.propTypes = {
+MoviecardOverview.propTypes = {
   movieInfo: PropTypes.exact(fullInfo).isRequired,
   setActiveItem: PropTypes.func.isRequired,
   tabItems: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -158,4 +148,4 @@ MoviecardDetails.propTypes = {
   onMovieTitleClick: PropTypes.func.isRequired,
 };
 
-export default MoviecardDetails;
+export default MoviecardOverview;

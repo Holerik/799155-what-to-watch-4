@@ -263,6 +263,7 @@ Array [
           <div
             className="small-movie-card__image"
             id="1"
+            onClick={[Function]}
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
@@ -291,6 +292,7 @@ Array [
           <div
             className="small-movie-card__image"
             id="2"
+            onClick={[Function]}
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
@@ -319,6 +321,7 @@ Array [
           <div
             className="small-movie-card__image"
             id="3"
+            onClick={[Function]}
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >

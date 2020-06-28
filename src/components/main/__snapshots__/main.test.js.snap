@@ -89,12 +89,12 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Adventure
+              Thriller
             </span>
             <span
               className="movie-card__year"
             >
-              2014
+              2019
             </span>
           </p>
           <div
@@ -263,6 +263,7 @@ Array [
           <div
             className="small-movie-card__image"
             id="1"
+            onClick={[Function]}
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
@@ -291,6 +292,7 @@ Array [
           <div
             className="small-movie-card__image"
             id="2"
+            onClick={[Function]}
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
@@ -319,6 +321,7 @@ Array [
           <div
             className="small-movie-card__image"
             id="3"
+            onClick={[Function]}
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
