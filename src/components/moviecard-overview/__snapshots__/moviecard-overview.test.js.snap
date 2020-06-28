@@ -212,7 +212,7 @@ Array [
               <span
                 className="movie-rating__level"
               >
-                very good
+                Normal
               </span>
               <span
                 className="movie-rating__count"

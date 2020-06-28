@@ -38,35 +38,30 @@ class App extends React.PureComponent {
           onMovieTitleClick={this._onMovieTitleClick}
         />);
     }
+    const props = {
+      movieInfo: this.state.selectedMovie,
+      setActiveItem: this._setActivePage,
+      tabItems,
+      filmsInfo: this.props.filmsInfo,
+      onMovieTitleClick: this._onMovieTitleClick,
+    };
     switch (this.state.activePage) {
       case 0:
         return (
           <MoviecardOverview
-            movieInfo={this.state.selectedMovie}
-            setActiveItem={this._setActivePage}
-            tabItems={tabItems}
-            filmsInfo={this.props.filmsInfo}
-            onMovieTitleClick={this._onMovieTitleClick}
+            {...props}
           />
         );
       case 1:
         return (
           <MoviecardDetails
-            movieInfo={this.state.selectedMovie}
-            setActiveItem={this._setActivePage}
-            tabItems={tabItems}
-            filmsInfo={this.props.filmsInfo}
-            onMovieTitleClick={this._onMovieTitleClick}
+            {...props}
           />
         );
       case 2:
         return (
           <MoviecardReviews
-            movieInfo={this.state.selectedMovie}
-            setActiveItem={this._setActivePage}
-            tabItems={tabItems}
-            filmsInfo={this.props.filmsInfo}
-            onMovieTitleClick={this._onMovieTitleClick}
+            {...props}
           />
         );
     }

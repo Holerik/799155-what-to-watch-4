@@ -182,7 +182,7 @@ class Video extends React.PureComponent {
 Video.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
-  onExitButtonClick: PropTypes.func.isRequired,
+  onExitButtonClick: PropTypes.func,
   poster: PropTypes.string.isRequired,
   isMuted: PropTypes.bool.isRequired,
   width: PropTypes.number.isRequired,

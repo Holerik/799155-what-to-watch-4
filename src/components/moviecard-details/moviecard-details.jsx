@@ -5,23 +5,7 @@ import {fullInfo} from '../../mocks/films.js';
 import Tabs from '../tabs/tabs.jsx';
 import {selectMoviesByGenre} from '../moviecard-overview/moviecard-overview.jsx';
 import Movielist from '../movielist/movielist.jsx';
-
-const setStarringList = (stars) => {
-  return (
-    <React.Fragment>
-      {
-        stars.map((item, index) => {
-          return (
-            <React.Fragment key={index}>
-              {item} <br />
-            </React.Fragment>
-
-          );
-        })
-      }
-    </React.Fragment>
-  );
-};
+import StarringList from '../starring-list/starring-list.jsx';
 
 const MoviecardDetails = (props) => {
   const {movieInfo, filmsInfo} = props;
@@ -99,7 +83,8 @@ const MoviecardDetails = (props) => {
                 <p className="movie-card__details-item">
                   <strong className="movie-card__details-name">Starring</strong>
                   <span className="movie-card__details-value">
-                    {setStarringList(movieInfo.starring)}                  </span>
+                    {<StarringList stars={movieInfo.starring}/>}
+                  </span>
                 </p>
               </div>
 

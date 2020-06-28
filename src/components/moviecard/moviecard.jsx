@@ -15,7 +15,6 @@ const Moviecard = (props) => {
             isMuted={true}
             poster={props.movie.poster}
             width={280}
-            onExitButtonClick={() => {}}
           />
         </div>
       </article>

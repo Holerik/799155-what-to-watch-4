@@ -16,9 +16,7 @@ export const getFullString = (data, delimiter) => {
 export const selectMoviesByGenre = (movie, filmsInfo) => {
   for (let genre of movie.genre) {
     const movies = filmsInfo.filter((film) => {
-      return (film.id !== movie.id && film.genre.findIndex((item) => {
-        return item === genre;
-      }) > -1);
+      return (film.id !== movie.id && film.genre.includes(genre));
     });
     if (movies.length > 0) {
       return movies.slice(0, 3);
@@ -27,8 +25,29 @@ export const selectMoviesByGenre = (movie, filmsInfo) => {
   return null;
 };
 
+export const getRatingLevel = (rating) => {
+  const level = [`Bad`, `Normal`, `Good`, `Very good`, `Awesome`];
+  const fRating = parseFloat(rating);
+  let index = 4;
+  if (fRating < 10) {
+    index = 3;
+  }
+  if (fRating < 8) {
+    index = 2;
+  }
+  if (fRating < 5) {
+    index = 1;
+  }
+  if (fRating < 3) {
+    index = 0;
+  }
+  return level[index];
+};
+
+
 const MoviecardOverview = (props) => {
   const {movieInfo} = props;
+  movieInfo.rating.level = getRatingLevel(movieInfo.rating.score);
   const selectedMovies = selectMoviesByGenre(movieInfo, props.filmsInfo);
   return <React.Fragment>
     <section className="movie-card movie-card--full">
