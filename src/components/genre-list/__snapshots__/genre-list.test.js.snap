@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GenreList should render genres correctly 1`] = `
+<ul
+  className="catalog__genres-list"
+  onClick={[Function]}
+  onMouseOver={[Function]}
+>
+   
+  <li
+    className="catalog__genres-item
+                            catalog__genres-item--active"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      All genres
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item
+                            "
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      Thriller
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item
+                            "
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      Crime
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item
+                            "
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      Drama
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item
+                            "
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      Action
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item
+                            "
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      Mystery
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item
+                            "
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      Biography
+    </a>
+  </li>
+</ul>
+`;

@@ -10,7 +10,6 @@ class Tabs extends React.PureComponent {
     this.state = {
       activeItem: props.activeItem,
     };
-    this.stateItem = props.activeItem;
   }
 
   _tabMouseOverHandler(evt) {
@@ -25,7 +24,9 @@ class Tabs extends React.PureComponent {
   }
 
   render() {
-    const {activeItem, tabItems} = this.props;
+    const {tabItems} = this.props;
+    const {activeItem} = this.state;
+    const stateItem = this.props.activeItem;
     return (
       <React.Fragment>
         <nav className="movie-nav movie-card__nav">
@@ -38,7 +39,7 @@ class Tabs extends React.PureComponent {
                 return (
                   <React.Fragment key={index}>
                     <li className= {`movie-nav__item
-                            ${this.stateItem === index ||
+                            ${stateItem === index ||
                             activeItem === index ? `movie-nav__item--active` : ``}`}>
                       <a href="#" className="movie-nav__link">{item}</a>
                     </li>
