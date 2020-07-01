@@ -14,18 +14,12 @@ export const ActionType = {
 
 export const selectMoviesByGenre = (genre) => {
   let movies = filmsInfo;
-  if (genre === undefined || genre === ALL_GENRES) {
-    return movies;
-  }
-  if (genre !== ALL_GENRES) {
+  if (genre !== undefined && genre !== ALL_GENRES) {
     movies = filmsInfo.filter((movie) => {
       return movie.genre.includes(genre);
     });
   }
-  if (movies.length > 0) {
-    return movies;
-  }
-  return [];
+  return movies;
 };
 
 export const getPromo = () => {

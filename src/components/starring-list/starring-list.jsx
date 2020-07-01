@@ -10,7 +10,6 @@ const StarringList = (props) => {
           <React.Fragment key={index}>
             {item} <br />
           </React.Fragment>
-
         );
       })}
     </React.Fragment>

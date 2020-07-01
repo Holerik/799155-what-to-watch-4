@@ -38,28 +38,22 @@ class GenreList extends React.PureComponent {
     const stateItem = this._tabItems.indexOf(this.props.activeGenre);
     const {activeItem} = this.state;
     return (
-      <React.Fragment>
-        <ul className="catalog__genres-list"
-          onClick={this._tabClickHandler}
-          onMouseOver={this._tabMouseOverHandler}
-        >
-          <React.Fragment> {
-            this._tabItems.map((item, index) => {
-              return (
-                <React.Fragment key={index}>
-                  <li className= {`catalog__genres-item
+      <ul className="catalog__genres-list"
+        onClick={this._tabClickHandler}
+        onMouseOver={this._tabMouseOverHandler}
+      >
+        {this._tabItems.map((item, index) => {
+          return (
+            <React.Fragment key={index}>
+              <li className= {`catalog__genres-item
                             ${stateItem === index ||
                             activeItem === index ? `catalog__genres-item--active` : ``}`}>
-                    <a href="#" className="catalog__genres-link">{item}</a>
-                  </li>
-                </React.Fragment>
-              );
-            })
-          }
-          </React.Fragment>
-        </ul>
-      </React.Fragment>
-    );
+                <a href="#" className="catalog__genres-link">{item}</a>
+              </li>
+            </React.Fragment>
+          );
+        })}
+      </ul>);
   }
 }
 

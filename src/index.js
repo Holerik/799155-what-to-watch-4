@@ -13,8 +13,7 @@ const store = createStore(reducer,
 const init = () => {
   ReactDom.render(
       <Provider store={store}>
-        <App
-        />
+        <App/>
       </Provider>,
       document.querySelector(`#root`)
   );
