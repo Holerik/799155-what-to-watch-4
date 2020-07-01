@@ -1,31 +1,7 @@
-// app.test.js
+// genre-list.test.js
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {App} from '../app/app.jsx';
-
-const promoMovie = {
-  id: 1,
-  title: `Joker`,
-  poster: `img/joker.jpg`,
-  altPoster: `Joker poster`,
-  background: `img/joker-bg.jpg`,
-  altBackground: `Gotham City`,
-  genre: [`Thriller`, `Crime`, `Drama`],
-  year: 2019,
-  duration: `2h 2min`,
-  age: `18+`,
-  src: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
-  preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
-  rating: {
-    score: `8.1`,
-    level: `very good`,
-    count: 950,
-  },
-  director: `Wes Anderson`,
-  starring: [`Ralph Fiennes`, `F. Murray Abraham`, `Mathieu Amalric`, `Adrien Brody`, `SWillem Dafoe`, `Jeff Goldblum`, `	Harvey Keitel`, `Jude Law`, `Bill Murray`],
-  description: `Wes Anderson's THE GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend`,
-  review: `GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend. The story involves the theft and recovery of a priceless Renaissance painting and the battle for an enormous family fortune`,
-};
+import GenreList from './genre-list.jsx';
 
 const filmsInfo = [
   {
@@ -99,28 +75,15 @@ const filmsInfo = [
   },
 ];
 
-describe(`App tests`, () => {
-  it(`App should render main screen`, () => {
-    const setPage = () => {};
-    const setMovie = () => {};
-    const setGenre = () => {};
-    const setPromo = () => {};
-    const tree = renderer
+it(`GenreList should render genres correctly`, () => {
+  const setActiveGenre = () => {};
+  const tree = renderer
     .create(
-        <App
-          promo={promoMovie}
-          filmsInfo={filmsInfo}
-          setPage={setPage}
-          setMovie={setMovie}
-          setGenre={setGenre}
-          setPromo={setPromo}
-          genre={`All genres`}
-        />, {
-          createNodeMock: () => {
-            return {};
-          }
-        }
-    ).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+        <GenreList
+          activeGenre={`All genres`}
+          setActiveGenre={setActiveGenre}
+          movies={filmsInfo}
+        />)
+    .toJSON();
+  expect(tree).toMatchSnapshot();
 });

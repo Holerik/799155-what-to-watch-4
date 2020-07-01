@@ -102,12 +102,16 @@ const filmsInfo = [
 describe(`Main tests`, () => {
   it(`Main should render the screen`, () => {
     const onMovieTitleClickHandler = jest.fn();
+    const onSelectGenre = jest.fn();
+    const genre = `All genres`;
     const tree = renderer
     .create(
         <Main
           promoMovie={promoMovie}
           filmsInfo={filmsInfo}
           onMovieTitleClick={onMovieTitleClickHandler}
+          onSelectGenre={onSelectGenre}
+          genre={genre}
         />
     ).toJSON();
     expect(tree).toMatchSnapshot();

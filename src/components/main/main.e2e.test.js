@@ -107,16 +107,23 @@ const filmsInfo = [
 describe(`Main e2e tests`, () => {
   it(`Should movie card title be clicked`, () =>{
     const onMovieTitleClickHandler = jest.fn();
-    const mainScreen = mount(
+    const onSelectGenre = jest.fn();
+    const genre = `All genres`;
+    const wrapper = mount(
         <Main
           promoMovie={promoMovie}
           filmsInfo={filmsInfo}
           onMovieTitleClick={onMovieTitleClickHandler}
+          onSelectGenre={onSelectGenre}
+          genre={genre}
         />
     );
-    const titles = mainScreen.find(`.small-movie-card__link`);
+    const titles = wrapper.find(`.small-movie-card__link`);
     expect(titles).toHaveLength(filmsInfo.length);
     titles.at(0).simulate(`click`);
     expect(onMovieTitleClickHandler.mock.calls.length).toBe(1);
+    const genres = wrapper.find(`.catalog__genres-link`);
+    genres.at(1).simulate(`click`);
+    expect(onSelectGenre.mock.calls.length).toBe(1);
   });
 });

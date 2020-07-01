@@ -82,7 +82,7 @@ class Movielist extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="catalog__movies-list">
-          { this.props.filmsInfo.slice(this._movieCardFirstOnPage, this._movieCardLastOnPage)
+          {this.props.filmsInfo.slice(this._movieCardFirstOnPage, this._movieCardLastOnPage)
           .map((filmInfo) => (
             <Moviecard
               movie={filmInfo}
