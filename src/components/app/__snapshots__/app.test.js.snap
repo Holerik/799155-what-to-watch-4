@@ -155,7 +155,6 @@ Array [
         onClick={[Function]}
         onMouseOver={[Function]}
       >
-         
         <li
           className="catalog__genres-item
                             catalog__genres-item--active"
