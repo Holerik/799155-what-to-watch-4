@@ -4,10 +4,24 @@ import PropTypes from 'prop-types';
 import Movielist from '../movielist/movielist.jsx';
 import {fullInfo} from '../../mocks/films.js';
 import GenreList from '../genre-list/genre-list.jsx';
+import ShowMore, {MOVIE_CARDS_ON_PAGE} from '../show-more/show-more.jsx';
 
 class Main extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      firstCard: 0,
+      lastCard: props.filmsInfo.length < MOVIE_CARDS_ON_PAGE ?
+        props.filmsInfo.length - 1 : MOVIE_CARDS_ON_PAGE - 1,
+    };
+    this._setCardShowLimits = this._setCardShowLimits.bind(this);
+  }
+
+  _setCardShowLimits(limits) {
+    this.setState({
+      firstCard: limits.first,
+      lastCard: limits.last,
+    });
   }
 
   render() {
@@ -77,11 +91,14 @@ class Main extends React.PureComponent {
             activeGenre={genre}
           />
           <Movielist
-            filmsInfo={filmsInfo}
+            filmsInfo={filmsInfo.slice(this.state.firstCard, this.state.lastCard + 1)}
             onMovieTitleClick={onMovieTitleClick}
           />
           <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
+            <ShowMore
+              filmsCount={filmsInfo.length}
+              setShowLimits={this._setCardShowLimits}
+            />
           </div>
         </section>
 
