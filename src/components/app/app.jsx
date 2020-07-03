@@ -10,6 +10,7 @@ import MoviecardReviews from '../moviecard-reviews/moviecard-reviews.jsx';
 import {fullInfo} from '../../mocks/films.js';
 import {ActionCreator} from '../../reducer.js';
 
+
 const tabItems = [`Overview`, `Details`, `Reviews`];
 
 class App extends React.PureComponent {
@@ -41,6 +42,8 @@ class App extends React.PureComponent {
           onMovieTitleClick={this._onMovieTitleClick}
           onSelectGenre={this._setActiveGenre}
           genre={this.props.genre}
+          firstCard={this.props.firstCard}
+          lastCard={this.props.lastCard}
         />);
     }
     const props = {
@@ -96,6 +99,9 @@ App.propTypes = {
   promo: PropTypes.exact(fullInfo).isRequired,
   page: PropTypes.number,
   genre: PropTypes.string,
+  firstCard: PropTypes.number,
+  lastCard: PropTypes.number,
+  cardsCount: PropTypes.number,
   setPage: PropTypes.func.isRequired,
   setMovie: PropTypes.func.isRequired,
   setPromo: PropTypes.func.isRequired,
@@ -108,12 +114,16 @@ const mapStateToProps = (state) => ({
   genre: state.genre,
   filmsInfo: state.movies,
   promo: state.promo,
+  firstCard: state.firstCard,
+  lastCard: state.lastCard,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setGenre(genre) {
     dispatch(ActionCreator.setCurrentGenre(genre));
     dispatch(ActionCreator.getFilmsInfo(genre));
+    dispatch(ActionCreator.setFirstCardNumber(0));
+    dispatch(ActionCreator.setCardCountsToShow());
   },
   setMovie(movie) {
     dispatch(ActionCreator.setMovie(movie));

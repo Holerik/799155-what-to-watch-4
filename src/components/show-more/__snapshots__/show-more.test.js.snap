@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ShowMore /> should render correctly 1`] = `
+exports[`ShowMore tests <ShowMore /> should render correctly 1`] = `
 <div
   className="catalog__more"
 >
   <button
-    className="catalog__button visually-hidden"
+    className="catalog__button "
     onClick={[Function]}
     type="button"
   >

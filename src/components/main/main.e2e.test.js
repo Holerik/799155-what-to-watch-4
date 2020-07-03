@@ -2,7 +2,11 @@
 import React from 'react';
 import Enzyme, {mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Main from './main.jsx';
+
+const mockStore = configureStore([]);
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -32,7 +36,7 @@ const promoMovie = {
   review: `GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend. The story involves the theft and recovery of a priceless Renaissance painting and the battle for an enormous family fortune`,
 };
 
-const filmsInfo = [
+const movies = [
   {
     id: 1,
     title: `Joker`,
@@ -109,17 +113,35 @@ describe(`Main e2e tests`, () => {
     const onMovieTitleClickHandler = jest.fn();
     const onSelectGenre = jest.fn();
     const genre = `All genres`;
+    const store = mockStore({
+      filmsInfo: movies,
+      movie: undefined,
+      promo: promoMovie,
+      page: 0,
+      genre: `All genres`,
+      firstCard: 0,
+      lastCard: 2,
+      cardsCount: 3,
+      setPage: () => {},
+      setMovie: () => {},
+      setPromo: () => {},
+      setGenre: () => {},
+    });
     const wrapper = mount(
-        <Main
-          promoMovie={promoMovie}
-          filmsInfo={filmsInfo}
-          onMovieTitleClick={onMovieTitleClickHandler}
-          onSelectGenre={onSelectGenre}
-          genre={genre}
-        />
+        <Provider store={store}>
+          <Main
+            promoMovie={promoMovie}
+            filmsInfo={movies}
+            onMovieTitleClick={onMovieTitleClickHandler}
+            onSelectGenre={onSelectGenre}
+            genre={genre}
+            firstCard={0}
+            lastCard={2}
+          />
+        </Provider>
     );
     const titles = wrapper.find(`.small-movie-card__link`);
-    expect(titles).toHaveLength(filmsInfo.length);
+    expect(titles).toHaveLength(movies.length);
     titles.at(0).simulate(`click`);
     expect(onMovieTitleClickHandler.mock.calls.length).toBe(1);
     const genres = wrapper.find(`.catalog__genres-link`);

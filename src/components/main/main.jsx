@@ -4,29 +4,14 @@ import PropTypes from 'prop-types';
 import Movielist from '../movielist/movielist.jsx';
 import {fullInfo} from '../../mocks/films.js';
 import GenreList from '../genre-list/genre-list.jsx';
-import ShowMore, {MOVIE_CARDS_ON_PAGE} from '../show-more/show-more.jsx';
+import ShowMore from '../show-more/show-more.jsx';
 
-class Main extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstCard: 0,
-      lastCard: props.filmsInfo.length < MOVIE_CARDS_ON_PAGE ?
-        props.filmsInfo.length - 1 : MOVIE_CARDS_ON_PAGE - 1,
-    };
-    this._setCardShowLimits = this._setCardShowLimits.bind(this);
-  }
+const Main = (props) => {
+  const {promoMovie, filmsInfo, onMovieTitleClick, onSelectGenre,
+    genre, firstCard, lastCard} = props;
 
-  _setCardShowLimits(limits) {
-    this.setState({
-      firstCard: limits.first,
-      lastCard: limits.last,
-    });
-  }
-
-  render() {
-    const {promoMovie, filmsInfo, onMovieTitleClick, onSelectGenre, genre} = this.props;
-    return <React.Fragment>
+  return (
+    <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
@@ -91,14 +76,11 @@ class Main extends React.PureComponent {
             activeGenre={genre}
           />
           <Movielist
-            filmsInfo={filmsInfo.slice(this.state.firstCard, this.state.lastCard + 1)}
+            filmsInfo={filmsInfo.slice(firstCard, lastCard + 1)}
             onMovieTitleClick={onMovieTitleClick}
           />
           <div className="catalog__more">
-            <ShowMore
-              filmsCount={filmsInfo.length}
-              setShowLimits={this._setCardShowLimits}
-            />
+            <ShowMore/>
           </div>
         </section>
 
@@ -116,9 +98,9 @@ class Main extends React.PureComponent {
           </div>
         </footer>
       </div>
-    </React.Fragment>;
-  }
-}
+    </React.Fragment>
+  );
+};
 
 Main.propTypes = {
   promoMovie: PropTypes.exact(fullInfo).isRequired,
@@ -127,6 +109,8 @@ Main.propTypes = {
   onMovieTitleClick: PropTypes.func.isRequired,
   onSelectGenre: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
+  firstCard: PropTypes.number.isRequired,
+  lastCard: PropTypes.number.isRequired,
 };
 
 export default Main;
