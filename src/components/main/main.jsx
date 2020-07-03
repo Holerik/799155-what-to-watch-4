@@ -4,15 +4,14 @@ import PropTypes from 'prop-types';
 import Movielist from '../movielist/movielist.jsx';
 import {fullInfo} from '../../mocks/films.js';
 import GenreList from '../genre-list/genre-list.jsx';
+import ShowMore from '../show-more/show-more.jsx';
 
-class Main extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
+const Main = (props) => {
+  const {promoMovie, filmsInfo, onMovieTitleClick, onSelectGenre,
+    genre, firstCard, lastCard} = props;
 
-  render() {
-    const {promoMovie, filmsInfo, onMovieTitleClick, onSelectGenre, genre} = this.props;
-    return <React.Fragment>
+  return (
+    <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
@@ -77,11 +76,11 @@ class Main extends React.PureComponent {
             activeGenre={genre}
           />
           <Movielist
-            filmsInfo={filmsInfo}
+            filmsInfo={filmsInfo.slice(firstCard, lastCard + 1)}
             onMovieTitleClick={onMovieTitleClick}
           />
           <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
+            <ShowMore/>
           </div>
         </section>
 
@@ -99,9 +98,9 @@ class Main extends React.PureComponent {
           </div>
         </footer>
       </div>
-    </React.Fragment>;
-  }
-}
+    </React.Fragment>
+  );
+};
 
 Main.propTypes = {
   promoMovie: PropTypes.exact(fullInfo).isRequired,
@@ -110,6 +109,8 @@ Main.propTypes = {
   onMovieTitleClick: PropTypes.func.isRequired,
   onSelectGenre: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
+  firstCard: PropTypes.number.isRequired,
+  lastCard: PropTypes.number.isRequired,
 };
 
 export default Main;

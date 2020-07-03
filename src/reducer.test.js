@@ -2,6 +2,8 @@
 import {reducer, ActionType, ActionCreator, ALL_GENRES} from './reducer.js';
 import {filmsInfo, promoMovie} from './mocks/films.js';
 
+const MOVIE_CARDS_ON_PAGE = 8;
+
 describe(`Reducer tests`, () => {
   it(`Reducer without paramters should return initialState`, () => {
     expect(reducer(void 0, {})).toEqual({
@@ -10,6 +12,10 @@ describe(`Reducer tests`, () => {
       page: 0,
       movie: undefined,
       genre: ALL_GENRES,
+      firstCard: 0,
+      lastCard: filmsInfo.length > MOVIE_CARDS_ON_PAGE ?
+        MOVIE_CARDS_ON_PAGE - 1 : filmsInfo.length - 1,
+      cardsCount: filmsInfo.length,
     });
   });
 
@@ -20,6 +26,9 @@ describe(`Reducer tests`, () => {
       page: 0,
       movie: undefined,
       genre: ALL_GENRES,
+      firstCard: 0,
+      lastCard: 7,
+      cardsCount: filmsInfo.length,
     }, {
       type: ActionType.SET_PAGE,
       payload: 1,
@@ -29,6 +38,9 @@ describe(`Reducer tests`, () => {
       page: 1,
       movie: undefined,
       genre: ALL_GENRES,
+      firstCard: 0,
+      lastCard: 7,
+      cardsCount: filmsInfo.length,
     });
   });
 });

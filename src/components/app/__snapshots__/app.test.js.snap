@@ -327,12 +327,17 @@ Array [
       <div
         className="catalog__more"
       >
-        <button
-          className="catalog__button"
-          type="button"
+        <div
+          className="catalog__more"
         >
-          Show more
-        </button>
+          <button
+            className="catalog__button visually-hidden"
+            onClick={[Function]}
+            type="button"
+          >
+            Show more
+          </button>
+        </div>
       </div>
     </section>
     <footer

@@ -1,7 +1,11 @@
 // main.test.js
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Main from './main.jsx';
+
+const mockStore = configureStore([]);
 
 const promoMovie = {
   id: 1,
@@ -27,7 +31,7 @@ const promoMovie = {
   review: `GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend. The story involves the theft and recovery of a priceless Renaissance painting and the battle for an enormous family fortune`,
 };
 
-const filmsInfo = [
+const movies = [
   {
     id: 1,
     title: `Joker`,
@@ -101,18 +105,32 @@ const filmsInfo = [
 
 describe(`Main tests`, () => {
   it(`Main should render the screen`, () => {
-    const onMovieTitleClickHandler = jest.fn();
-    const onSelectGenre = jest.fn();
-    const genre = `All genres`;
-    const tree = renderer
-    .create(
-        <Main
-          promoMovie={promoMovie}
-          filmsInfo={filmsInfo}
-          onMovieTitleClick={onMovieTitleClickHandler}
-          onSelectGenre={onSelectGenre}
-          genre={genre}
-        />
+    const store = mockStore({
+      filmsInfo: movies,
+      movie: undefined,
+      promo: promoMovie,
+      page: 0,
+      genre: `All genres`,
+      firstCard: 0,
+      lastCard: 2,
+      cardsCount: 3,
+      setPage: () => {},
+      setMovie: () => {},
+      setPromo: () => {},
+      setGenre: () => {},
+    });
+    const tree = renderer.create(
+        <Provider store={store}>
+          <Main
+            promoMovie={promoMovie}
+            filmsInfo={movies}
+            onMovieTitleClick={() => {}}
+            onSelectGenre={() => {}}
+            genre={`All genres`}
+            firstCard={0}
+            lastCard={2}
+          />
+        </Provider>
     ).toJSON();
     expect(tree).toMatchSnapshot();
   });

@@ -1,6 +1,7 @@
 // reducer.js
 import {filmsInfo, promoMovie} from './mocks/films.js';
 import {extend} from './utils.js';
+import {MOVIE_CARDS_ON_PAGE} from './components/show-more/show-more.jsx';
 
 export const ALL_GENRES = `All genres`;
 
@@ -10,6 +11,8 @@ export const ActionType = {
   SET_MOVIE: `SET_MOVIE`,
   SET_PROMO: `SET_PROMO`,
   SET_PAGE: `SET_PAGE`,
+  SET_FIRST_CARD_NUMBER: `SET_FIRST_CARD_NUMBER`,
+  SET_CARD_COUNT_TO_SHOW: `SET_CARD_COUNT_TO_SHOW`,
 };
 
 export const selectMoviesByGenre = (genre) => {
@@ -27,7 +30,7 @@ export const getPromo = () => {
 };
 
 const initialState = {
-  // список карточек фильмов с короткой информацией
+  // список карточек фильмов
   movies: filmsInfo,
   // промо фильм
   promo: promoMovie,
@@ -37,6 +40,13 @@ const initialState = {
   movie: undefined,
   // текущий жанр
   genre: ALL_GENRES,
+  // номер первой карточки на странице
+  firstCard: 0,
+  // номер последней карточки на странице
+  lastCard: filmsInfo.length > MOVIE_CARDS_ON_PAGE ?
+    MOVIE_CARDS_ON_PAGE - 1 : filmsInfo.length - 1,
+  // количество карточек для показа
+  cardsCount: filmsInfo.length,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -60,6 +70,20 @@ export const reducer = (state = initialState, action) => {
     case ActionType.SET_PAGE:
       return extend(state, {
         page: action.payload,
+      });
+    case ActionType.SET_FIRST_CARD_NUMBER:
+      const filmsCount = state.movies.length;
+      if (action.payload >= filmsInfo) {
+        return state;
+      }
+      const lastNumber = action.payload + MOVIE_CARDS_ON_PAGE - 1;
+      return extend(state, {
+        firstCard: action.payload,
+        lastCard: lastNumber > filmsCount - 1 ? filmsCount - 1 : lastNumber,
+      });
+    case ActionType.SET_CARD_COUNT_TO_SHOW:
+      return extend(state, {
+        cardsCount: state.movies.length,
       });
   }
   return state;
@@ -85,5 +109,12 @@ export const ActionCreator = {
   setPage: (page) => ({
     type: ActionType.SET_PAGE,
     payload: page,
+  }),
+  setFirstCardNumber: (first) => ({
+    type: ActionType.SET_FIRST_CARD_NUMBER,
+    payload: first,
+  }),
+  setCardCountsToShow: () => ({
+    type: ActionType.SET_CARD_COUNT_TO_SHOW,
   }),
 };
