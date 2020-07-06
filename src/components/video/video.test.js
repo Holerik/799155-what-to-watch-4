@@ -36,7 +36,6 @@ const MockComponent = () => {
         isMuted={true}
         poster={movie.poster}
         width={280}
-        onExitButtonClick={() => {}}
       />
     </div>
   );

@@ -4,23 +4,15 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../reducer.js';
 
-export const MOVIE_CARDS_ON_PAGE = 8;
-
-class ShowMore extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const {lastCard, cardsCount} = this.props;
-    return (
-      <div className="catalog__more">
-        <button className={`catalog__button ${lastCard + 1 < cardsCount ? `` : `visually-hidden`}`}
-          type="button" onClick={() => this.props.showMoreClickHandler(lastCard + 1)}>Show more</button>
-      </div>
-    );
-  }
-}
+const ShowMore = React.memo(function ShowMore(props) {
+  const {lastCard, cardsCount, showMoreClickHandler} = props;
+  return (
+    <div className="catalog__more">
+      <button className={`catalog__button ${lastCard + 1 < cardsCount ? `` : `visually-hidden`}`}
+        type="button" onClick={() => showMoreClickHandler(lastCard + 1)}>Show more</button>
+    </div>
+  );
+});
 
 const mapStateToProps = (state) => ({
   lastCard: state.lastCard,

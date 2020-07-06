@@ -1,9 +1,12 @@
-// movielist.test.js
+// with-canplay.test.js
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Movielist from './movielist.jsx';
+import withCanPlay from './with-canplay.jsx';
+import withActiveItem from '../with-activeitem/with-activeitem.jsx';
+import PropTypes from 'prop-types';
+import {fullInfo} from '../../mocks/films.js';
 
-const filmsInfo = [
+const movies = [
   {
     id: 1,
     title: `Joker`,
@@ -75,19 +78,43 @@ const filmsInfo = [
   },
 ];
 
-describe(`Movielist tests`, () => {
-  it(`Movielist should render several moviecards`, () => {
-    const tree = renderer
-    .create(
-        <Movielist
-          listItems={filmsInfo}
-          setActiveItem={() => {}}
-          mouseOverHandler={() => {}}
-          mouseClickHandler={() => {}}
-          onCanPlay={() => {}}
-          canPlay={false}
-        />
-    ).toJSON();
+const MockComponent = (props) => {
+  const {listItems} = props;
+  return (
+    <section>
+      {listItems.map((item, index) => {
+        return (
+          <React.Fragment key={index}>
+            <article>
+              <h3>
+                <a>{item.title}</a>
+              </h3>
+            </article>
+          </React.Fragment>);
+      })}
+    </section>
+  );
+};
+
+MockComponent.propTypes = {
+  listItems: PropTypes.arrayOf(
+      PropTypes.exact(fullInfo)).isRequired,
+  setActiveItem: PropTypes.func.isRequired,
+};
+
+const MockComponentWrapped = withActiveItem(withCanPlay(MockComponent));
+
+describe(`withCanPlay tests`, () => {
+  it(`Should correctly render genres list`, () => {
+    const tree = renderer.create((
+      <MockComponentWrapped
+        listItems={movies}
+        setActiveItem={() => {}}
+      />), {
+      createNodeMock() {
+        return {};
+      }
+    }).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

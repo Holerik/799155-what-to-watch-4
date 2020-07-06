@@ -19,10 +19,15 @@ class App extends React.PureComponent {
     this._onMovieTitleClick = this._onMovieTitleClick.bind(this);
     this._setActivePage = this._setActivePage.bind(this);
     this._setActiveGenre = this._setActiveGenre.bind(this);
+    this._setActiveMovie = this._setActiveMovie.bind(this);
   }
 
   _onMovieTitleClick(movie) {
     this.props.setMovie(movie);
+  }
+
+  _setActiveMovie(activeMovieId) {
+    this.props.setMovie(this.props.filmsInfo.find((movie) => movie.id === activeMovieId));
   }
 
   _setActivePage(page) {
@@ -39,7 +44,8 @@ class App extends React.PureComponent {
         <Main
           promoMovie={this.props.promo}
           filmsInfo={this.props.filmsInfo}
-          onMovieTitleClick={this._onMovieTitleClick}
+          genresList={this.props.genresList}
+          setActiveMovie={this._setActiveMovie}
           onSelectGenre={this._setActiveGenre}
           genre={this.props.genre}
           firstCard={this.props.firstCard}
@@ -51,7 +57,7 @@ class App extends React.PureComponent {
       setActiveItem: this._setActivePage,
       tabItems,
       filmsInfo: this.props.filmsInfo,
-      onMovieTitleClick: this._onMovieTitleClick,
+      setActiveMovie: this._setActiveMovie,
     };
     switch (this.props.page) {
       case 0:
@@ -99,6 +105,7 @@ App.propTypes = {
   promo: PropTypes.exact(fullInfo).isRequired,
   page: PropTypes.number,
   genre: PropTypes.string,
+  genresList: PropTypes.arrayOf(PropTypes.string).isRequired,
   firstCard: PropTypes.number,
   lastCard: PropTypes.number,
   cardsCount: PropTypes.number,
@@ -112,6 +119,7 @@ const mapStateToProps = (state) => ({
   movie: state.movie,
   page: state.page,
   genre: state.genre,
+  genresList: state.genresList,
   filmsInfo: state.movies,
   promo: state.promo,
   firstCard: state.firstCard,

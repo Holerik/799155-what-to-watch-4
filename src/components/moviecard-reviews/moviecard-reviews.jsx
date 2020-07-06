@@ -3,11 +3,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {fullInfo} from '../../mocks/films.js';
 import Tabs from '../tabs/tabs.jsx';
-import {selectMoviesByGenre} from '../moviecard-overview/moviecard-overview.jsx';
-import Movielist from '../movielist/movielist.jsx';
+import {selectMoviesByGenre, getFullString} from '../moviecard-overview/moviecard-overview.jsx';
+import MovieList from '../movielist/movielist.jsx';
+import Header from '../header/header.jsx';
+import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
+import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 
-const MoviecardReviews = (props) => {
-  const {movieInfo, filmsInfo} = props;
+const MovieTabs = withActiveItem(withCanPlay(MovieList));
+
+const MoviecardReviews = React.memo(function MoviecardReviews(props) {
+  const {movieInfo, filmsInfo, setActiveMovie} = props;
   const selectedMovies = selectMoviesByGenre(movieInfo, filmsInfo);
   return (
     <React.Fragment>
@@ -20,26 +25,14 @@ const MoviecardReviews = (props) => {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header movie-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
-
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </div>
+            <Header/>
           </header>
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{movieInfo.title}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{movieInfo.genre[0]}</span>
+                <span className="movie-card__genre">{getFullString(movieInfo.genre, 183)}</span>
                 <span className="movie-card__year">{movieInfo.year}</span>
               </p>
 
@@ -164,13 +157,10 @@ const MoviecardReviews = (props) => {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__movies-list">
-            <Movielist
-              filmsInfo={selectedMovies}
-              onMovieTitleClick={props.onMovieTitleClick}
-            />
-          </div>
+          <MovieTabs
+            listItems={selectedMovies}
+            setActiveItem={setActiveMovie}
+          />
         </section>
 
         <footer className="page-footer">
@@ -189,7 +179,7 @@ const MoviecardReviews = (props) => {
       </div>
     </React.Fragment>
   );
-};
+});
 
 MoviecardReviews.propTypes = {
   movieInfo: PropTypes.exact(fullInfo).isRequired,
@@ -197,7 +187,7 @@ MoviecardReviews.propTypes = {
   tabItems: PropTypes.arrayOf(PropTypes.string).isRequired,
   filmsInfo: PropTypes.arrayOf(
       PropTypes.exact(fullInfo)).isRequired,
-  onMovieTitleClick: PropTypes.func.isRequired,
+  setActiveMovie: PropTypes.func.isRequired,
 };
 
 export default MoviecardReviews;

@@ -110,7 +110,7 @@ const movies = [
 
 describe(`Main e2e tests`, () => {
   it(`Should movie card title be clicked`, () =>{
-    const onMovieTitleClickHandler = jest.fn();
+    const setActiveMovie = jest.fn();
     const onSelectGenre = jest.fn();
     const genre = `All genres`;
     const store = mockStore({
@@ -119,9 +119,11 @@ describe(`Main e2e tests`, () => {
       promo: promoMovie,
       page: 0,
       genre: `All genres`,
+      genresList: [`All genres`],
       firstCard: 0,
       lastCard: 2,
       cardsCount: 3,
+      avatar: `img/avatar.jpg`,
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
@@ -132,9 +134,10 @@ describe(`Main e2e tests`, () => {
           <Main
             promoMovie={promoMovie}
             filmsInfo={movies}
-            onMovieTitleClick={onMovieTitleClickHandler}
+            setActiveMovie={setActiveMovie}
             onSelectGenre={onSelectGenre}
             genre={genre}
+            genresList={[`All genres`]}
             firstCard={0}
             lastCard={2}
           />
@@ -143,9 +146,9 @@ describe(`Main e2e tests`, () => {
     const titles = wrapper.find(`.small-movie-card__link`);
     expect(titles).toHaveLength(movies.length);
     titles.at(0).simulate(`click`);
-    expect(onMovieTitleClickHandler.mock.calls.length).toBe(1);
+    expect(setActiveMovie.mock.calls.length).toBe(1);
     const genres = wrapper.find(`.catalog__genres-link`);
-    genres.at(1).simulate(`click`);
+    genres.at(0).simulate(`click`);
     expect(onSelectGenre.mock.calls.length).toBe(1);
   });
 });

@@ -29,16 +29,13 @@ const filmInfo = {
 
 describe(`Moviecard tests`, () => {
   it(`Moviecard should render poster`, () => {
-    const onMovieTitleClick = jest.fn();
-    const onMovieCardActivate = jest.fn();
-    const onMovieCardOut = jest.fn();
     const tree = renderer
     .create(
         <Moviecard
           movie={filmInfo}
-          onMovieCardActivate={onMovieCardActivate}
-          onMovieCardOut={onMovieCardOut}
-          onMovieTitleClick={onMovieTitleClick}
+          onMovieCardActivate={() => {}}
+          onMovieCardOut={() => {}}
+          onMovieTitleClick={() => {}}
           canPlayVideo={false}
           activeMovieId={-1}
         />

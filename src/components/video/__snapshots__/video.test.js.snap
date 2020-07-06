@@ -24,13 +24,13 @@ exports[`Video tests Moviecard should rendered as video 1`] = `
           <progress
             className="player__progress"
             max="100"
-            value="0"
+            value="undefined"
           />
           <div
             className="player__toggler"
             style={
               Object {
-                "left": "0%",
+                "left": "undefined%",
               }
             }
           >
@@ -39,9 +39,7 @@ exports[`Video tests Moviecard should rendered as video 1`] = `
         </div>
         <div
           className="player__time-value"
-        >
-          
-        </div>
+        />
       </div>
       <div
         className="player__controls-row"
@@ -89,16 +87,6 @@ exports[`Video tests Moviecard should rendered as video 1`] = `
         </button>
       </div>
     </div>
-    <video
-      className="player__video"
-      muted={true}
-      poster="img/joker.jpg"
-      width={280}
-    >
-      <source
-        src="https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
-      />
-    </video>
   </div>
 </div>
 `;

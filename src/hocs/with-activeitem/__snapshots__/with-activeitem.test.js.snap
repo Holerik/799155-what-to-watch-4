@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withActiveItem tests Should correctly render genres list 1`] = `
+<ul>
+  <li>
+    <a>
+      All genres
+    </a>
+  </li>
+  <li>
+    <a>
+      Drama
+    </a>
+  </li>
+  <li>
+    <a>
+      Crime
+    </a>
+  </li>
+</ul>
+`;

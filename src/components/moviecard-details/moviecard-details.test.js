@@ -1,7 +1,11 @@
 // moviecard-details.test.js
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import MoviecardDetails from './moviecard-details.jsx';
+
+const mockStore = configureStore([]);
 
 const movie = {
   id: 1,
@@ -27,7 +31,7 @@ const movie = {
   review: `Arthur Fleck (Joaquin Phoenix) isn’t happy with his life. He struggles to make money as a part-time clown while sharing a rundown apartment with his ailing mom (Frances Conroy). But Arthur lives in a city struck by hard times where a decent, honest living is difficult to come by. He also suffers from a condition that causes him to break into uncontrollable laughter. None of this stops Arthur from dreaming big. He aspires to be a stand-up comedian and attempts to write jokes in his diary. Caught in between it all, Arthur slowly begins to lose his grip on sanity`,
 };
 
-const filmsInfo = [
+const movies = [
   {
     id: 1,
     title: `Joker`,
@@ -103,17 +107,33 @@ const tabItems = [`tab1`, `tab2`, `tab3`];
 
 describe(`MoviecardDetails tests`, () => {
   it(`MoviecardDetails should render movie details`, () => {
-    const setActiveItem = jest.fn();
-    const onMovieTitleClick = jest.fn();
+    const store = mockStore({
+      filmsInfo: movies,
+      movie: undefined,
+      promo: movie,
+      page: 0,
+      genre: `All genres`,
+      genresList: [`All genres`],
+      firstCard: 0,
+      lastCard: 2,
+      cardsCount: 3,
+      avatar: `img/avatar.jpg`,
+      setPage: () => {},
+      setMovie: () => {},
+      setPromo: () => {},
+      setGenre: () => {},
+    });
     const tree = renderer
     .create(
-        <MoviecardDetails
-          movieInfo={movie}
-          filmsInfo={filmsInfo}
-          setActiveItem={setActiveItem}
-          tabItems={tabItems}
-          onMovieTitleClick={onMovieTitleClick}
-        />
+        <Provider store={store}>
+          <MoviecardDetails
+            movieInfo={movie}
+            filmsInfo={movies}
+            setActiveItem={() => {}}
+            tabItems={tabItems}
+            setActiveMovie={() => {}}
+          />
+        </Provider>
     ).toJSON();
     expect(tree).toMatchSnapshot();
   });

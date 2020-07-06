@@ -1,9 +1,9 @@
 // reducer.js
 import {filmsInfo, promoMovie} from './mocks/films.js';
 import {extend} from './utils.js';
-import {MOVIE_CARDS_ON_PAGE} from './components/show-more/show-more.jsx';
 
 export const ALL_GENRES = `All genres`;
+export const MOVIE_CARDS_ON_PAGE = 8;
 
 export const ActionType = {
   GET_MOVIES_BY_GENRE: `GET_MOVIES_BY_GENRE`,
@@ -15,7 +15,7 @@ export const ActionType = {
   SET_CARD_COUNT_TO_SHOW: `SET_CARD_COUNT_TO_SHOW`,
 };
 
-export const selectMoviesByGenre = (genre) => {
+const selectMoviesByGenre = (genre) => {
   let movies = filmsInfo;
   if (genre !== undefined && genre !== ALL_GENRES) {
     movies = filmsInfo.filter((movie) => {
@@ -23,6 +23,16 @@ export const selectMoviesByGenre = (genre) => {
     });
   }
   return movies;
+};
+
+const createGenresList = (movies) => {
+  let genresList = [ALL_GENRES];
+  for (const movie of movies) {
+    genresList = genresList.concat(movie.genre.filter((item) => {
+      return !genresList.includes(item);
+    }));
+  }
+  return genresList;
 };
 
 export const getPromo = () => {
@@ -40,6 +50,8 @@ const initialState = {
   movie: undefined,
   // текущий жанр
   genre: ALL_GENRES,
+  // список всех жанров
+  genresList: createGenresList(filmsInfo),
   // номер первой карточки на странице
   firstCard: 0,
   // номер последней карточки на странице
@@ -47,6 +59,8 @@ const initialState = {
     MOVIE_CARDS_ON_PAGE - 1 : filmsInfo.length - 1,
   // количество карточек для показа
   cardsCount: filmsInfo.length,
+  // картинка аватара
+  avatar: `img/avatar.jpg`,
 };
 
 export const reducer = (state = initialState, action) => {
