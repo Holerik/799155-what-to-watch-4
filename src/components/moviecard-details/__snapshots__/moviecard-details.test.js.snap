@@ -29,7 +29,8 @@ Array [
         >
           <a
             className="logo__link"
-            href="main.html"
+            href="/"
+            onClick={[Function]}
           >
             <span
               className="logo__letter logo__letter--1"
@@ -80,7 +81,7 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Thriller
+              Thriller·Crime·Drama
             </span>
             <span
               className="movie-card__year"
@@ -287,7 +288,7 @@ Array [
                 <span
                   className="movie-card__details-value"
                 >
-                  Thriller
+                  Thriller·Crime·Drama
                 </span>
               </p>
               <p

@@ -26,6 +26,8 @@ Array [
       >
         <a
           className="logo__link"
+          href="/"
+          onClick={[Function]}
         >
           <span
             className="logo__letter logo__letter--1"
@@ -164,72 +166,6 @@ Array [
             href="#"
           >
             All genres
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item
-                            "
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            Thriller
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item
-                            "
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            Crime
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item
-                            "
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            Drama
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item
-                            "
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            Action
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item
-                            "
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            Mystery
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item
-                            "
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            Biography
           </a>
         </li>
       </ul>

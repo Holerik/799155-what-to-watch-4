@@ -111,9 +111,11 @@ describe(`Main tests`, () => {
       promo: promoMovie,
       page: 0,
       genre: `All genres`,
+      genresList: [`All genres`],
       firstCard: 0,
       lastCard: 2,
       cardsCount: 3,
+      avatar: `img/avatar.jpg`,
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
@@ -124,9 +126,10 @@ describe(`Main tests`, () => {
           <Main
             promoMovie={promoMovie}
             filmsInfo={movies}
-            onMovieTitleClick={() => {}}
+            setActiveMovie={() => {}}
             onSelectGenre={() => {}}
             genre={`All genres`}
+            genresList={[`All genres`]}
             firstCard={0}
             lastCard={2}
           />

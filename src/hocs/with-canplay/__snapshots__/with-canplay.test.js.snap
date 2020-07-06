@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withCanPlay tests Should correctly render genres list 1`] = `
+<section>
+  <article>
+    <h3>
+      <a>
+        Joker
+      </a>
+    </h3>
+  </article>
+  <article>
+    <h3>
+      <a>
+        The Commuter
+      </a>
+    </h3>
+  </article>
+  <article>
+    <h3>
+      <a>
+        Molly's Game
+      </a>
+    </h3>
+  </article>
+</section>
+`;

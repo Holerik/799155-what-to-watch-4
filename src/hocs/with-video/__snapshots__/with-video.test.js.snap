@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withVideo tests Should correctly render VideoPlayer 1`] = `
+<div>
+  <video
+    className="player__video"
+    muted={true}
+    poster=""
+    width={200}
+  >
+    <source
+      src=""
+    />
+  </video>
+</div>
+`;

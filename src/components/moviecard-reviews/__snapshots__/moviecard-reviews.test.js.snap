@@ -29,7 +29,8 @@ Array [
         >
           <a
             className="logo__link"
-            href="main.html"
+            href="/"
+            onClick={[Function]}
           >
             <span
               className="logo__letter logo__letter--1"
@@ -80,7 +81,7 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Thriller
+              Thriller·Crime·Drama
             </span>
             <span
               className="movie-card__year"
@@ -426,39 +427,35 @@ Array [
       <div
         className="catalog__movies-list"
       >
-        <div
-          className="catalog__movies-list"
+        <article
+          className="small-movie-card catalog__movies-card"
         >
-          <article
-            className="small-movie-card catalog__movies-card"
+          <div
+            className="small-movie-card__image"
+            id="2"
+            onClick={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
           >
-            <div
-              className="small-movie-card__image"
-              id="2"
+            <img
+              alt="The Commuter poster"
+              height="175"
+              src="img/commuter.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+          >
+            <a
+              className="small-movie-card__link"
+              href=""
               onClick={[Function]}
-              onMouseOut={[Function]}
-              onMouseOver={[Function]}
             >
-              <img
-                alt="The Commuter poster"
-                height="175"
-                src="img/commuter.jpg"
-                width="280"
-              />
-            </div>
-            <h3
-              className="small-movie-card__title"
-            >
-              <a
-                className="small-movie-card__link"
-                href=""
-                onClick={[Function]}
-              >
-                The Commuter
-              </a>
-            </h3>
-          </article>
-        </div>
+              The Commuter
+            </a>
+          </h3>
+        </article>
       </div>
     </section>
     <footer

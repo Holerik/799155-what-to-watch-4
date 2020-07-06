@@ -7,9 +7,9 @@ exports[`Moviecard tests Moviecard should render poster 1`] = `
   <div
     className="small-movie-card__image"
     id="1"
-    onClick={[MockFunction]}
-    onMouseOut={[MockFunction]}
-    onMouseOver={[MockFunction]}
+    onClick={[Function]}
+    onMouseOut={[Function]}
+    onMouseOver={[Function]}
   >
     <img
       alt="Joker poster"
@@ -24,7 +24,7 @@ exports[`Moviecard tests Moviecard should render poster 1`] = `
     <a
       className="small-movie-card__link"
       href=""
-      onClick={[MockFunction]}
+      onClick={[Function]}
     >
       Joker
     </a>

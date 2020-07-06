@@ -111,9 +111,11 @@ describe(`App tests`, () => {
       promo: promoMovie,
       page: 0,
       genre: `All genres`,
+      genresList: [`All genres`],
       firstCard: 0,
       lastCard: 2,
       cardsCount: 3,
+      avatar: `img/avatar.jpg`,
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
@@ -128,6 +130,7 @@ describe(`App tests`, () => {
             promo = {promoMovie}
             page = {0}
             genre = {`All genres`}
+            genresList = {[`All genres`]}
             firstCard = {0}
             lastCard = {2}
             cardsCount = {3}

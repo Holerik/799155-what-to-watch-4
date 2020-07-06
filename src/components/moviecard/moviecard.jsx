@@ -2,14 +2,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {fullInfo} from '../../mocks/films.js';
+import withVideo from '../../hocs/with-video/with-video.jsx';
 import Video from '../video/video.jsx';
 
-const Moviecard = (props) => {
+const VideoPlayer = withVideo(Video);
+
+const Moviecard = React.memo(function Moviecard(props) {
   if (props.canPlayVideo && (props.activeMovieId === props.movie.id)) {
     return (
       <article className="small-movie-card catalog__movies-card">
         <div className="small-movie-card__image" onMouseOut={props.onMovieCardOut}>
-          <Video
+          <VideoPlayer
             isPlaying={true}
             src={props.movie.preview}
             isMuted={true}
@@ -32,7 +35,7 @@ const Moviecard = (props) => {
       </h3>
     </article>
   );
-};
+});
 
 Moviecard.propTypes = {
   movie: PropTypes.exact(fullInfo),
