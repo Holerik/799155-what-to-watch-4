@@ -4,7 +4,7 @@ import Enzyme, {mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import Main from './main.jsx';
+import {Main} from './main.jsx';
 
 const mockStore = configureStore([]);
 
@@ -124,10 +124,13 @@ describe(`Main e2e tests`, () => {
       lastCard: 2,
       cardsCount: 3,
       avatar: `img/avatar.jpg`,
+      play: false,
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
       setGenre: () => {},
+      playMovie: () => {},
+      stopMovie: () => {}
     });
     const wrapper = mount(
         <Provider store={store}>
@@ -140,6 +143,9 @@ describe(`Main e2e tests`, () => {
             genresList={[`All genres`]}
             firstCard={0}
             lastCard={2}
+            play={false}
+            playMovie={() => {}}
+            stopMovie={() => {}}
           />
         </Provider>
     );

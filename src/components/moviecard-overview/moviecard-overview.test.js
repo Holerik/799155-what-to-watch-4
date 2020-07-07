@@ -1,7 +1,7 @@
 // moviecard-overview.test.js
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MoviecardOverview from './moviecard-overview.jsx';
+import {MoviecardOverview} from './moviecard-overview.jsx';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 
@@ -118,10 +118,13 @@ describe(`MoviecardOverview tests`, () => {
       lastCard: 2,
       cardsCount: 3,
       avatar: `img/avatar.jpg`,
+      play: false,
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
       setGenre: () => {},
+      playMovie: () => {},
+      stopMovie: () => {}
     });
     const tree = renderer.create(
         <Provider store={store}>
@@ -131,6 +134,9 @@ describe(`MoviecardOverview tests`, () => {
             setActiveItem={() => {}}
             tabItems={tabItems}
             setActiveMovie={() => {}}
+            play={false}
+            playMovie={() => {}}
+            stopMovie={() => {}}
           />
         </Provider>
     ).toJSON();

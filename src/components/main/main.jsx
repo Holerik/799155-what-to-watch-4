@@ -1,6 +1,7 @@
 // main.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import MovieList from '../movielist/movielist.jsx';
 import {fullInfo} from '../../mocks/films.js';
 import ShowMore from '../show-more/show-more.jsx';
@@ -8,22 +9,37 @@ import Header from '../header/header.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 import GenreList from '../genre-list/genre-list.jsx';
+import {ActionCreator} from '../../reducer.js';
+import withVideo from '../../hocs/with-video/with-video.jsx';
+import Video from '../video/video.jsx';
+
 
 const MAX_GENRE_COUNT = 10;
 
+const VideoPlayer = withVideo(Video);
 const GenreTabs = withActiveItem(GenreList);
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
 
 const Main = (props) => {
   const {promoMovie, filmsInfo, onSelectGenre, setActiveMovie,
-    genre, genresList, firstCard, lastCard} = props;
-
+    genre, genresList, firstCard, lastCard, playMovie, stopMovie} = props;
   const setGenre = (index) => {
     onSelectGenre(genresList[index]);
   };
-
   const activeItem = genresList.indexOf(genre);
 
+  if (props.play) {
+    return (
+      <VideoPlayer
+        src={promoMovie.src}
+        isMuted={false}
+        poster={promoMovie.poster}
+        width={480}
+        isPlaying={true}
+        onStopPlayMovie={stopMovie}
+      />
+    );
+  }
   return (
     <React.Fragment>
       <section className="movie-card">
@@ -51,7 +67,9 @@ const Main = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <button className="btn btn--play movie-card__button"
+                  onClick={playMovie} type="button"
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -105,6 +123,19 @@ const Main = (props) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  play: state.play,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  playMovie: () => {
+    dispatch(ActionCreator.playMovie());
+  },
+  stopMovie: () => {
+    dispatch(ActionCreator.stopMovie());
+  }
+});
+
 Main.propTypes = {
   promoMovie: PropTypes.exact(fullInfo).isRequired,
   filmsInfo: PropTypes.arrayOf(
@@ -114,7 +145,11 @@ Main.propTypes = {
   genre: PropTypes.string.isRequired,
   genresList: PropTypes.arrayOf(PropTypes.string).isRequired,
   firstCard: PropTypes.number.isRequired,
+  playMovie: PropTypes.func.isRequired,
+  stopMovie: PropTypes.func.isRequired,
+  play: PropTypes.bool.isRequired,
   lastCard: PropTypes.number.isRequired,
 };
 
-export default Main;
+export {Main};
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

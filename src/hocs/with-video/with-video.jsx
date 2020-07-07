@@ -125,6 +125,11 @@ const withVideo = (Component) => {
           fullScreenButtonHandler={onSetFullScreen}
           playButtonClickHandler={this._onPlayButtonClick}
           exitButtonClickHandler={this._onExitButtonClick}
+          progress={this.state.progress}
+          duration={this.state.duration}
+          isPlaying={this.state.isPlaying}
+          isPaused={this.state.isPaused}
+          isMuted={this.props.isMuted}
         >
           <video className="player__video" ref={this._videoRef}
             poster={this.props.poster}

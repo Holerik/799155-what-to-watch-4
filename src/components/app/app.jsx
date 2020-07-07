@@ -10,7 +10,6 @@ import MoviecardReviews from '../moviecard-reviews/moviecard-reviews.jsx';
 import {fullInfo} from '../../mocks/films.js';
 import {ActionCreator} from '../../reducer.js';
 
-
 const tabItems = [`Overview`, `Details`, `Reviews`];
 
 class App extends React.PureComponent {
@@ -79,6 +78,7 @@ class App extends React.PureComponent {
           />
         );
     }
+    // }
     return null;
   }
 
@@ -103,6 +103,7 @@ App.propTypes = {
       PropTypes.exact(fullInfo)).isRequired,
   movie: PropTypes.exact(fullInfo),
   promo: PropTypes.exact(fullInfo).isRequired,
+  play: PropTypes.bool,
   page: PropTypes.number,
   genre: PropTypes.string,
   genresList: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -141,7 +142,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setPage(page) {
     dispatch(ActionCreator.setPage(page));
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

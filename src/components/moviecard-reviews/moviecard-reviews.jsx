@@ -1,6 +1,7 @@
 // moviecard-reviews.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {fullInfo} from '../../mocks/films.js';
 import Tabs from '../tabs/tabs.jsx';
 import {selectMoviesByGenre, getFullString} from '../moviecard-overview/moviecard-overview.jsx';
@@ -8,12 +9,28 @@ import MovieList from '../movielist/movielist.jsx';
 import Header from '../header/header.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
+import {ActionCreator} from '../../reducer.js';
+import withVideo from '../../hocs/with-video/with-video.jsx';
+import Video from '../video/video.jsx';
 
+const VideoPlayer = withVideo(Video);
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
 
 const MoviecardReviews = React.memo(function MoviecardReviews(props) {
-  const {movieInfo, filmsInfo, setActiveMovie} = props;
+  const {movieInfo, filmsInfo, setActiveMovie, playMovie, stopMovie} = props;
   const selectedMovies = selectMoviesByGenre(movieInfo, filmsInfo);
+  if (props.play) {
+    return (
+      <VideoPlayer
+        src={movieInfo.src}
+        isMuted={false}
+        poster={movieInfo.poster}
+        width={480}
+        isPlaying={true}
+        onStopPlayMovie={stopMovie}
+      />
+    );
+  }
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
@@ -37,7 +54,9 @@ const MoviecardReviews = React.memo(function MoviecardReviews(props) {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <button className="btn btn--play movie-card__button" type="button"
+                  onClick={playMovie}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -181,6 +200,19 @@ const MoviecardReviews = React.memo(function MoviecardReviews(props) {
   );
 });
 
+const mapStateToProps = (state) => ({
+  play: state.play,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  playMovie: () => {
+    dispatch(ActionCreator.playMovie());
+  },
+  stopMovie: () => {
+    dispatch(ActionCreator.stopMovie());
+  }
+});
+
 MoviecardReviews.propTypes = {
   movieInfo: PropTypes.exact(fullInfo).isRequired,
   setActiveItem: PropTypes.func.isRequired,
@@ -188,6 +220,10 @@ MoviecardReviews.propTypes = {
   filmsInfo: PropTypes.arrayOf(
       PropTypes.exact(fullInfo)).isRequired,
   setActiveMovie: PropTypes.func.isRequired,
+  playMovie: PropTypes.func.isRequired,
+  stopMovie: PropTypes.func.isRequired,
+  play: PropTypes.bool.isRequired,
 };
 
-export default MoviecardReviews;
+export {MoviecardReviews};
+export default connect(mapStateToProps, mapDispatchToProps)(MoviecardReviews);
