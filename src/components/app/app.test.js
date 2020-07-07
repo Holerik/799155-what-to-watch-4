@@ -116,10 +116,13 @@ describe(`App tests`, () => {
       lastCard: 2,
       cardsCount: 3,
       avatar: `img/avatar.jpg`,
+      play: false,
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
       setGenre: () => {},
+      playMovie: () => {},
+      stopMovie: () => {}
     });
     const tree = renderer
     .create(

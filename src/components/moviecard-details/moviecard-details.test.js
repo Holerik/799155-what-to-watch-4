@@ -3,7 +3,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import MoviecardDetails from './moviecard-details.jsx';
+import {MoviecardDetails} from './moviecard-details.jsx';
 
 const mockStore = configureStore([]);
 
@@ -118,10 +118,13 @@ describe(`MoviecardDetails tests`, () => {
       lastCard: 2,
       cardsCount: 3,
       avatar: `img/avatar.jpg`,
+      play: false,
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
       setGenre: () => {},
+      playMovie: () => {},
+      stopMovie: () => {}
     });
     const tree = renderer
     .create(
@@ -132,6 +135,9 @@ describe(`MoviecardDetails tests`, () => {
             setActiveItem={() => {}}
             tabItems={tabItems}
             setActiveMovie={() => {}}
+            play={false}
+            playMovie={() => {}}
+            stopMovie={() => {}}
           />
         </Provider>
     ).toJSON();

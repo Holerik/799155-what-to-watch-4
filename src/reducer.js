@@ -13,6 +13,8 @@ export const ActionType = {
   SET_PAGE: `SET_PAGE`,
   SET_FIRST_CARD_NUMBER: `SET_FIRST_CARD_NUMBER`,
   SET_CARD_COUNT_TO_SHOW: `SET_CARD_COUNT_TO_SHOW`,
+  PLAY_MOVIE: `PLAY_MOVIE`,
+  STOP_MOVIE: `STOP_MOVIE`,
 };
 
 const selectMoviesByGenre = (genre) => {
@@ -61,6 +63,8 @@ const initialState = {
   cardsCount: filmsInfo.length,
   // картинка аватара
   avatar: `img/avatar.jpg`,
+  // пригрывать видео
+  play: false,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -99,6 +103,14 @@ export const reducer = (state = initialState, action) => {
       return extend(state, {
         cardsCount: state.movies.length,
       });
+    case ActionType.PLAY_MOVIE:
+      return extend(state, {
+        play: action.payload,
+      });
+    case ActionType.STOP_MOVIE:
+      return extend(state, {
+        play: action.payload,
+      });
   }
   return state;
 };
@@ -130,5 +142,13 @@ export const ActionCreator = {
   }),
   setCardCountsToShow: () => ({
     type: ActionType.SET_CARD_COUNT_TO_SHOW,
+  }),
+  playMovie: () => ({
+    type: ActionType.PLAY_MOVIE,
+    payload: true,
+  }),
+  stopMovie: () => ({
+    type: ActionType.STOP_MOVIE,
+    payload: false,
   }),
 };

@@ -28,6 +28,7 @@ describe(`Reducer tests`, () => {
         MOVIE_CARDS_ON_PAGE - 1 : filmsInfo.length - 1,
       cardsCount: filmsInfo.length,
       avatar: `img/avatar.jpg`,
+      play: false,
     });
   });
 
@@ -43,6 +44,7 @@ describe(`Reducer tests`, () => {
       lastCard: 7,
       cardsCount: filmsInfo.length,
       avatar: ``,
+      play: false,
     }, {
       type: ActionType.SET_PAGE,
       payload: 1,
@@ -57,6 +59,7 @@ describe(`Reducer tests`, () => {
       lastCard: 7,
       cardsCount: filmsInfo.length,
       avatar: ``,
+      play: false,
     });
   });
 });
