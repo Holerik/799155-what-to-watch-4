@@ -126,7 +126,7 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
         <MovieTabs
-          listItems= {filmsInfo}
+          listItems={filmsInfo}
           setActiveItem={setActiveMovie}
         />
       </section>

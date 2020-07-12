@@ -11,10 +11,19 @@ import {fullInfo} from '../../reducer/data/data.js';
 import {ActionCreator as DataCreator} from '../../reducer/data/data.js';
 import {ActionCreator as MovieCreator, MOVIE_CARDS_ON_PAGE} from '../../reducer/movie/movie.js';
 import {ActionCreator as UserCreator, AuthorizationStatus} from '../../reducer/user/user.js';
-import {getMovie, getPage,
-  getFirstCardNumber, getLastCardNumber} from '../../reducer/movie/selectors.js';
-import {getPromoMovie, getGenre, getFilmsByGenre,
-  getGenresList, getCardsCount} from '../../reducer/data/selectors.js';
+import {
+  getMovie,
+  getPage,
+  getFirstCardNumber,
+  getLastCardNumber
+} from '../../reducer/movie/selectors.js';
+import {
+  getPromoMovie,
+  getGenre,
+  getFilmsByGenre,
+  getGenresList,
+  getCardsCount
+} from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus, getAuthorInfo} from '../../reducer/user/selectors.js';
 
 const tabItems = [`Overview`, `Details`, `Reviews`];
@@ -150,7 +159,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setGenre(genre) {
     dispatch(DataCreator.setCurrentGenre(genre));
-    // dispatch(DataCreator.getFilmsInfo(genre));
     dispatch(MovieCreator.setFirstCardNumber({firstNumber: 0, maxNumber: MOVIE_CARDS_ON_PAGE}));
   },
   setMovie(movie) {

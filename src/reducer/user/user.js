@@ -77,7 +77,6 @@ const Operation = {
       checkStatus(status);
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(ActionCreator.setAuthorInfo(status.data));
-      authData.history.back();
     })
     .catch(errorHandle);
   },

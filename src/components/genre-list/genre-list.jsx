@@ -10,9 +10,7 @@ class GenreList extends React.PureComponent {
   }
 
   _tabMouseOverHandler(evt) {
-    const index = this.props.listItems.findIndex((item) => {
-      return item === evt.target.text;
-    });
+    const index = this.props.listItems.indexOf(evt.target.text);
     this.props.onMouseOver(index);
   }
 

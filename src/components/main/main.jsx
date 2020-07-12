@@ -22,8 +22,18 @@ const GenreTabs = withActiveItem(GenreList);
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
 
 const Main = (props) => {
-  const {promoMovie, filmsInfo, onSelectGenre, setActiveMovie,
-    genre, genresList, firstCard, lastCard, playMovie, stopMovie} = props;
+  const {
+    promoMovie,
+    filmsInfo,
+    onSelectGenre,
+    setActiveMovie,
+    genre,
+    genresList,
+    firstCard,
+    lastCard,
+    playMovie,
+    stopMovie
+  } = props;
   const setGenre = (index) => {
     onSelectGenre(genresList[index]);
   };

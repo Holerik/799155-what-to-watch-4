@@ -179,7 +179,7 @@ const MoviecardReviews = React.memo(function MoviecardReviews(props) {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <MovieTabs
-            listItems= {filmsInfo}
+            listItems={filmsInfo}
             setActiveItem={setActiveMovie}
           />
         </section>

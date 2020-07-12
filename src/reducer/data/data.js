@@ -2,8 +2,7 @@
 import PropTypes from 'prop-types';
 import {extend} from '../../utils.js';
 
-export const fullInfo =
-{
+export const fullInfo = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
@@ -198,23 +197,23 @@ export const getMovieObject = (movie) => {
 const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
     return api.get(`/films`)
-    .then((response) => {
-      const moviesList = response.data.map((movie) => {
-        return getMovieObject(movie);
-      });
-      dispatch(ActionCreator.loadMovies(moviesList));
-      dispatch(ActionCreator.setGenresList(createGenresList(moviesList)));
-      dispatch(ActionCreator.setCurrentGenre(ALL_GENRES));
-    })
+      .then((response) => {
+        const moviesList = response.data.map((movie) => {
+          return getMovieObject(movie);
+        });
+        dispatch(ActionCreator.loadMovies(moviesList));
+        dispatch(ActionCreator.setGenresList(createGenresList(moviesList)));
+        dispatch(ActionCreator.setCurrentGenre(ALL_GENRES));
+      })
     .catch(errorHandle);
   },
   loadPromoMovie: () => (dispatch, getState, api) => {
     return api.get(`/films/promo`)
-    .then((response) => {
-      const promoMovie = getMovieObject(response.data);
-      dispatch(ActionCreator.setPromoMovie(promoMovie));
-    })
-    .catch(errorHandle);
+      .then((response) => {
+        const promoMovie = getMovieObject(response.data);
+        dispatch(ActionCreator.setPromoMovie(promoMovie));
+      })
+      .catch(errorHandle);
   },
 };
 

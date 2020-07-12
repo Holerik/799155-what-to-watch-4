@@ -34,13 +34,14 @@ export const getFilmsByGenre = createSelector(
     getMoviesList,
     getGenre,
     getMovie,
-    (resultOne, resultTwo, resultThree) => {
+    // movie может принимать значения undefined или активной карточки
+    (moviesList, genre, movie) => {
       let result = [];
-      if (resultTwo === ALL_GENRES) {
-        result = resultOne;
+      if (genre === ALL_GENRES) {
+        result = moviesList;
       } else {
-        result = resultOne.filter((it) =>
-          it !== resultThree && it.genre.includes(resultTwo));
+        result = moviesList.filter((it) =>
+          it !== movie && it.genre.includes(genre));
       }
       return result;
     }

@@ -25,7 +25,6 @@ export const createAPI = (onUnauthorized) => {
     if (response.status === Error.UNAUTHORIZED) {
       // запрос авторизации - особый случай
       onUnauthorized();
-      throw err;
     }
     throw err;
   };
