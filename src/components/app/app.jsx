@@ -33,7 +33,9 @@ class App extends React.PureComponent {
   }
 
   _setActiveMovie(activeMovieId) {
-    this.props.setMovie(this.props.filmsInfo.find((movie) => movie.id === activeMovieId));
+    const movie = this.props.filmsInfo.find((film) => film.id === activeMovieId);
+    this.props.setMovie(movie);
+    this.props.setGenre(movie.genre[0]);
   }
 
   _setActivePage(page) {
