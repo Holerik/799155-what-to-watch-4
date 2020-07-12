@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import withCanPlay from './with-canplay.jsx';
 import withActiveItem from '../with-activeitem/with-activeitem.jsx';
 import PropTypes from 'prop-types';
-import {fullInfo} from '../../mocks/films.js';
+import {fullInfo} from '../../reducer/data/data.js';
 
 const movies = [
   {

@@ -2,26 +2,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../reducer.js';
+import {ActionCreator} from '../../reducer/movie/movie.js';
+import {getCardsCount} from '../../reducer/data/selectors.js';
+import {getLastCardNumber} from '../../reducer/movie/selectors.js';
 
 const ShowMore = React.memo(function ShowMore(props) {
   const {lastCard, cardsCount, showMoreClickHandler} = props;
   return (
     <div className="catalog__more">
       <button className={`catalog__button ${lastCard + 1 < cardsCount ? `` : `visually-hidden`}`}
-        type="button" onClick={() => showMoreClickHandler(lastCard + 1)}>Show more</button>
+        type="button" onClick={() => showMoreClickHandler(lastCard + 1, cardsCount)}>Show more</button>
     </div>
   );
 });
 
 const mapStateToProps = (state) => ({
-  lastCard: state.lastCard,
-  cardsCount: state.cardsCount,
+  lastCard: getLastCardNumber(state),
+  cardsCount: getCardsCount(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  showMoreClickHandler: (number) => {
-    dispatch(ActionCreator.setFirstCardNumber(number));
+  showMoreClickHandler: (firstNumber, maxNumber) => {
+    dispatch(ActionCreator.setFirstCardNumber({firstNumber, maxNumber}));
   }
 });
 

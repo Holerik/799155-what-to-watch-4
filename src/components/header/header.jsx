@@ -2,7 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../reducer.js';
+import {ActionCreator} from '../../reducer/movie/movie.js';
+import {getAuthorInfo} from '../../reducer/user/selectors.js';
 
 const Header = (props) => {
   const {avatar} = props;
@@ -35,7 +36,7 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  avatar: state.avatar,
+  avatar: getAuthorInfo(state).avatar,
 });
 
 const mapDispatchToProps = (dispatch) => ({

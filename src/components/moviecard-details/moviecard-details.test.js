@@ -7,7 +7,7 @@ import {MoviecardDetails} from './moviecard-details.jsx';
 
 const mockStore = configureStore([]);
 
-const movie = {
+const film = {
   id: 1,
   title: `Joker`,
   poster: `img/joker.jpg`,
@@ -31,7 +31,7 @@ const movie = {
   review: `Arthur Fleck (Joaquin Phoenix) isn’t happy with his life. He struggles to make money as a part-time clown while sharing a rundown apartment with his ailing mom (Frances Conroy). But Arthur lives in a city struck by hard times where a decent, honest living is difficult to come by. He also suffers from a condition that causes him to break into uncontrollable laughter. None of this stops Arthur from dreaming big. He aspires to be a stand-up comedian and attempts to write jokes in his diary. Caught in between it all, Arthur slowly begins to lose his grip on sanity`,
 };
 
-const movies = [
+const films = [
   {
     id: 1,
     title: `Joker`,
@@ -108,17 +108,24 @@ const tabItems = [`tab1`, `tab2`, `tab3`];
 describe(`MoviecardDetails tests`, () => {
   it(`MoviecardDetails should render movie details`, () => {
     const store = mockStore({
-      filmsInfo: movies,
-      movie: undefined,
-      promo: movie,
-      page: 0,
-      genre: `All genres`,
-      genresList: [`All genres`],
-      firstCard: 0,
-      lastCard: 2,
-      cardsCount: 3,
-      avatar: `img/avatar.jpg`,
-      play: false,
+      DATA: {
+        moviesList: films,
+        movies: films,
+        promo: film,
+        genre: `All genres`,
+        genresList: [`All genres`],
+        cardsCount: 3,
+      },
+      MOVIE: {
+        movie: film,
+        firstCard: 0,
+        lastCard: 2,
+        play: false,
+        page: 0,
+      },
+      USER: {
+        avatar: `img/avatar.jpg`,
+      },
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
@@ -130,14 +137,15 @@ describe(`MoviecardDetails tests`, () => {
     .create(
         <Provider store={store}>
           <MoviecardDetails
-            movieInfo={movie}
-            filmsInfo={movies}
+            movieInfo={film}
+            filmsInfo={films}
             setActiveItem={() => {}}
             tabItems={tabItems}
             setActiveMovie={() => {}}
             play={false}
             playMovie={() => {}}
             stopMovie={() => {}}
+            genre={`All genres`}
           />
         </Provider>
     ).toJSON();

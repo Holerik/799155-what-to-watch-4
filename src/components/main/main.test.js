@@ -31,7 +31,7 @@ const promoMovie = {
   review: `GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend. The story involves the theft and recovery of a priceless Renaissance painting and the battle for an enormous family fortune`,
 };
 
-const movies = [
+const films = [
   {
     id: 1,
     title: `Joker`,
@@ -106,17 +106,24 @@ const movies = [
 describe(`Main tests`, () => {
   it(`Main should render the screen`, () => {
     const store = mockStore({
-      filmsInfo: movies,
-      movie: undefined,
-      promo: promoMovie,
-      page: 0,
-      genre: `All genres`,
-      genresList: [`All genres`],
-      firstCard: 0,
-      lastCard: 2,
-      cardsCount: 3,
-      avatar: `img/avatar.jpg`,
-      play: false,
+      DATA: {
+        moviesList: films,
+        movies: films,
+        promo: promoMovie,
+        genre: `All genres`,
+        genresList: [`All genres`],
+        cardsCount: 3,
+      },
+      MOVIE: {
+        page: 0,
+        movie: undefined,
+        firstCard: 0,
+        lastCard: 2,
+        play: false,
+      },
+      USER: {
+        avatar: `img/avatar.jpg`,
+      },
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
@@ -128,7 +135,7 @@ describe(`Main tests`, () => {
         <Provider store={store}>
           <Main
             promoMovie={promoMovie}
-            filmsInfo={movies}
+            filmsInfo={films}
             setActiveMovie={() => {}}
             onSelectGenre={() => {}}
             genre={`All genres`}

@@ -29,9 +29,11 @@ const promoMovie = {
   starring: [`Ralph Fiennes`, `F. Murray Abraham`, `Mathieu Amalric`, `Adrien Brody`, `SWillem Dafoe`, `Jeff Goldblum`, `	Harvey Keitel`, `Jude Law`, `Bill Murray`],
   description: `Wes Anderson's THE GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend`,
   review: `GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend. The story involves the theft and recovery of a priceless Renaissance painting and the battle for an enormous family fortune`,
+  reviews: [0],
+  favorite: false,
 };
 
-const movies = [
+const films = [
   {
     id: 1,
     title: `Joker`,
@@ -54,6 +56,8 @@ const movies = [
     starring: [`Joaquin Phoenix`, `Zazie Beetz`, `Robert De Niro`, `Bryan Callen`, `Shea Whigham`, `Frances Conroy`, `Glenn Fleshler`, `Brett Cullen`, `Marc Maron`],
     description: `The origin tale of the Joker (Joaquin Phoenix) – one of the most iconic villains in comic book history.`,
     review: `Arthur Fleck (Joaquin Phoenix) isn’t happy with his life. He struggles to make money as a part-time clown while sharing a rundown apartment with his ailing mom (Frances Conroy). But Arthur lives in a city struck by hard times where a decent, honest living is difficult to come by. He also suffers from a condition that causes him to break into uncontrollable laughter. None of this stops Arthur from dreaming big. He aspires to be a stand-up comedian and attempts to write jokes in his diary. Caught in between it all, Arthur slowly begins to lose his grip on sanity`,
+    reviews: [0],
+    favorite: false,
   },
   {
     id: 2,
@@ -77,6 +81,8 @@ const movies = [
     starring: [`Liam Neeson`, `Vera Farmiga`, `Patrick Wilson`, `Jonathan Banks`, `Sam Neill`, `Elizabeth McGovern`, `Killian Scott`, `Shazad Latif`, `Andy Nyman`],
     description: `An Insurance Salesman/Ex-Cop is caught up in a criminal conspiracy during his daily commute home`,
     review: `Now a hard-working life insurance salesman and a caring family man, the former police officer, Michael MacCauley, has taken the commuter rail to New York for the past ten years. But, unexpectedly, things will take a turn for the worse, when on one of his daily journeys, the cryptic passenger, Joanna, makes Michael a generous and tempting offer to locate a single commuter or face grave consequences`,
+    reviews: [0],
+    favorite: false,
   },
   {
     id: 3,
@@ -100,23 +106,32 @@ const movies = [
     starring: [`Jessica Chastain`, `Idris Elba`, `Kevin Costner`, `Michael Cera`, `Jeremy Strong`, `Chris O'Dowd`, `J.C. MacKenzie`, `Brian d'Arcy James`, `Bill Camp`, `Graham Greene`],
     description: `The true story of Molly Bloom, an Olympic-class skier who ran the world's most exclusive high-stakes poker game and became an FBI target`,
     review: `Molly Bloom, a beautiful young Olympic-class skier, ran the world's most exclusive high-stakes poker game for a decade before being arrested in the middle of the night by 17 FBI agents wielding automatic weapons. Her players included Hollywood royalty, sports stars, business titans, and finally, unbeknownst to her, the Russian mob`,
+    reviews: [0],
+    favorite: false,
   },
 ];
 
 describe(`App tests`, () => {
   it(`App should render main screen`, () => {
     const store = mockStore({
-      filmsInfo: movies,
-      movie: undefined,
-      promo: promoMovie,
-      page: 0,
-      genre: `All genres`,
-      genresList: [`All genres`],
-      firstCard: 0,
-      lastCard: 2,
-      cardsCount: 3,
-      avatar: `img/avatar.jpg`,
-      play: false,
+      DATA: {
+        moviesList: films,
+        movies: films,
+        promo: promoMovie,
+        genre: `All genres`,
+        genresList: [`All genres`],
+        cardsCount: 3,
+      },
+      MOVIE: {
+        page: 0,
+        movie: undefined,
+        firstCard: 0,
+        lastCard: 2,
+        play: false,
+      },
+      USER: {
+        avatar: `img/avatar.jpg`,
+      },
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
@@ -128,7 +143,7 @@ describe(`App tests`, () => {
     .create(
         <Provider store={store}>
           <App
-            filmsInfo= {movies}
+            filmsInfo= {films}
             movie = {undefined}
             promo = {promoMovie}
             page = {0}

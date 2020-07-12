@@ -270,6 +270,35 @@ Array [
         >
           <div
             className="small-movie-card__image"
+            id="1"
+            onClick={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <img
+              alt="Joker poster"
+              height="175"
+              src="img/joker.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+          >
+            <a
+              className="small-movie-card__link"
+              href=""
+              onClick={[Function]}
+            >
+              Joker
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+        >
+          <div
+            className="small-movie-card__image"
             id="2"
             onClick={[Function]}
             onMouseOut={[Function]}
@@ -291,6 +320,35 @@ Array [
               onClick={[Function]}
             >
               The Commuter
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+        >
+          <div
+            className="small-movie-card__image"
+            id="3"
+            onClick={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <img
+              alt="Molly game poster"
+              height="175"
+              src="img/mollys-game.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+          >
+            <a
+              className="small-movie-card__link"
+              href=""
+              onClick={[Function]}
+            >
+              Molly's Game
             </a>
           </h3>
         </article>
