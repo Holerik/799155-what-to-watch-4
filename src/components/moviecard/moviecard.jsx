@@ -1,7 +1,7 @@
 // moviecard.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
-import {fullInfo} from '../../mocks/films.js';
+import {fullInfo} from '../../reducer/data/data.js';
 import withVideo from '../../hocs/with-video/with-video.jsx';
 import Video from '../video/video.jsx';
 

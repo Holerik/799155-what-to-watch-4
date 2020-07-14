@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Moviecard from '../moviecard/moviecard.jsx';
-import {fullInfo} from '../../mocks/films.js';
-import {MOVIE_CARDS_ON_PAGE} from '../../reducer.js';
+import {fullInfo} from '../../reducer/data/data.js';
+import {MOVIE_CARDS_ON_PAGE} from '../../reducer/movie/movie.js';
 
 const TIME_INTERVAL = 1000; // ms
 

@@ -2,15 +2,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {fullInfo} from '../../mocks/films.js';
+import {fullInfo} from '../../reducer/data/data.js';
 import Tabs from '../tabs/tabs.jsx';
 import MovieList from '../movielist/movielist.jsx';
 import Header from '../header/header.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
-import {ActionCreator} from '../../reducer.js';
+import {ActionCreator} from '../../reducer/movie/movie.js';
+import {getPlayState} from '../../reducer/movie/selectors.js';
 import withVideo from '../../hocs/with-video/with-video.jsx';
 import Video from '../video/video.jsx';
+import {getFilmsByGenre} from '../../reducer/data/selectors.js';
 
 const VideoPlayer = withVideo(Video);
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
@@ -21,18 +23,6 @@ export const getFullString = (data, delimiter) => {
     result += String.fromCharCode(delimiter) + item;
   }
   return result.slice(1);
-};
-
-export const selectMoviesByGenre = (movie, filmsInfo) => {
-  for (const genre of movie.genre) {
-    const movies = filmsInfo.filter((film) => {
-      return (film.id !== movie.id && film.genre.includes(genre));
-    });
-    if (movies.length > 0) {
-      return movies.slice(0, 3);
-    }
-  }
-  return null;
 };
 
 export const getRatingLevel = (rating) => {
@@ -55,9 +45,8 @@ export const getRatingLevel = (rating) => {
 };
 
 const MoviecardOverview = React.memo(function MoviecardOverview(props) {
-  const {movieInfo, setActiveMovie, playMovie, stopMovie} = props;
+  const {movieInfo, setActiveMovie, playMovie, stopMovie, filmsInfo} = props;
   movieInfo.rating.level = getRatingLevel(movieInfo.rating.score);
-  const selectedMovies = selectMoviesByGenre(movieInfo, props.filmsInfo);
   if (props.play) {
     return (
       <VideoPlayer
@@ -148,7 +137,7 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <MovieTabs
-            listItems={selectedMovies}
+            listItems={filmsInfo}
             setActiveItem={setActiveMovie}
           />
         </section>
@@ -172,7 +161,8 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
 });
 
 const mapStateToProps = (state) => ({
-  play: state.play,
+  play: getPlayState(state),
+  filmsInfo: getFilmsByGenre(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

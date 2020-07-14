@@ -1,7 +1,7 @@
 // with-activeitem.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
-import {fullInfo} from '../../mocks/films.js';
+import {fullInfo} from '../../reducer/data/data.js';
 
 const withActiveItem = (Component) => {
   class WithActiveItem extends React.PureComponent {

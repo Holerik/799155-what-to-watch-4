@@ -7,8 +7,24 @@ import Main from '../main/main.jsx';
 import MoviecardDetails from '../moviecard-details/moviecard-details.jsx';
 import MoviecardOverview from '../moviecard-overview/moviecard-overview.jsx';
 import MoviecardReviews from '../moviecard-reviews/moviecard-reviews.jsx';
-import {fullInfo} from '../../mocks/films.js';
-import {ActionCreator} from '../../reducer.js';
+import {fullInfo} from '../../reducer/data/data.js';
+import {ActionCreator as DataCreator} from '../../reducer/data/data.js';
+import {ActionCreator as MovieCreator, MOVIE_CARDS_ON_PAGE} from '../../reducer/movie/movie.js';
+import {ActionCreator as UserCreator, AuthorizationStatus} from '../../reducer/user/user.js';
+import {
+  getMovie,
+  getPage,
+  getFirstCardNumber,
+  getLastCardNumber
+} from '../../reducer/movie/selectors.js';
+import {
+  getPromoMovie,
+  getGenre,
+  getFilmsByGenre,
+  getGenresList,
+  getCardsCount
+} from '../../reducer/data/selectors.js';
+import {getAuthorizationStatus, getAuthorInfo} from '../../reducer/user/selectors.js';
 
 const tabItems = [`Overview`, `Details`, `Reviews`];
 
@@ -26,7 +42,9 @@ class App extends React.PureComponent {
   }
 
   _setActiveMovie(activeMovieId) {
-    this.props.setMovie(this.props.filmsInfo.find((movie) => movie.id === activeMovieId));
+    const movie = this.props.filmsInfo.find((film) => film.id === activeMovieId);
+    this.props.setMovie(movie);
+    this.props.setGenre(movie.genre[0]);
   }
 
   _setActivePage(page) {
@@ -42,8 +60,6 @@ class App extends React.PureComponent {
       return (
         <Main
           promoMovie={this.props.promo}
-          filmsInfo={this.props.filmsInfo}
-          genresList={this.props.genresList}
           setActiveMovie={this._setActiveMovie}
           onSelectGenre={this._setActiveGenre}
           genre={this.props.genre}
@@ -55,7 +71,6 @@ class App extends React.PureComponent {
       movieInfo: this.props.movie,
       setActiveItem: this._setActivePage,
       tabItems,
-      filmsInfo: this.props.filmsInfo,
       setActiveMovie: this._setActiveMovie,
     };
     switch (this.props.page) {
@@ -99,6 +114,10 @@ class App extends React.PureComponent {
 }
 
 App.propTypes = {
+  authorInfo: PropTypes.shape({
+    avatar: PropTypes.string,
+    name: PropTypes.string,
+  }),
   filmsInfo: PropTypes.arrayOf(
       PropTypes.exact(fullInfo)).isRequired,
   movie: PropTypes.exact(fullInfo),
@@ -114,34 +133,42 @@ App.propTypes = {
   setMovie: PropTypes.func.isRequired,
   setPromo: PropTypes.func.isRequired,
   setGenre: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.oneOf([
+    AuthorizationStatus.AUTH,
+    AuthorizationStatus.NO_AUTH
+  ]),
 };
 
 const mapStateToProps = (state) => ({
-  movie: state.movie,
-  page: state.page,
-  genre: state.genre,
-  genresList: state.genresList,
-  filmsInfo: state.movies,
-  promo: state.promo,
-  firstCard: state.firstCard,
-  lastCard: state.lastCard,
+  authorizationStatus: getAuthorizationStatus(state),
+  authorInfo: getAuthorInfo(state),
+  movie: getMovie(state),
+  page: getPage(state),
+  genre: getGenre(state),
+  genresList: getGenresList(state),
+  filmsInfo: getFilmsByGenre(state),
+  promo: getPromoMovie(state),
+  firstCard: getFirstCardNumber(state),
+  lastCard: getLastCardNumber(state),
+  cardsCount: getCardsCount(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setAuthorInfo(authInfo) {
+    dispatch(UserCreator.setAuthorInfo(authInfo));
+  },
   setGenre(genre) {
-    dispatch(ActionCreator.setCurrentGenre(genre));
-    dispatch(ActionCreator.getFilmsInfo(genre));
-    dispatch(ActionCreator.setFirstCardNumber(0));
-    dispatch(ActionCreator.setCardCountsToShow());
+    dispatch(DataCreator.setCurrentGenre(genre));
+    dispatch(MovieCreator.setFirstCardNumber({firstNumber: 0, maxNumber: MOVIE_CARDS_ON_PAGE}));
   },
   setMovie(movie) {
-    dispatch(ActionCreator.setMovie(movie));
+    dispatch(MovieCreator.setMovie(movie));
   },
   setPromo(movie) {
-    dispatch(ActionCreator.setPromo(movie));
+    dispatch(DataCreator.setPromo(movie));
   },
   setPage(page) {
-    dispatch(ActionCreator.setPage(page));
+    dispatch(MovieCreator.setPage(page));
   },
 });
 

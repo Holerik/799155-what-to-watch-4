@@ -7,13 +7,10 @@ class GenreList extends React.PureComponent {
     super(props);
     this._tabMouseOverHandler = this._tabMouseOverHandler.bind(this);
     this._tabClickHandler = this._tabClickHandler.bind(this);
-    this._tabItems = this.props.listItems.slice(0, this.props.maxItemsCount);
   }
 
   _tabMouseOverHandler(evt) {
-    const index = this._tabItems.findIndex((item) => {
-      return item === evt.target.text;
-    });
+    const index = this.props.listItems.indexOf(evt.target.text);
     this.props.onMouseOver(index);
   }
 
@@ -22,13 +19,13 @@ class GenreList extends React.PureComponent {
   }
 
   render() {
-    const {currentActiveItem, activeItem} = this.props;
+    const {currentActiveItem, activeItem, listItems} = this.props;
     return (
       <ul className="catalog__genres-list"
         onClick={this._tabClickHandler}
         onMouseOver={this._tabMouseOverHandler}
       >
-        {this._tabItems.map((item, index) => {
+        {listItems.slice(0, this.props.maxItemsCount).map((item, index) => {
           const itemIsActive = currentActiveItem === index || activeItem === index;
           return (
             <React.Fragment key={index}>

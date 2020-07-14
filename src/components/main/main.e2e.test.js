@@ -36,7 +36,7 @@ const promoMovie = {
   review: `GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend. The story involves the theft and recovery of a priceless Renaissance painting and the battle for an enormous family fortune`,
 };
 
-const movies = [
+const films = [
   {
     id: 1,
     title: `Joker`,
@@ -114,17 +114,24 @@ describe(`Main e2e tests`, () => {
     const onSelectGenre = jest.fn();
     const genre = `All genres`;
     const store = mockStore({
-      filmsInfo: movies,
-      movie: undefined,
-      promo: promoMovie,
-      page: 0,
-      genre: `All genres`,
-      genresList: [`All genres`],
-      firstCard: 0,
-      lastCard: 2,
-      cardsCount: 3,
-      avatar: `img/avatar.jpg`,
-      play: false,
+      DATA: {
+        moviesList: films,
+        movies: films,
+        promo: promoMovie,
+        genresList: [`All genres`],
+        genre: `All genres`,
+        cardsCount: 3,
+      },
+      MOVIE: {
+        movie: undefined,
+        page: 0,
+        firstCard: 0,
+        lastCard: 2,
+        play: false,
+      },
+      USER: {
+        avatar: `img/avatar.jpg`,
+      },
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
@@ -136,7 +143,7 @@ describe(`Main e2e tests`, () => {
         <Provider store={store}>
           <Main
             promoMovie={promoMovie}
-            filmsInfo={movies}
+            filmsInfo={films}
             setActiveMovie={setActiveMovie}
             onSelectGenre={onSelectGenre}
             genre={genre}
@@ -150,7 +157,7 @@ describe(`Main e2e tests`, () => {
         </Provider>
     );
     const titles = wrapper.find(`.small-movie-card__link`);
-    expect(titles).toHaveLength(movies.length);
+    expect(titles).toHaveLength(films.length);
     titles.at(0).simulate(`click`);
     expect(setActiveMovie.mock.calls.length).toBe(1);
     const genres = wrapper.find(`.catalog__genres-link`);

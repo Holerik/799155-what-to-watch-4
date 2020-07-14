@@ -3,16 +3,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MovieList from '../movielist/movielist.jsx';
-import {fullInfo} from '../../mocks/films.js';
+import {fullInfo} from '../../reducer/data/data.js';
 import ShowMore from '../show-more/show-more.jsx';
 import Header from '../header/header.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 import GenreList from '../genre-list/genre-list.jsx';
-import {ActionCreator} from '../../reducer.js';
+import {ActionCreator} from '../../reducer/movie/movie.js';
+import {getPlayState} from '../../reducer/movie/selectors.js';
 import withVideo from '../../hocs/with-video/with-video.jsx';
 import Video from '../video/video.jsx';
-
+import {getGenresList, getFilmsByGenre} from '../../reducer/data/selectors.js';
 
 const MAX_GENRE_COUNT = 10;
 
@@ -21,8 +22,18 @@ const GenreTabs = withActiveItem(GenreList);
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
 
 const Main = (props) => {
-  const {promoMovie, filmsInfo, onSelectGenre, setActiveMovie,
-    genre, genresList, firstCard, lastCard, playMovie, stopMovie} = props;
+  const {
+    promoMovie,
+    filmsInfo,
+    onSelectGenre,
+    setActiveMovie,
+    genre,
+    genresList,
+    firstCard,
+    lastCard,
+    playMovie,
+    stopMovie
+  } = props;
   const setGenre = (index) => {
     onSelectGenre(genresList[index]);
   };
@@ -124,7 +135,9 @@ const Main = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  play: state.play,
+  play: getPlayState(state),
+  genresList: getGenresList(state),
+  filmsInfo: getFilmsByGenre(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
