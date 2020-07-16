@@ -132,12 +132,17 @@ describe(`App tests`, () => {
       USER: {
         avatar: `img/avatar.jpg`,
       },
+      ERROR: {
+        message: ``,
+        show: false,
+      },
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},
       setGenre: () => {},
       playMovie: () => {},
-      stopMovie: () => {}
+      stopMovie: () => {},
+      login: () => {},
     });
     const tree = renderer
     .create(
@@ -156,6 +161,7 @@ describe(`App tests`, () => {
             setMovie = {() => {}}
             setPromo = {() => {}}
             setGenre = {() => {}}
+            login= {() => {}}
           />
         </Provider>, {
           createNodeMock: () => {

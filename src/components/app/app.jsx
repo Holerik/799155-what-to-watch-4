@@ -10,7 +10,11 @@ import MoviecardReviews from '../moviecard-reviews/moviecard-reviews.jsx';
 import {fullInfo} from '../../reducer/data/data.js';
 import {ActionCreator as DataCreator} from '../../reducer/data/data.js';
 import {ActionCreator as MovieCreator, MOVIE_CARDS_ON_PAGE} from '../../reducer/movie/movie.js';
-import {ActionCreator as UserCreator, AuthorizationStatus} from '../../reducer/user/user.js';
+import {
+  ActionCreator as UserCreator,
+  AuthorizationStatus,
+  Operation as UserOperation,
+} from '../../reducer/user/user.js';
 import {
   getMovie,
   getPage,
@@ -25,6 +29,7 @@ import {
   getCardsCount
 } from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus, getAuthorInfo} from '../../reducer/user/selectors.js';
+import SignIn from '../sign-in/sign-in.jsx';
 
 const tabItems = [`Overview`, `Details`, `Reviews`];
 
@@ -35,6 +40,12 @@ class App extends React.PureComponent {
     this._setActivePage = this._setActivePage.bind(this);
     this._setActiveGenre = this._setActiveGenre.bind(this);
     this._setActiveMovie = this._setActiveMovie.bind(this);
+    this._onSignIn = this._onSignIn.bind(this);
+  }
+
+  _onSignIn(authData) {
+    this.props.login(authData);
+    location.href = `\\`;
   }
 
   _onMovieTitleClick(movie) {
@@ -104,6 +115,11 @@ class App extends React.PureComponent {
           <Route exact path="/">
             {this._renderApp()}
           </Route>
+          <Route exact path="/sign-in">
+            <SignIn
+              onSubmit={this._onSignIn}
+            />
+          </Route>
           <Route exact path="/dev-component">
             <Component />
           </Route>
@@ -133,6 +149,7 @@ App.propTypes = {
   setMovie: PropTypes.func.isRequired,
   setPromo: PropTypes.func.isRequired,
   setGenre: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.oneOf([
     AuthorizationStatus.AUTH,
     AuthorizationStatus.NO_AUTH
@@ -169,6 +186,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setPage(page) {
     dispatch(MovieCreator.setPage(page));
+  },
+  login(authData) {
+    dispatch(UserOperation.login(authData));
   },
 });
 

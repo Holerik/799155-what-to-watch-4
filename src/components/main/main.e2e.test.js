@@ -132,6 +132,10 @@ describe(`Main e2e tests`, () => {
       USER: {
         avatar: `img/avatar.jpg`,
       },
+      ERROR: {
+        message: ``,
+        show: false,
+      },
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},

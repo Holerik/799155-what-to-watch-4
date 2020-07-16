@@ -6,7 +6,7 @@ const Error = {
   SERVER_FAIL: `Server connection fail`,
 };
 
-export const createAPI = (onUnauthorized) => {
+export const createAPI = (onUnauthorized, onErrorOccured) => {
   const api = axios.create({
     baseURL: `https://htmlacademy-react-3.appspot.com/wtw`,
     timeout: 1000 * 5,
@@ -20,11 +20,14 @@ export const createAPI = (onUnauthorized) => {
   const onFail = (err) => {
     const {response} = err;
     if (response === undefined) {
+      onErrorOccured(Error.SERVER_FAIL);
       throw Error.SERVER_FAIL;
     }
     if (response.status === Error.UNAUTHORIZED) {
       // запрос авторизации - особый случай
       onUnauthorized();
+    } else {
+      onErrorOccured(err.response.data.error);
     }
     throw err;
   };
