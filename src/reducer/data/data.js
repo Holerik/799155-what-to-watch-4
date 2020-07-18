@@ -28,17 +28,6 @@ export const fullInfo = {
   favorite: PropTypes.bool,
 };
 
-export const errorHandle = (error, signal) => {
-  if (signal === undefined) {
-    const node = document.createElement(`div`);
-    node.style = `width: 180px; margin: 0 auto; text-align: center; background-color: red;`;
-    node.textContent = error;
-    document.body.insertAdjacentElement(`afterbegin`, node);
-  } else {
-    signal();
-  }
-};
-
 export const ALL_GENRES = `All genres`;
 
 export const mockMovie = {
@@ -82,16 +71,6 @@ const createGenresList = (movies) => {
     }));
   }
   return genresList;
-};
-
-export const selectMoviesByGenre = (genre, filmsList, exclude) => {
-  let movies = filmsList;
-  if (genre !== undefined && genre !== ALL_GENRES) {
-    movies = filmsList.filter((movie) => {
-      return movie !== exclude && movie.genre.includes(genre);
-    });
-  }
-  return movies;
 };
 
 const convertTimeToString = (time) => {
@@ -204,16 +183,14 @@ const Operation = {
         dispatch(ActionCreator.loadMovies(moviesList));
         dispatch(ActionCreator.setGenresList(createGenresList(moviesList)));
         dispatch(ActionCreator.setCurrentGenre(ALL_GENRES));
-      })
-    .catch(errorHandle);
+      });
   },
   loadPromoMovie: () => (dispatch, getState, api) => {
     return api.get(`/films/promo`)
       .then((response) => {
         const promoMovie = getMovieObject(response.data);
         dispatch(ActionCreator.setPromoMovie(promoMovie));
-      })
-      .catch(errorHandle);
+      });
   },
 };
 

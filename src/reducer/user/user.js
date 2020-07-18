@@ -1,6 +1,5 @@
 // user.js
 import {extend} from '../../utils.js';
-import {errorHandle} from '../data/data.js';
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,
@@ -52,15 +51,6 @@ const reducer = (state = initilalState, action) => {
   return state;
 };
 
-const checkStatus = (response) => {
-  const status = response.status;
-  if (status >= 200 && status < 300) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
-};
-
 const Operation = {
   checkAuth: () => (dispatch, getState, api) => {
     return api.get(`/login`)
@@ -73,12 +63,9 @@ const Operation = {
       email: authData.email,
       password: authData.password,
     })
-    .then((status) => {
-      checkStatus(status);
+    .then(() => {
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(ActionCreator.setAuthorInfo(status.data));
-    })
-    .catch(errorHandle);
+    });
   },
 };
 

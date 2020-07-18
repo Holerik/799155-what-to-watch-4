@@ -134,6 +134,10 @@ describe(`MoviecardReviews tests`, () => {
       USER: {
         avatar: `img/avatar.jpg`,
       },
+      ERROR: {
+        message: ``,
+        show: false,
+      },
       setPage: () => {},
       setMovie: () => {},
       setPromo: () => {},

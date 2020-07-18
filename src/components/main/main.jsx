@@ -6,6 +6,7 @@ import MovieList from '../movielist/movielist.jsx';
 import {fullInfo} from '../../reducer/data/data.js';
 import ShowMore from '../show-more/show-more.jsx';
 import Header from '../header/header.jsx';
+import Footer from '../footer/footer.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 import GenreList from '../genre-list/genre-list.jsx';
@@ -14,6 +15,8 @@ import {getPlayState} from '../../reducer/movie/selectors.js';
 import withVideo from '../../hocs/with-video/with-video.jsx';
 import Video from '../video/video.jsx';
 import {getGenresList, getFilmsByGenre} from '../../reducer/data/selectors.js';
+import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
+import {AuthorizationStatus} from '../../reducer/user/user.js';
 
 const MAX_GENRE_COUNT = 10;
 
@@ -21,7 +24,7 @@ const VideoPlayer = withVideo(Video);
 const GenreTabs = withActiveItem(GenreList);
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
 
-const Main = (props) => {
+const Main = React.memo(function Main(props) {
   const {
     promoMovie,
     filmsInfo,
@@ -87,9 +90,15 @@ const Main = (props) => {
                   <span>Play</span>
                 </button>
                 <button className="btn btn--list movie-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                  {promoMovie.favorite ? (
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg>
+                  )}
                   <span>My list</span>
                 </button>
               </div>
@@ -115,29 +124,17 @@ const Main = (props) => {
             <ShowMore/>
           </div>
         </section>
-
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </React.Fragment>
   );
-};
+});
 
 const mapStateToProps = (state) => ({
   play: getPlayState(state),
   genresList: getGenresList(state),
   filmsInfo: getFilmsByGenre(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -162,6 +159,10 @@ Main.propTypes = {
   stopMovie: PropTypes.func.isRequired,
   play: PropTypes.bool.isRequired,
   lastCard: PropTypes.number.isRequired,
+  authorizationStatus: PropTypes.oneOf([
+    AuthorizationStatus.AUTH,
+    AuthorizationStatus.NO_AUTH
+  ]),
 };
 
 export {Main};

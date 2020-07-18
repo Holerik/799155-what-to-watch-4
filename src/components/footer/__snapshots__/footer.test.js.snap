@@ -1,12 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header tests <Header /> should render correctly 1`] = `
-Array [
+exports[`<Footer /> should render correctly 1`] = `
+<footer
+  className="page-footer"
+>
   <div
     className="logo"
   >
     <a
-      className="logo__link"
+      className="logo__link logo__link--light"
       href="/"
       onClick={[Function]}
     >
@@ -26,24 +28,13 @@ Array [
         W
       </span>
     </a>
-  </div>,
+  </div>
   <div
-    className="user-block"
+    className="copyright"
   >
-    <div
-      className="user-block__link"
-    >
-      <a
-        className="logo__link"
-        href="/sign-in"
-      >
-        <span
-          className="logo__letter"
-        >
-          Sign In
-        </span>
-      </a>
-    </div>
-  </div>,
-]
+    <p>
+      © 2019 What to watch Ltd.
+    </p>
+  </div>
+</footer>
 `;
