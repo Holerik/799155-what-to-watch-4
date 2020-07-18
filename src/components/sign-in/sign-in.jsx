@@ -5,10 +5,7 @@ import Footer from '../footer/footer.jsx';
 
 const checkEmailIsValid = (email) => {
   const testChars = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-  if (testChars.test(email) === false) {
-    return false;
-  }
-  return true;
+  return testChars.test(email);
 };
 
 const SignIn = React.memo(function SignIn(props) {
@@ -58,10 +55,7 @@ const SignIn = React.memo(function SignIn(props) {
           </div>
         </form>
       </div>
-
-      <footer className="page-footer">
-        <Footer/>
-      </footer>
+      <Footer/>
     </div>
 
   </React.Fragment>

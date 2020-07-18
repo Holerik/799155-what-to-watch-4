@@ -22,5 +22,5 @@ ErrorMsg.propTypes = {
 };
 
 export {ErrorMsg};
-export default connect(mapStateToProps, null)(ErrorMsg);
+export default connect(mapStateToProps)(ErrorMsg);
 

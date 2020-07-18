@@ -8,6 +8,7 @@ import {getFullString} from '../moviecard-overview/moviecard-overview.jsx';
 import MovieList from '../movielist/movielist.jsx';
 import StarringList from '../starring-list/starring-list.jsx';
 import Header from '../header/header.jsx';
+import Footer from '../footer/footer.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 import {ActionCreator} from '../../reducer/movie/movie.js';
@@ -130,20 +131,7 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
           setActiveItem={setActiveMovie}
         />
       </section>
-
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   </React.Fragment>;
 });

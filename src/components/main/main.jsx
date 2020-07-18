@@ -124,10 +124,7 @@ const Main = React.memo(function Main(props) {
             <ShowMore/>
           </div>
         </section>
-
-        <footer className="page-footer">
-          <Footer/>
-        </footer>
+        <Footer/>
       </div>
     </React.Fragment>
   );

@@ -17,11 +17,9 @@ const onUnauthorized = () => {
 };
 
 const onErrorOccured = (errMessage) => {
-  let timer = 0;
-  clearTimeout(timer);
   store.dispatch(ErrorActionCreator.setErrMessage(errMessage));
   store.dispatch(ErrorActionCreator.showErrMessage(true));
-  timer = setTimeout(() => {
+  setTimeout(() => {
     store.dispatch(ErrorActionCreator.showErrMessage(false));
     store.dispatch(ErrorActionCreator.setErrMessage(``));
   }, 10000);

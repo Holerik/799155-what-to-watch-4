@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Footer /> should render correctly 1`] = `
-Array [
+<footer
+  className="page-footer"
+>
   <div
     className="logo"
   >
@@ -26,13 +28,13 @@ Array [
         W
       </span>
     </a>
-  </div>,
+  </div>
   <div
     className="copyright"
   >
     <p>
       © 2019 What to watch Ltd.
     </p>
-  </div>,
-]
+  </div>
+</footer>
 `;

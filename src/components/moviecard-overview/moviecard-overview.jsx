@@ -142,10 +142,7 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
             setActiveItem={setActiveMovie}
           />
         </section>
-
-        <footer className="page-footer">
-          <Footer/>
-        </footer>
+        <Footer/>
       </div>
     </React.Fragment>
   );

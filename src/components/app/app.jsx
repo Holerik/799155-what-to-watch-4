@@ -45,7 +45,7 @@ class App extends React.PureComponent {
 
   _onSignIn(authData) {
     this.props.login(authData);
-    location.href = `\\`;
+    location.href = `/`;
   }
 
   _onMovieTitleClick(movie) {
