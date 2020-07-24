@@ -7,6 +7,7 @@ import Main from '../main/main.jsx';
 import MoviecardDetails from '../moviecard-details/moviecard-details.jsx';
 import MoviecardOverview from '../moviecard-overview/moviecard-overview.jsx';
 import MoviecardReviews from '../moviecard-reviews/moviecard-reviews.jsx';
+import MyList from '../my-list/my-list.jsx';
 import {fullInfo} from '../../reducer/data/data.js';
 import {ActionCreator as DataCreator} from '../../reducer/data/data.js';
 import {ActionCreator as MovieCreator, MOVIE_CARDS_ON_PAGE} from '../../reducer/movie/movie.js';
@@ -26,11 +27,17 @@ import {
   getGenre,
   getFilmsByGenre,
   getGenresList,
-  getCardsCount
 } from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus, getAuthorInfo} from '../../reducer/user/selectors.js';
 import SignIn from '../sign-in/sign-in.jsx';
+import {
+  Operation as ReviewOperation,
+} from '../../reducer/review/review.js';
+import withAddReview from '../../hocs/with-addreview/with-addreview.jsx';
+import AddReview from '../add-review/add-review.jsx';
+import {ShowMode, Operation as DataOperation} from '../../reducer/data/data.js';
 
+const AddReviewText = withAddReview(AddReview);
 const tabItems = [`Overview`, `Details`, `Reviews`];
 
 class App extends React.PureComponent {
@@ -52,6 +59,10 @@ class App extends React.PureComponent {
     this.props.setMovie(movie);
   }
 
+  _onAddReviewText(movie, comment) {
+    this.props.onAddReviewComment(movie, comment);
+  }
+
   _setActiveMovie(activeMovieId) {
     const movie = this.props.filmsInfo.find((film) => film.id === activeMovieId);
     this.props.setMovie(movie);
@@ -64,25 +75,39 @@ class App extends React.PureComponent {
 
   _setActiveGenre(genre) {
     this.props.setGenre(genre);
+    this.props.setCardsCount(this.props.filmsInfo.length);
   }
 
-  _renderApp() {
+  _renderApp(mode) {
     if (this.props.movie === undefined) {
-      return (
-        <Main
-          promoMovie={this.props.promo}
-          setActiveMovie={this._setActiveMovie}
-          onSelectGenre={this._setActiveGenre}
-          genre={this.props.genre}
-          firstCard={this.props.firstCard}
-          lastCard={this.props.lastCard}
-        />);
+      switch (mode) {
+        case ShowMode.GENRE_MODE:
+          return (
+            <Main
+              promoMovie={this.props.promo}
+              setActiveMovie={this._setActiveMovie}
+              onSelectGenre={this._setActiveGenre}
+              genre={this.props.genre}
+              firstCard={this.props.firstCard}
+              lastCard={this.props.lastCard}
+              favoriteButtonClickHandler={this.props.changeFavoriteStatus}
+            />);
+        case ShowMode.FAVORITE_MODE:
+          return (
+            <MyList
+              setActiveMovie={this._setActiveMovie}
+              firstCard={this.props.firstCard}
+              lastCard={this.props.lastCard}
+            />);
+      }
     }
     const props = {
       movieInfo: this.props.movie,
       setActiveItem: this._setActivePage,
       tabItems,
       setActiveMovie: this._setActiveMovie,
+      favoriteButtonClickHandler: this.props.changeFavoriteStatus,
+      loadReviews: this.props.loadReviews
     };
     switch (this.props.page) {
       case 0:
@@ -104,7 +129,6 @@ class App extends React.PureComponent {
           />
         );
     }
-    // }
     return null;
   }
 
@@ -113,11 +137,23 @@ class App extends React.PureComponent {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            {this._renderApp()}
+            {this._renderApp(ShowMode.GENRE_MODE)}
           </Route>
           <Route exact path="/sign-in">
             <SignIn
               onSubmit={this._onSignIn}
+            />
+          </Route>
+          <Route exact path="/my-list">
+            {this._renderApp(ShowMode.FAVORITE_MODE)}
+          </Route>
+          <Route exact path="/add-review">
+            <AddReviewText
+              onSubmit={this._onAddReviewText}
+              movieInfo={this.props.filmsInfo[0]}
+              avatar={this.props.authorInfo.avatar}
+              setPage={this.props.setPage}
+              setMovie={this.props.setMovie}
             />
           </Route>
           <Route exact path="/dev-component">
@@ -142,18 +178,22 @@ App.propTypes = {
   page: PropTypes.number,
   genre: PropTypes.string,
   genresList: PropTypes.arrayOf(PropTypes.string).isRequired,
-  firstCard: PropTypes.number,
-  lastCard: PropTypes.number,
-  cardsCount: PropTypes.number,
   setPage: PropTypes.func.isRequired,
   setMovie: PropTypes.func.isRequired,
   setPromo: PropTypes.func.isRequired,
   setGenre: PropTypes.func.isRequired,
+  setCardsCount: PropTypes.func.isRequired,
+  changeFavoriteStatus: PropTypes.func.isRequired,
+  loadReviews: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.oneOf([
     AuthorizationStatus.AUTH,
     AuthorizationStatus.NO_AUTH
   ]),
+  firstCard: PropTypes.number,
+  lastCard: PropTypes.number,
+  onAddReviewComment: PropTypes.func.isRequired,
+  setAuthorInfo: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -167,7 +207,6 @@ const mapStateToProps = (state) => ({
   promo: getPromoMovie(state),
   firstCard: getFirstCardNumber(state),
   lastCard: getLastCardNumber(state),
-  cardsCount: getCardsCount(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -189,6 +228,15 @@ const mapDispatchToProps = (dispatch) => ({
   },
   login(authData) {
     dispatch(UserOperation.login(authData));
+  },
+  changeFavoriteStatus(movie) {
+    dispatch(DataOperation.changeFavoriteStatus(movie));
+  },
+  setCardsCount(count) {
+    dispatch(DataCreator.setCardsCount(count));
+  },
+  loadReviews(movie) {
+    dispatch(ReviewOperation.loadReviews(movie));
   },
 });
 

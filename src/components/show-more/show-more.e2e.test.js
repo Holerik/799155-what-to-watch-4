@@ -3,6 +3,7 @@ import React from 'react';
 import Enzyme, {mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {ShowMore} from './show-more.jsx';
+import {ShowMode} from '../../reducer/data/data.js';
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -14,7 +15,9 @@ describe(`ShowMore e2e tests`, () => {
     const main = mount(
         <ShowMore
           cardsCount={16}
+          favoritesCount={0}
           lastCard={0}
+          ShowMode={ShowMode.GENRE_MODE}
           showMoreClickHandler={showMoreClickHandler}
         />
     );

@@ -15,11 +15,46 @@
     background-color: red;
     position: relative;
   }
+  .comment--error {
+    box-shadow: 0 2px 38px 0 rgba(240, 0, 0, 0.59);
+  }
+  .rating--error {
+    background-color: #ff0000;
+  }
+  .rating__input {
+  display: none;
+  }
+  .rating__input:checked ~ .rating__label::after {
+    color: rgba(246, 46, 11, 0.36);
+  }
+  .rating__input:checked + .rating__label::after {
+    color: rgba(246, 46, 11, 0.7);
+  }
+  .rating__label {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    padding-right: 10px;
+    cursor: pointer;
+  }
+  .rating__label:last-child {
+    padding-right: 0;
+  }
+  .rating__label::after {
+    content: '★';
+    display: block;
+    font-size: 32px;
+    line-height: 36px;
+    color: rgba(246, 46, 11, 0.7);
+    -webkit-transition: color 0.2s;
+    transition: color 0.2s;
+  }
 </style>
 
 <body>
     <div class="visually-hidden">
-      <!-- inject:svg --><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <!-- inject:svg -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <symbol id="add" viewBox="0 0 19 20">
           <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
           <title>+</title>
@@ -54,7 +89,8 @@
               points="10 -1.11910481e-13 14 -1.11910481e-13 14 21 10 21" />
           </g>
         </symbol>
-        <path id="play-s" fill-rule="evenodd" clip-rule="evenodd" d="M0 0L19 9.5L0 19V0Z" fill="#EEE5B5"/>      </svg><!-- endinject -->
+        <path id="play-s" fill-rule="evenodd" clip-rule="evenodd" d="M0 0L19 9.5L0 19V0Z" fill="#EEE5B5"/>
+      </svg><!-- endinject -->
     </div>
   <div id="root"></div>
 </body>

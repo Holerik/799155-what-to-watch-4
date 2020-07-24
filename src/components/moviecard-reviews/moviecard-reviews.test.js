@@ -4,8 +4,18 @@ import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {MoviecardReviews} from './moviecard-reviews.jsx';
+import {AuthorizationStatus} from '../../reducer/user/user.js';
 
 const mockStore = configureStore([]);
+
+const mockReview = {
+  id: -1,
+  authorId: -1,
+  author: ``,
+  rating: `0`,
+  date: `2020-07-24T14:16:23.037Z`,
+  text: ``,
+};
 
 const film = {
   id: 1,
@@ -123,6 +133,7 @@ describe(`MoviecardReviews tests`, () => {
         genre: `All genres`,
         genresList: [`All genres`],
         cardsCount: 3,
+        favoritesCount: 0,
       },
       MOVIE: {
         movie: film,
@@ -157,6 +168,10 @@ describe(`MoviecardReviews tests`, () => {
             play={false}
             playMovie={() => {}}
             stopMovie={() => {}}
+            favoriteButtonClickHandler={() => {}}
+            authorizationStatus={AuthorizationStatus.NO_AUTH}
+            loadReviews={() => {}}
+            reviews={[mockReview]}
           />
         </Provider>
     ).toJSON();

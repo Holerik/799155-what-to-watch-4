@@ -16,12 +16,22 @@ import {getPlayState} from '../../reducer/movie/selectors.js';
 import withVideo from '../../hocs/with-video/with-video.jsx';
 import Video from '../video/video.jsx';
 import {getFilmsByGenre} from '../../reducer/data/selectors.js';
+import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
+import {AuthorizationStatus} from '../../reducer/user/user.js';
 
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
 const VideoPlayer = withVideo(Video);
 
 const MoviecardDetails = React.memo(function MoviecardDetails(props) {
-  const {movieInfo, filmsInfo, setActiveMovie, playMovie, stopMovie} = props;
+  const {
+    movieInfo,
+    filmsInfo,
+    setActiveMovie,
+    playMovie,
+    stopMovie,
+    authorizationStatus,
+    favoriteButtonClickHandler
+  } = props;
   const genres = getFullString(movieInfo.genre, 183);
   if (props.play) {
     return (
@@ -43,11 +53,7 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
-
-        <header className="page-header movie-card__head">
-          <Header/>
-        </header>
-
+        <Header/>
         <div className="movie-card__wrap">
           <div className="movie-card__desc">
             <h2 className="movie-card__title">{movieInfo.title}</h2>
@@ -65,13 +71,32 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
-              <a href="add-review.html" className="btn movie-card__button">Add review</a>
+              {authorizationStatus === AuthorizationStatus.AUTH &&
+                  <button className="btn btn--list movie-card__button"
+                    type="button" onClick={() => favoriteButtonClickHandler(movieInfo)}
+                  >
+                    {movieInfo.favorite ? (
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#in-list"></use>
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#add"></use>
+                      </svg>
+                    )}
+                    <span>My list</span>
+                  </button>
+              }
+              {authorizationStatus === AuthorizationStatus.AUTH &&
+                  <a href="/add-review" className="btn movie-card__button">Add review</a>
+              }
+              {authorizationStatus === AuthorizationStatus.NO_AUTH &&
+                  <div className="btn btn--list movie-card__button">
+                    <a href="/sign-in" className="logo__link">
+                      <span>My list</span>
+                    </a>
+                  </div>
+              }
             </div>
           </div>
         </div>
@@ -139,6 +164,7 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
 const mapStateToProps = (state) => ({
   play: getPlayState(state),
   filmsInfo: getFilmsByGenre(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -151,6 +177,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 MoviecardDetails.propTypes = {
+  authorizationStatus: PropTypes.oneOf([
+    AuthorizationStatus.AUTH,
+    AuthorizationStatus.NO_AUTH
+  ]),
   movieInfo: PropTypes.exact(fullInfo).isRequired,
   setActiveItem: PropTypes.func.isRequired,
   tabItems: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -160,6 +190,7 @@ MoviecardDetails.propTypes = {
   playMovie: PropTypes.func.isRequired,
   stopMovie: PropTypes.func.isRequired,
   play: PropTypes.bool.isRequired,
+  favoriteButtonClickHandler: PropTypes.func.isRequired,
 };
 
 export {MoviecardDetails};

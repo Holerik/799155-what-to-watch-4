@@ -56,11 +56,20 @@ export const mockMovie = {
   favorite: false,
 };
 
+export const ShowMode = {
+  GENRE_MODE: `GENRE_MODE`,
+  FAVORITE_MODE: `FAVORITE_MODE`
+};
+
 const ActionType = {
   LOAD_MOVIES: `LOAD_MOVIES`,
   SET_CURRENT_GENRE: `SET_CURRENT_GENRE`,
   SET_PROMO_MOVIE: `SET_PROMO_MOVIE`,
   SET_GENRES_LIST: `SET_GENRES_LIST`,
+  CHANGE_FAVORITE_STATUS: `CHANGE_FAVORITE_STATUS`,
+  SET_CARDS_COUNT: `SET_CARDS_COUNT`,
+  SET_FAVORITES_COUNT: `SET_FAVORITES_COUNT`,
+  CHANGE_FAVORITES_COUNT: `CHANGE_FAVORITES_COUNT`
 };
 
 const createGenresList = (movies) => {
@@ -82,8 +91,6 @@ const convertTimeToString = (time) => {
 export const initialState = {
   // список всех загруженных карточек фильмов
   moviesList: [mockMovie],
-  // список отобранных карточек фильмов
-  movies: [mockMovie],
   // промо фильм
   promo: mockMovie,
   // текущий жанр
@@ -92,6 +99,8 @@ export const initialState = {
   genresList: [ALL_GENRES],
   // количество карточек фильмов
   cardsCount: 0,
+  // количество карточек избранных фильмов
+  favoritesCount: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -111,12 +120,49 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_MOVIES:
       return extend(state, {
         moviesList: action.payload,
-        movies: action.payload,
-        cardsCount: action.payload.length,
+      });
+    case ActionType.SET_CARDS_COUNT:
+      return extend(state, {
+        cardsCount: action.payload,
+      });
+    case ActionType.SET_FAVORITES_COUNT:
+      return extend(state, {
+        favoritesCount: action.payload,
+      });
+    case ActionType.CHANGE_FAVORITES_COUNT:
+      if (action.payload) {
+        return extend(state, {
+          favoritesCount: state.favoritesCount++,
+        });
+      } else {
+        return state;
+      }
+    case ActionType.CHANGE_FAVORITE_STATUS:
+      let favorites = state.favoritesCount;
+      if (state.promo.id === action.payload) {
+        favorites = state.promo.favorite ? favorites-- : favorites++;
+        return extend(state, {
+          promo: extend(state.promo, {
+            favorite: state.promo.id === action.payload ?
+              !state.promo.favorite : state.promo.favorite,
+          }),
+          favoritesCount: favorites,
+        });
+      }
+      return extend(state, {
+        moviesList: state.moviesList.map((movie) => {
+          if (movie.id === action.payload) {
+            favorites = movie.favorite ? favorites-- : favorites++;
+            return extend(movie, {favorite: !movie.favorite});
+          }
+          return movie;
+        }),
+        favoritesCount: favorites,
       });
   }
   return state;
 };
+
 
 const ActionCreator = {
   loadMovies: (movies) => {
@@ -141,6 +187,30 @@ const ActionCreator = {
     return {
       type: ActionType.SET_GENRES_LIST,
       payload: list,
+    };
+  },
+  changeFavoriteStatus: (movie) => {
+    return {
+      type: ActionType.CHANGE_FAVORITE_STATUS,
+      payload: movie.id,
+    };
+  },
+  setCardsCount: (count) => {
+    return {
+      type: ActionType.SET_CARDS_COUNT,
+      payload: count,
+    };
+  },
+  setFavoritesCount: (count) => {
+    return {
+      type: ActionType.SET_FAVORITES_COUNT,
+      payload: count,
+    };
+  },
+  changeFavoritesCount: (increase) => {
+    return {
+      type: ActionType.CHANGE_FAVORITES_COUNT,
+      payload: increase,
     };
   },
 };
@@ -175,14 +245,20 @@ export const getMovieObject = (movie) => {
 
 const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
+    let favoritesCount = 0;
     return api.get(`/films`)
       .then((response) => {
         const moviesList = response.data.map((movie) => {
+          if (movie[`is_favorite`]) {
+            favoritesCount++;
+          }
           return getMovieObject(movie);
         });
         dispatch(ActionCreator.loadMovies(moviesList));
         dispatch(ActionCreator.setGenresList(createGenresList(moviesList)));
         dispatch(ActionCreator.setCurrentGenre(ALL_GENRES));
+        dispatch(ActionCreator.setCardsCount(moviesList.length));
+        dispatch(ActionCreator.setFavoritesCount(favoritesCount));
       });
   },
   loadPromoMovie: () => (dispatch, getState, api) => {
@@ -190,7 +266,14 @@ const Operation = {
       .then((response) => {
         const promoMovie = getMovieObject(response.data);
         dispatch(ActionCreator.setPromoMovie(promoMovie));
+        dispatch(ActionCreator.changeFavoritesCount(promoMovie.favorite));
       });
+  },
+  changeFavoriteStatus: (movie) => (dispatch, getState, api) => {
+    return api.post(`/favorite/${movie.id}/${!movie.favorite ? 1 : 0}`)
+    .then(() => {
+      dispatch(ActionCreator.changeFavoriteStatus(movie));
+    });
   },
 };
 

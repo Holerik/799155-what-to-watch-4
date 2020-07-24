@@ -16,30 +16,36 @@ const Header = React.memo(function Header(props) {
   };
 
   return <React.Fragment>
-    <div className="logo">
-      <a href="/" className="logo__link" onClick={initState}>
-        <span className="logo__letter logo__letter--1">W</span>
-        <span className="logo__letter logo__letter--2">T</span>
-        <span className="logo__letter logo__letter--3">W</span>
-      </a>
-    </div>
-    {showErrMessage &&
+    <header className="page-header movie-card__head">
+      <div className="logo">
+        <a href="/" className="logo__link" onClick={initState}>
+          <span className="logo__letter logo__letter--1">W</span>
+          <span className="logo__letter logo__letter--2">T</span>
+          <span className="logo__letter logo__letter--3">W</span>
+        </a>
+      </div>
+      {showErrMessage &&
       <ErrorMsg
         errMessage={errMessage}
       />
-    }
-    <div className="user-block">
-      {props.authorizationStatus === AuthorizationStatus.AUTH &&
+      }
+      <div className="user-block">
+        {props.authorizationStatus === AuthorizationStatus.AUTH &&
         <div className="user-block__avatar">
-          <img src={avatar} alt="User avatar" width="63" height="63" />
+          <img src={avatar} alt="User avatar" width="63" height="63"
+            onClick={() => {
+              location.href = `/my-list`;
+            }}
+          />
         </div>}
-      {props.authorizationStatus === AuthorizationStatus.NO_AUTH &&
+        {props.authorizationStatus === AuthorizationStatus.NO_AUTH &&
         <div className="user-block__link">
           <a href="/sign-in" className="logo__link">
             <span className="logo__letter">Sign In</span>
           </a>
         </div>}
-    </div>
+      </div>
+    </header>
   </React.Fragment>;
 });
 

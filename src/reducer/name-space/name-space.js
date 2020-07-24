@@ -4,6 +4,7 @@ const NameSpace = {
   USER: `USER`,
   MOVIE: `MOVIE`,
   ERROR: `ERROR`,
+  REVIEW: `REVIEW`,
 };
 
 export default NameSpace;

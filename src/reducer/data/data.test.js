@@ -42,7 +42,7 @@ describe(`Data operation tests`, () => {
 
     return moviesLoader(dispatch, () => {}, api)
     .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(5);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.LOAD_MOVIES,
         payload: movies,
@@ -54,6 +54,14 @@ describe(`Data operation tests`, () => {
       expect(dispatch).toHaveBeenNthCalledWith(3, {
         type: ActionType.SET_CURRENT_GENRE,
         payload: `All genres`,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(4, {
+        type: ActionType.SET_CARDS_COUNT,
+        payload: 1,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(5, {
+        type: ActionType.SET_FAVORITES_COUNT,
+        payload: 0,
       });
     });
   });

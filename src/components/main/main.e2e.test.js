@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {Main} from './main.jsx';
+import {AuthorizationStatus} from '../../reducer/user/user.js';
 
 const mockStore = configureStore([]);
 
@@ -112,6 +113,7 @@ describe(`Main e2e tests`, () => {
   it(`Should movie card title be clicked`, () =>{
     const setActiveMovie = jest.fn();
     const onSelectGenre = jest.fn();
+    const favoriteButtonClickHandler = jest.fn();
     const genre = `All genres`;
     const store = mockStore({
       DATA: {
@@ -121,6 +123,7 @@ describe(`Main e2e tests`, () => {
         genresList: [`All genres`],
         genre: `All genres`,
         cardsCount: 3,
+        favoritesCount: 0,
       },
       MOVIE: {
         movie: undefined,
@@ -157,6 +160,8 @@ describe(`Main e2e tests`, () => {
             play={false}
             playMovie={() => {}}
             stopMovie={() => {}}
+            favoriteButtonClickHandler={favoriteButtonClickHandler}
+            authorizationStatus={AuthorizationStatus.NO_AUTH}
           />
         </Provider>
     );

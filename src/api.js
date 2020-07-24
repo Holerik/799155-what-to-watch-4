@@ -8,7 +8,8 @@ const Error = {
 
 export const createAPI = (onUnauthorized, onErrorOccured) => {
   const api = axios.create({
-    baseURL: `https://htmlacademy-react-3.appspot.com/wtw`,
+    // baseURL: `https://htmlacademy-react-3.appspot.com/wtw`,
+    baseURL: `https://4.react.pages.academy/wtw`,
     timeout: 1000 * 5,
     withCredentials: true,
   });
@@ -25,9 +26,9 @@ export const createAPI = (onUnauthorized, onErrorOccured) => {
     }
     if (response.status === Error.UNAUTHORIZED) {
       // запрос авторизации - особый случай
-      onUnauthorized();
+      onUnauthorized(response.data.error);
     } else {
-      onErrorOccured(err.response.data.error);
+      onErrorOccured(response.data.error);
     }
     throw err;
   };
