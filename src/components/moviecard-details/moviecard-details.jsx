@@ -12,15 +12,17 @@ import Footer from '../footer/footer.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 import {ActionCreator} from '../../reducer/movie/movie.js';
-import {getPlayState} from '../../reducer/movie/selectors.js';
+import {getPlayState, getMovie} from '../../reducer/movie/selectors.js';
 import withVideo from '../../hocs/with-video/with-video.jsx';
 import Video from '../video/video.jsx';
 import {getFilmsByGenre} from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
 import {AuthorizationStatus} from '../../reducer/user/user.js';
+import Controls from '../controls/controls.jsx';
 
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
 const VideoPlayer = withVideo(Video);
+const PageTabs = withActiveItem(Tabs);
 
 const MoviecardDetails = React.memo(function MoviecardDetails(props) {
   const {
@@ -71,32 +73,11 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
                 </svg>
                 <span>Play</span>
               </button>
-              {authorizationStatus === AuthorizationStatus.AUTH &&
-                  <button className="btn btn--list movie-card__button"
-                    type="button" onClick={() => favoriteButtonClickHandler(movieInfo)}
-                  >
-                    {movieInfo.favorite ? (
-                      <svg viewBox="0 0 19 20" width="19" height="20">
-                        <use xlinkHref="#in-list"></use>
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 19 20" width="19" height="20">
-                        <use xlinkHref="#add"></use>
-                      </svg>
-                    )}
-                    <span>My list</span>
-                  </button>
-              }
-              {authorizationStatus === AuthorizationStatus.AUTH &&
-                  <a href="/add-review" className="btn movie-card__button">Add review</a>
-              }
-              {authorizationStatus === AuthorizationStatus.NO_AUTH &&
-                  <div className="btn btn--list movie-card__button">
-                    <a href="/sign-in" className="logo__link">
-                      <span>My list</span>
-                    </a>
-                  </div>
-              }
+              {<Controls
+                favoriteButtonClickHandler={favoriteButtonClickHandler}
+                authorizationStatus={authorizationStatus}
+                movieInfo={movieInfo}
+              />}
             </div>
           </div>
         </div>
@@ -109,10 +90,10 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
           </div>
 
           <div className="movie-card__desc">
-            <Tabs
-              activeItem={1}
+            <PageTabs
+              currentActiveItem={1}
+              listItems={props.tabItems}
               setActiveItem={props.setActiveItem}
-              tabItems={props.tabItems}
             />
             <div className="movie-card__text movie-card__row">
               <div className="movie-card__text-col">
@@ -164,6 +145,7 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
 const mapStateToProps = (state) => ({
   play: getPlayState(state),
   filmsInfo: getFilmsByGenre(state),
+  movieInfo: getMovie(state),
   authorizationStatus: getAuthorizationStatus(state),
 });
 

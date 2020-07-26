@@ -7,25 +7,24 @@ class Tabs extends React.PureComponent {
     super(props);
     this._tabMouseOverHandler = this._tabMouseOverHandler.bind(this);
     this._tabClickHandler = this._tabClickHandler.bind(this);
-    this.state = {
-      activeItem: props.activeItem,
-    };
   }
 
   _tabMouseOverHandler(evt) {
-    const index = this.props.tabItems.findIndex((item) => {
+    const index = this.props.listItems.findIndex((item) => {
       return item === evt.target.text;
     });
-    this.setState({activeItem: index});
+    this.props.onMouseOver(index);
   }
 
-  _tabClickHandler() {
-    this.props.setActiveItem(this.state.activeItem);
+  _tabClickHandler(evt) {
+    const index = this.props.listItems.findIndex((item) => {
+      return item === evt.target.text;
+    });
+    this.props.onMouseClick(index);
   }
 
   render() {
-    const {tabItems} = this.props;
-    const {activeItem} = this.state;
+    const {listItems, activeItem} = this.props;
     const stateItem = this.props.activeItem;
     return (
       <React.Fragment>
@@ -35,7 +34,7 @@ class Tabs extends React.PureComponent {
             onMouseOver={this._tabMouseOverHandler}
           >
             <React.Fragment> {
-              tabItems.map((item, index) => {
+              listItems.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
                     <li className= {`movie-nav__item
@@ -57,8 +56,9 @@ class Tabs extends React.PureComponent {
 
 Tabs.propTypes = {
   activeItem: PropTypes.number.isRequired,
-  setActiveItem: PropTypes.func.isRequired,
-  tabItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+  listItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onMouseClick: PropTypes.func.isRequired,
+  onMouseOver: PropTypes.func.isRequired,
 };
 
 export default Tabs;

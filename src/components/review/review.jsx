@@ -8,7 +8,7 @@ const Review = React.memo(function Review(props) {
   const options = {year: `numeric`, month: `long`, day: `numeric`};
   const date = (new Date(review.date)).toLocaleDateString(`en-US`, options);
 
-  return <React.Fragment>
+  return (
     <div className="review">
       <blockquote className="review__quote">
         <p className="review__text">{review.text}</p>
@@ -21,11 +21,11 @@ const Review = React.memo(function Review(props) {
 
       <div className="review__rating">{`${review.rating}`}</div>
     </div>
-  </React.Fragment>;
+  );
 });
-
-export default Review;
 
 Review.propTypes = {
   review: PropTypes.exact(reviewInfo).isRequired,
 };
+
+export default Review;

@@ -2,51 +2,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {fullInfo} from '../../reducer/data/data.js';
+import Rating from '../rating/rating.jsx';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 400;
 
-const RatingFragment = React.memo(function RatingFragment({index}) {
-  return <React.Fragment>
-    <input className="rating__input" id={`star-${index}`} type="radio" name="rating" value={`${index}`}/>
-    <label className="rating__label" htmlFor={`star-${index}`}>{`Rating ${index}`}</label>
-  </React.Fragment>;
-});
-
-RatingFragment.propTypes = {
-  index: PropTypes.number.isRequired,
-};
-
 const STARS_COUNT = 10;
 const COMMENT_ERROR = `comment--error`;
-
-const createMoreRatingFragments = (count) => {
-  const items = [];
-  let index = 1;
-  while (index <= count) {
-    items.push(
-        <RatingFragment
-          key={index}
-          index={index++}
-        />);
-  }
-  return items;
-};
 
 class AddReview extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.initState = this.initState.bind(this);
+    this._initState = this._initState.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
-    this.checkReviewLength = this.checkReviewLength.bind(this);
+    this._checkReviewLength = this._checkReviewLength.bind(this);
   }
 
-  initState() {
+  _initState() {
     this.props.setPage(0);
     this.props.setMovie(undefined);
   }
 
-  checkReviewLength() {
+  _checkReviewLength() {
     const review = document.addReview.reviewText;
     const isSubmitBlocked = review.value.length < MIN_REVIEW_LENGTH ||
       review.value.length > MAX_REVIEW_LENGTH;
@@ -75,6 +52,19 @@ class AddReview extends React.PureComponent {
     return false;
   }
 
+  _createMoreRatingFragments(count) {
+    const items = [];
+    let index = 1;
+    while (index <= count) {
+      items.push(
+          <Rating
+            key={index}
+            index={index++}
+          />);
+    }
+    return items;
+  }
+
   render() {
     const {avatar, movieInfo} = this.props;
     return (
@@ -89,7 +79,7 @@ class AddReview extends React.PureComponent {
 
             <header className="page-header">
               <div className="logo">
-                <a href="/" className="logo__link" onClick={this.initState}>
+                <a href="/" className="logo__link" onClick={this._initState}>
                   <span className="logo__letter logo__letter--1">W</span>
                   <span className="logo__letter logo__letter--2">T</span>
                   <span className="logo__letter logo__letter--3">W</span>
@@ -123,13 +113,13 @@ class AddReview extends React.PureComponent {
             <form action="#" className="add-review__form" name="addReview" onSubmit={this.submitHandler}>
               <div className="rating">
                 <div className="rating__stars">
-                  {createMoreRatingFragments(STARS_COUNT)}
+                  {this._createMoreRatingFragments(STARS_COUNT)}
                 </div>
               </div>
 
               <div className="add-review__text">
                 <textarea className="add-review__textarea"
-                  name="reviewText" onInput={this.checkReviewLength}
+                  name="reviewText" onInput={this._checkReviewLength}
                   id="review-text" placeholder="Review text"></textarea>
                 <div className="add-review__submit">
                   <button className="add-review__btn"

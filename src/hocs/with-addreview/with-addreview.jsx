@@ -7,10 +7,9 @@ const withAddReview = (Component) => {
   class WithAddReview extends React.PureComponent {
     constructor(props) {
       super(props);
-      this.initState = {
+      this.state = {
         textLength: 0,
       };
-      this.state = this.initState;
       this._changeTextLength = this._changeTextLength.bind(this);
     }
 

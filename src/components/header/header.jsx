@@ -25,9 +25,9 @@ const Header = React.memo(function Header(props) {
         </a>
       </div>
       {showErrMessage &&
-      <ErrorMsg
-        errMessage={errMessage}
-      />
+        <ErrorMsg
+          errMessage={errMessage}
+        />
       }
       <div className="user-block">
         {props.authorizationStatus === AuthorizationStatus.AUTH &&

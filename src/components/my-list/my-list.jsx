@@ -23,24 +23,22 @@ const MyList = React.memo(function MyList(props) {
   } = props;
 
   return (
-    <React.Fragment>
-      <div className="user-page">
-        <Header/>
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <MovieTabs
-            listItems={filmsInfo.slice(firstCard, lastCard + 1)}
-            setActiveItem={setActiveMovie}
+    <div className="user-page">
+      <Header/>
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
+        <MovieTabs
+          listItems={filmsInfo.slice(firstCard, lastCard + 1)}
+          setActiveItem={setActiveMovie}
+        />
+        <div className="catalog__more">
+          <ShowMore
+            showMode={ShowMode.FAVORITE_MODE}
           />
-          <div className="catalog__more">
-            <ShowMore
-              showMode={ShowMode.FAVORITE_MODE}
-            />
-          </div>
-        </section>
-        <Footer/>
-      </div>
-    </React.Fragment>
+        </div>
+      </section>
+      <Footer/>
+    </div>
   );
 });
 
