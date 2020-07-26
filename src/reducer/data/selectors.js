@@ -22,12 +22,12 @@ export const getMoviesList = (state) => {
   return state[NAME_SPACE].moviesList;
 };
 
-export const getMovies = (state) => {
-  return state[NAME_SPACE].movies;
-};
-
 export const getCardsCount = (state) => {
   return state[NAME_SPACE].cardsCount;
+};
+
+export const getFavoritesCount = (state) => {
+  return state[NAME_SPACE].favoritesCount;
 };
 
 export const getFilmsByGenre = createSelector(
@@ -41,7 +41,21 @@ export const getFilmsByGenre = createSelector(
         result = moviesList;
       } else {
         result = moviesList.filter((it) =>
-          it !== movie && it.genre.includes(genre));
+          it.id !== movie.id && it.genre.includes(genre));
+      }
+      return result;
+    }
+);
+
+export const getFavoriteFilms = createSelector(
+    getMoviesList,
+    getPromoMovie,
+    (moviesList, promo) => {
+      const result = moviesList.filter((movie) => movie.favorite);
+      if (promo !== undefined && promo.favorite) {
+        if (!moviesList.find((movie) => movie.id === promo.id)) {
+          result.push(promo);
+        }
       }
       return result;
     }

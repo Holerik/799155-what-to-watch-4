@@ -48,7 +48,22 @@ Array [
       </div>
       <div
         className="user-block"
-      />
+      >
+        <div
+          className="user-block__link"
+        >
+          <a
+            className="logo__link"
+            href="/sign-in"
+          >
+            <span
+              className="logo__letter"
+            >
+              Sign In
+            </span>
+          </a>
+        </div>
+      </div>
     </header>
     <div
       className="movie-card__wrap"
@@ -109,23 +124,18 @@ Array [
                 Play
               </span>
             </button>
-            <button
+            <div
               className="btn btn--list movie-card__button"
-              type="button"
             >
-              <svg
-                height="20"
-                viewBox="0 0 19 20"
-                width="19"
+              <a
+                className="logo__link"
+                href="/sign-in"
               >
-                <use
-                  xlinkHref="#add"
-                />
-              </svg>
-              <span>
-                My list
-              </span>
-            </button>
+                <span>
+                  My list
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -17,6 +17,7 @@ import Video from '../video/video.jsx';
 import {getGenresList, getFilmsByGenre} from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
 import {AuthorizationStatus} from '../../reducer/user/user.js';
+import {ShowMode} from '../../reducer/data/data.js';
 
 const MAX_GENRE_COUNT = 10;
 
@@ -35,7 +36,9 @@ const Main = React.memo(function Main(props) {
     firstCard,
     lastCard,
     playMovie,
-    stopMovie
+    stopMovie,
+    authorizationStatus,
+    favoriteButtonClickHandler
   } = props;
   const setGenre = (index) => {
     onSelectGenre(genresList[index]);
@@ -62,11 +65,7 @@ const Main = React.memo(function Main(props) {
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
-
-        <header className="page-header movie-card__head">
-          <Header/>
-        </header>
-
+        <Header/>
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
@@ -89,18 +88,23 @@ const Main = React.memo(function Main(props) {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button">
-                  {promoMovie.favorite ? (
+                {authorizationStatus === AuthorizationStatus.AUTH &&
+                  <button className="btn btn--list movie-card__button"
+                    type="button" onClick={() => favoriteButtonClickHandler(promoMovie)}
+                  >
                     <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#in-list"></use>
+                      {promoMovie.favorite ? <use xlinkHref="#in-list"></use> : <use xlinkHref="#add"></use>}
                     </svg>
-                  ) : (
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                  )}
-                  <span>My list</span>
-                </button>
+                    <span>My list</span>
+                  </button>
+                }
+                {authorizationStatus === AuthorizationStatus.NO_AUTH &&
+                  <div className="btn btn--list movie-card__button">
+                    <a href="/sign-in" className="logo__link">
+                      <span>My list</span>
+                    </a>
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -121,7 +125,9 @@ const Main = React.memo(function Main(props) {
             setActiveItem={setActiveMovie}
           />
           <div className="catalog__more">
-            <ShowMore/>
+            <ShowMore
+              showMode={ShowMode.GENRE_MODE}
+            />
           </div>
         </section>
         <Footer/>
@@ -163,6 +169,7 @@ Main.propTypes = {
     AuthorizationStatus.AUTH,
     AuthorizationStatus.NO_AUTH
   ]),
+  favoriteButtonClickHandler: PropTypes.func.isRequired,
 };
 
 export {Main};

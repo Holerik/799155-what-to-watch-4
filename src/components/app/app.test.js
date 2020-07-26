@@ -3,6 +3,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import {AuthorizationStatus} from '../../reducer/user/user.js';
 import {App} from '../app/app.jsx';
 
 const mockStore = configureStore([]);
@@ -116,11 +117,11 @@ describe(`App tests`, () => {
     const store = mockStore({
       DATA: {
         moviesList: films,
-        movies: films,
         promo: promoMovie,
         genre: `All genres`,
         genresList: [`All genres`],
         cardsCount: 3,
+        favoritesCount: 0,
       },
       MOVIE: {
         page: 0,
@@ -131,10 +132,17 @@ describe(`App tests`, () => {
       },
       USER: {
         avatar: `img/avatar.jpg`,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        authorId: -1,
+        authorName: ``,
+        authorEmail: ``,
       },
       ERROR: {
         message: ``,
         show: false,
+      },
+      REVIEW: {
+        reviews: [],
       },
       setPage: () => {},
       setMovie: () => {},
@@ -143,11 +151,14 @@ describe(`App tests`, () => {
       playMovie: () => {},
       stopMovie: () => {},
       login: () => {},
+      setCardsCount: () => {},
+      changeFavoriteStatus: () => {},
     });
     const tree = renderer
     .create(
         <Provider store={store}>
           <App
+            authorInfo={{avatar: `img/avatar.jpg`, name: `Nina`}}
             filmsInfo= {films}
             movie = {undefined}
             promo = {promoMovie}
@@ -156,12 +167,16 @@ describe(`App tests`, () => {
             genresList = {[`All genres`]}
             firstCard = {0}
             lastCard = {2}
-            cardsCount = {3}
             setPage = {() => {}}
             setMovie = {() => {}}
             setPromo = {() => {}}
             setGenre = {() => {}}
             login= {() => {}}
+            setCardsCount={() => {}}
+            changeFavoriteStatus={() => {}}
+            authorizationStatus={AuthorizationStatus.NO_AUTH}
+            onAddReviewComment={() => {}}
+            loadReviews={() => {}}
           />
         </Provider>, {
           createNodeMock: () => {

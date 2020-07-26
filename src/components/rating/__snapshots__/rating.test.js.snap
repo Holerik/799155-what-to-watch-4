@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Rating /> should render correctly 1`] = `
+Array [
+  <input
+    className="rating__input"
+    id="star-0"
+    name="rating"
+    type="radio"
+    value="0"
+  />,
+  <label
+    className="rating__label"
+    htmlFor="star-0"
+  >
+    Rating 0
+  </label>,
+]
+`;

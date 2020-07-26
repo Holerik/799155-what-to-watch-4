@@ -8,13 +8,16 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import App from '../src/components/app/app.jsx';
 import {createAPI} from './api.js';
-import {Operation as UserOperation, AuthorizationStatus, ActionCreator} from './reducer/user/user.js';
+import {
+  Operation as UserOperation,
+  AuthorizationStatus,
+  ActionCreator
+} from './reducer/user/user.js';
 import {Operation as DataOperation} from './reducer/data/data.js';
+import {Operation as ReviewOperation} from './reducer/review/review.js';
 import {ActionCreator as ErrorActionCreator} from './reducer/error/error.js';
 
-const onUnauthorized = () => {
-  store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
-};
+const TIMEOUT = 5000;
 
 const onErrorOccured = (errMessage) => {
   store.dispatch(ErrorActionCreator.setErrMessage(errMessage));
@@ -22,7 +25,16 @@ const onErrorOccured = (errMessage) => {
   setTimeout(() => {
     store.dispatch(ErrorActionCreator.showErrMessage(false));
     store.dispatch(ErrorActionCreator.setErrMessage(``));
-  }, 10000);
+  }, TIMEOUT);
+};
+
+const onAddReviewComment = (movie, comment) => {
+  store.dispatch(ReviewOperation.pushComment(movie, comment));
+};
+
+const onUnauthorized = (errMessage) => {
+  store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
+  onErrorOccured(errMessage);
 };
 
 const api = createAPI(onUnauthorized, onErrorOccured);
@@ -41,7 +53,9 @@ store.dispatch(DataOperation.loadPromoMovie());
 const init = () => {
   ReactDom.render(
       <Provider store={store}>
-        <App/>
+        <App
+          onAddReviewComment={onAddReviewComment}
+        />
       </Provider>,
       document.querySelector(`#root`)
   );

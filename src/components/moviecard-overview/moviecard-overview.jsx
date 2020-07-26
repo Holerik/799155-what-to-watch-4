@@ -10,13 +10,17 @@ import Footer from '../footer/footer.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 import {ActionCreator} from '../../reducer/movie/movie.js';
-import {getPlayState} from '../../reducer/movie/selectors.js';
+import {getPlayState, getMovie} from '../../reducer/movie/selectors.js';
 import withVideo from '../../hocs/with-video/with-video.jsx';
 import Video from '../video/video.jsx';
 import {getFilmsByGenre} from '../../reducer/data/selectors.js';
+import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
+import {AuthorizationStatus} from '../../reducer/user/user.js';
+import Controls from '../controls/controls.jsx';
 
 const VideoPlayer = withVideo(Video);
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
+const PageTabs = withActiveItem(Tabs);
 
 export const getFullString = (data, delimiter) => {
   let result = ``;
@@ -46,7 +50,15 @@ export const getRatingLevel = (rating) => {
 };
 
 const MoviecardOverview = React.memo(function MoviecardOverview(props) {
-  const {movieInfo, setActiveMovie, playMovie, stopMovie, filmsInfo} = props;
+  const {
+    movieInfo,
+    setActiveMovie,
+    playMovie,
+    stopMovie,
+    filmsInfo,
+    authorizationStatus,
+    favoriteButtonClickHandler
+  } = props;
   movieInfo.rating.level = getRatingLevel(movieInfo.rating.score);
   if (props.play) {
     return (
@@ -69,11 +81,7 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
-
-          <header className="page-header movie-card__head">
-            <Header/>
-          </header>
-
+          <Header/>
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{movieInfo.title}</h2>
@@ -91,13 +99,11 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-                <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                {<Controls
+                  favoriteButtonClickHandler={favoriteButtonClickHandler}
+                  authorizationStatus={authorizationStatus}
+                  movieInfo={movieInfo}
+                />}
               </div>
             </div>
           </div>
@@ -110,10 +116,10 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
             </div>
 
             <div className="movie-card__desc">
-              <Tabs
-                activeItem={0}
+              <PageTabs
+                currentActiveItem={0}
+                listItems={props.tabItems}
                 setActiveItem={props.setActiveItem}
-                tabItems={props.tabItems}
               />
               <div className="movie-rating">
                 <div className="movie-rating__score">{movieInfo.rating.score}</div>
@@ -151,6 +157,8 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
 const mapStateToProps = (state) => ({
   play: getPlayState(state),
   filmsInfo: getFilmsByGenre(state),
+  movieInfo: getMovie(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -163,6 +171,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 MoviecardOverview.propTypes = {
+  authorizationStatus: PropTypes.oneOf([
+    AuthorizationStatus.AUTH,
+    AuthorizationStatus.NO_AUTH
+  ]),
   movieInfo: PropTypes.exact(fullInfo).isRequired,
   setActiveItem: PropTypes.func.isRequired,
   tabItems: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -172,6 +184,7 @@ MoviecardOverview.propTypes = {
   playMovie: PropTypes.func.isRequired,
   stopMovie: PropTypes.func.isRequired,
   play: PropTypes.bool.isRequired,
+  favoriteButtonClickHandler: PropTypes.func.isRequired,
 };
 
 export {MoviecardOverview};

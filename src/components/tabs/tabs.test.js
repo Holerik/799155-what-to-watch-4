@@ -6,13 +6,13 @@ import Tabs from './tabs.jsx';
 const tabItems = [`All genres`, `Dramas`, `Crime`];
 
 it(`Tabs should render correctly`, () => {
-  const setActiveItem = () => {};
   const tree = renderer
     .create(
         <Tabs
           activeItem={0}
-          setActiveItem={setActiveItem}
-          tabItems={tabItems}
+          listItems={tabItems}
+          onMouseClick={() => {}}
+          onMouseOver={() => {}}
         />)
     .toJSON();
   expect(tree).toMatchSnapshot();

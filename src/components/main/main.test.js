@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {Main} from './main.jsx';
+import {AuthorizationStatus} from '../../reducer/user/user.js';
 
 const mockStore = configureStore([]);
 
@@ -113,6 +114,7 @@ describe(`Main tests`, () => {
         genre: `All genres`,
         genresList: [`All genres`],
         cardsCount: 3,
+        favoritesCount: 0,
       },
       MOVIE: {
         page: 0,
@@ -149,6 +151,8 @@ describe(`Main tests`, () => {
             play={false}
             playMovie={() => {}}
             stopMovie={() => {}}
+            favoriteButtonClickHandler={() => {}}
+            authorizationStatus={AuthorizationStatus.NO_AUTH}
           />
         </Provider>
     ).toJSON();
