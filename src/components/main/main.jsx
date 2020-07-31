@@ -18,6 +18,8 @@ import {getGenresList, getFilmsByGenre} from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
 import {AuthorizationStatus} from '../../reducer/user/user.js';
 import {ShowMode} from '../../reducer/data/data.js';
+import {AppRoutes} from '../../const.js';
+import {Link} from 'react-router-dom';
 
 const MAX_GENRE_COUNT = 10;
 
@@ -100,9 +102,9 @@ const Main = React.memo(function Main(props) {
                 }
                 {authorizationStatus === AuthorizationStatus.NO_AUTH &&
                   <div className="btn btn--list movie-card__button">
-                    <a href="/sign-in" className="logo__link">
+                    <Link to={`${AppRoutes.LOGIN}`} className="logo__link">
                       <span>My list</span>
-                    </a>
+                    </Link>
                   </div>
                 }
               </div>

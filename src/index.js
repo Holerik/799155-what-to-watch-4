@@ -17,7 +17,7 @@ import {Operation as DataOperation} from './reducer/data/data.js';
 import {Operation as ReviewOperation} from './reducer/review/review.js';
 import {ActionCreator as ErrorActionCreator} from './reducer/error/error.js';
 
-const TIMEOUT = 5000;
+const TIMEOUT = 2500;
 
 const onErrorOccured = (errMessage) => {
   store.dispatch(ErrorActionCreator.setErrMessage(errMessage));

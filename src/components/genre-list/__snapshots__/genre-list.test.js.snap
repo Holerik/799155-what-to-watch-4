@@ -12,7 +12,8 @@ exports[`GenreList should render genres list correctly 1`] = `
   >
     <a
       className="catalog__genres-link"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
       All genres
     </a>
@@ -23,7 +24,8 @@ exports[`GenreList should render genres list correctly 1`] = `
   >
     <a
       className="catalog__genres-link"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
       Drama
     </a>
@@ -34,7 +36,8 @@ exports[`GenreList should render genres list correctly 1`] = `
   >
     <a
       className="catalog__genres-link"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
       Crime
     </a>
@@ -45,7 +48,8 @@ exports[`GenreList should render genres list correctly 1`] = `
   >
     <a
       className="catalog__genres-link"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
       Biography
     </a>
@@ -56,7 +60,8 @@ exports[`GenreList should render genres list correctly 1`] = `
   >
     <a
       className="catalog__genres-link"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
       Thriller
     </a>
@@ -67,7 +72,8 @@ exports[`GenreList should render genres list correctly 1`] = `
   >
     <a
       className="catalog__genres-link"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
       Action
     </a>
@@ -78,7 +84,8 @@ exports[`GenreList should render genres list correctly 1`] = `
   >
     <a
       className="catalog__genres-link"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
       Mystery
     </a>

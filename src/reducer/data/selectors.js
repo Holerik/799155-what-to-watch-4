@@ -41,7 +41,7 @@ export const getFilmsByGenre = createSelector(
         result = moviesList;
       } else {
         result = moviesList.filter((it) =>
-          it.id !== movie.id && it.genre.includes(genre));
+          (movie === undefined ? true : it.id !== movie.id) && it.genre.includes(genre));
       }
       return result;
     }

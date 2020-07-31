@@ -9,6 +9,7 @@ const ActionType = {
   SET_FIRST_CARD_NUMBER: `SET_FIRST_CARD_NUMBER`,
   PLAY_MOVIE: `PLAY_MOVIE`,
   STOP_MOVIE: `STOP_MOVIE`,
+  RESET_MOVIE: `RESET_MOVIE`,
 };
 
 const initialState = {
@@ -52,6 +53,10 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         play: action.payload,
       });
+    case ActionType.RESET_MOVIE:
+      return extend(state, {
+        movie: action.payload,
+      });
   }
   return state;
 };
@@ -76,6 +81,10 @@ const ActionCreator = {
   stopMovie: () => ({
     type: ActionType.STOP_MOVIE,
     payload: false,
+  }),
+  resetMovie: (movie) => ({
+    type: ActionType.RESET_MOVIE,
+    payload: movie,
   }),
 };
 

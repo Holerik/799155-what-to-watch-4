@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header tests <Header /> should render correctly 1`] = `
+exports[`Header test <Header /> should render correctly 1`] = `
 <header
   className="page-header movie-card__head"
 >
@@ -10,7 +10,6 @@ exports[`Header tests <Header /> should render correctly 1`] = `
     <a
       className="logo__link"
       href="/"
-      onClick={[Function]}
     >
       <span
         className="logo__letter logo__letter--1"
@@ -37,7 +36,8 @@ exports[`Header tests <Header /> should render correctly 1`] = `
     >
       <a
         className="logo__link"
-        href="/sign-in"
+        href="/login"
+        onClick={[Function]}
       >
         <span
           className="logo__letter"

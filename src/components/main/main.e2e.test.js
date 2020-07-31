@@ -6,6 +6,8 @@ import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {Main} from './main.jsx';
 import {AuthorizationStatus} from '../../reducer/user/user.js';
+import history from '../../history.js';
+import {Router} from 'react-router-dom';
 
 const mockStore = configureStore([]);
 
@@ -148,21 +150,23 @@ describe(`Main e2e tests`, () => {
     });
     const wrapper = mount(
         <Provider store={store}>
-          <Main
-            promoMovie={promoMovie}
-            filmsInfo={films}
-            setActiveMovie={setActiveMovie}
-            onSelectGenre={onSelectGenre}
-            genre={genre}
-            genresList={[`All genres`]}
-            firstCard={0}
-            lastCard={2}
-            play={false}
-            playMovie={() => {}}
-            stopMovie={() => {}}
-            favoriteButtonClickHandler={favoriteButtonClickHandler}
-            authorizationStatus={AuthorizationStatus.NO_AUTH}
-          />
+          <Router history={history}>
+            <Main
+              promoMovie={promoMovie}
+              filmsInfo={films}
+              setActiveMovie={setActiveMovie}
+              onSelectGenre={onSelectGenre}
+              genre={genre}
+              genresList={[`All genres`]}
+              firstCard={0}
+              lastCard={2}
+              play={false}
+              playMovie={() => {}}
+              stopMovie={() => {}}
+              favoriteButtonClickHandler={favoriteButtonClickHandler}
+              authorizationStatus={AuthorizationStatus.NO_AUTH}
+            />
+          </Router>
         </Provider>
     );
     const titles = wrapper.find(`.small-movie-card__link`);

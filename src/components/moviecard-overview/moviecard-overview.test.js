@@ -5,7 +5,8 @@ import {MoviecardOverview} from './moviecard-overview.jsx';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {AuthorizationStatus} from '../../reducer/user/user.js';
-
+import history from '../../history.js';
+import {Router} from 'react-router-dom';
 
 const mockStore = configureStore([]);
 
@@ -142,19 +143,21 @@ describe(`MoviecardOverview tests`, () => {
     });
     const tree = renderer.create(
         <Provider store={store}>
-          <MoviecardOverview
-            movieInfo={film}
-            filmsInfo={films}
-            setActiveItem={() => {}}
-            tabItems={tabItems}
-            setActiveMovie={() => {}}
-            play={false}
-            playMovie={() => {}}
-            stopMovie={() => {}}
-            genre={`All genres`}
-            favoriteButtonClickHandler={() => {}}
-            authorizationStatus={AuthorizationStatus.NO_AUTH}
-          />
+          <Router history={history}>
+            <MoviecardOverview
+              movieInfo={film}
+              filmsInfo={films}
+              setActiveItem={() => {}}
+              tabItems={tabItems}
+              setActiveMovie={() => {}}
+              play={false}
+              playMovie={() => {}}
+              stopMovie={() => {}}
+              genre={`All genres`}
+              favoriteButtonClickHandler={() => {}}
+              authorizationStatus={AuthorizationStatus.NO_AUTH}
+            />
+          </Router>
         </Provider>
     ).toJSON();
     expect(tree).toMatchSnapshot();

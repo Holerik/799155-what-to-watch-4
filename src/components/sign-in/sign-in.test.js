@@ -4,6 +4,8 @@ import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import SignIn from './sign-in.jsx';
+import history from '../../history.js';
+import {Router} from 'react-router-dom';
 
 const mockStore = configureStore([]);
 
@@ -22,9 +24,11 @@ describe(`SignIn test`, () => {
     const tree = renderer
     .create(
         <Provider store={store}>
-          <SignIn
-            onSubmit={() => {}}
-          />)
+          <Router history={history}>
+            <SignIn
+              onSubmit={() => {}}
+            />)
+          </Router>
         </Provider>
     ).toJSON();
     expect(tree).toMatchSnapshot();

@@ -1,6 +1,8 @@
 // genre-list.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+import {AppRoutes} from '../../const.js';
 
 class GenreList extends React.PureComponent {
   constructor(props) {
@@ -31,7 +33,7 @@ class GenreList extends React.PureComponent {
             <React.Fragment key={index}>
               <li className= {`catalog__genres-item
                             ${itemIsActive ? `catalog__genres-item--active` : ``}`}>
-                <a href="#" className="catalog__genres-link">{item}</a>
+                <Link to={`${AppRoutes.ROOT}`} className="catalog__genres-link">{item}</Link>
               </li>
             </React.Fragment>
           );
