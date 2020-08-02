@@ -16,16 +16,18 @@ const mockReview = {
   authorId: -1,
   author: ``,
   rating: `0`,
-  date: (new Date()).toISOString(),
+  date: `2020-07-24T14:16:23.037Z`,
   text: ``,
 };
 
 const ActionType = {
   LOAD_REVIEWS: `LOAD_REVIEWS`,
+  SET_LOAD_STATUS: `SET_LOAD_STATUS`,
 };
 
 const initialState = {
   reviews: [mockReview],
+  loadStatus: true,
 };
 
 const ActionCreator = {
@@ -35,6 +37,12 @@ const ActionCreator = {
       payload: reviews,
     };
   },
+  setLoadStatus: (status) => {
+    return {
+      type: ActionType.SET_LOAD_STATUS,
+      payload: status,
+    };
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -42,6 +50,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_REVIEWS:
       return extend(state, {
         reviews: action.payload,
+      });
+    case ActionType.SET_LOAD_STATUS:
+      return extend(state, {
+        loadStatus: action.payload,
       });
   }
   return state;
@@ -64,12 +76,16 @@ const Operation = {
         };
       });
       dispatch(ActionCreator.loadReviews(reviews));
+      dispatch(ActionCreator.setLoadStatus(false));
     });
   },
   pushComment: (movie, review) => (dispatch, getState, api) => {
     return api.post(`/comments/${movie.id}`, {
       rating: review.rating,
       comment: review.comment,
+    })
+    .then(() => {
+      dispatch(ActionCreator.setLoadStatus(true));
     });
   },
 };

@@ -27,7 +27,9 @@ const Moviecard = React.memo(function Moviecard(props) {
     <article className="small-movie-card catalog__movies-card">
       <div onMouseOver={props.onMovieCardActivate} onMouseOut={props.onMovieCardOut}
         className="small-movie-card__image" id={`${props.movie.id }`} onClick={props.onMovieTitleClick}>
-        <img src={props.movie.poster} alt={props.movie.altPoster} width="280" height="175" />
+        <a href="" onClick={props.onMovieTitleClick}>
+          <img src={props.movie.poster} alt={props.movie.altPoster} width="280" height="175"/>
+        </a>
       </div>
       <h3 className="small-movie-card__title">
         <a className="small-movie-card__link"

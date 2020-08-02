@@ -56,7 +56,6 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
     playMovie,
     stopMovie,
     filmsInfo,
-    authorizationStatus,
     favoriteButtonClickHandler
   } = props;
   movieInfo.rating.level = getRatingLevel(movieInfo.rating.score);
@@ -101,7 +100,6 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
                 </button>
                 {<Controls
                   favoriteButtonClickHandler={favoriteButtonClickHandler}
-                  authorizationStatus={authorizationStatus}
                   movieInfo={movieInfo}
                 />}
               </div>
@@ -175,7 +173,7 @@ MoviecardOverview.propTypes = {
     AuthorizationStatus.AUTH,
     AuthorizationStatus.NO_AUTH
   ]),
-  movieInfo: PropTypes.exact(fullInfo).isRequired,
+  movieInfo: PropTypes.exact(fullInfo),
   setActiveItem: PropTypes.func.isRequired,
   tabItems: PropTypes.arrayOf(PropTypes.string).isRequired,
   filmsInfo: PropTypes.arrayOf(

@@ -1,5 +1,5 @@
 // app.jsx
-import React, {Component} from 'react';
+import React from 'react';
 import {Router, Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -39,6 +39,8 @@ import AddReview from '../add-review/add-review.jsx';
 import {Operation as DataOperation} from '../../reducer/data/data.js';
 import {AppRoutes} from '../../const.js';
 import history from '../../history.js';
+import PrivateRoute from '../private-route/private-route.jsx';
+import NotFound from '../not-found/not-found.jsx';
 
 const AddReviewText = withAddReview(AddReview);
 const tabItems = [`Overview`, `Details`, `Reviews`];
@@ -46,7 +48,6 @@ const tabItems = [`Overview`, `Details`, `Reviews`];
 class App extends React.PureComponent {
   constructor(props) {
     super(props);
-    this._onMovieTitleClick = this._onMovieTitleClick.bind(this);
     this._setActivePage = this._setActivePage.bind(this);
     this._setActiveGenre = this._setActiveGenre.bind(this);
     this._setActiveMovie = this._setActiveMovie.bind(this);
@@ -59,10 +60,6 @@ class App extends React.PureComponent {
   _onSignIn(authData) {
     this.props.login(authData);
     location.href = AppRoutes.ROOT;
-  }
-
-  _onMovieTitleClick(movie) {
-    this.props.setMovie(movie);
   }
 
   _onAddReviewText(movie, comment) {
@@ -106,18 +103,17 @@ class App extends React.PureComponent {
     }
     switch (this.props.page) {
       case 0:
-        return history.push(AppRoutes.MOVIE_OVERVIEW);
+        return history.push(`${AppRoutes.MOVIE_OVERVIEW}/${this.props.movie.id}`);
       case 1:
-        return history.push(AppRoutes.MOVIE_DETAILS);
+        return history.push(`${AppRoutes.MOVIE_DETAILS}/${this.props.movie.id}`);
       case 2:
-        return history.push(AppRoutes.MOVIE_REVIEWS);
+        return history.push(`${AppRoutes.MOVIE_REVIEWS}/${this.props.movie.id}`);
     }
     return null;
   }
 
   render() {
     const props = {
-      movieInfo: this.props.movie,
       setActiveItem: this._setActivePage,
       tabItems,
       setActiveMovie: this._setActiveMovie,
@@ -135,21 +131,42 @@ class App extends React.PureComponent {
               onSubmit={this._onSignIn}
             />
           </Route>
-          <Route exact path={`${AppRoutes.MOVIE_OVERVIEW}`}>
-            <MoviecardOverview
-              {...props}
-            />
-          </Route>
-          <Route exact path={`${AppRoutes.MOVIE_DETAILS}`}>
-            <MoviecardDetails
-              {...props}
-            />
-          </Route>
-          <Route exact path={`${AppRoutes.MOVIE_REVIEWS}`}>
-            <MoviecardReviews
-              {...props}
-            />
-          </Route>
+          <Route exact path={`${AppRoutes.MOVIE_OVERVIEW}/:id`}
+            render={(routeProps) => {
+              const id = +routeProps.match.params.id;
+              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              return (
+                <MoviecardOverview
+                  {...props}
+                  movieInfo={movie}
+                />
+              );
+            }}
+          />
+          <Route exact path={`${AppRoutes.MOVIE_DETAILS}/:id`}
+            render={(routeProps) => {
+              const id = +routeProps.match.params.id;
+              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              return (
+                <MoviecardDetails
+                  {...props}
+                  movieInfo={movie}
+                />
+              );
+            }}
+          />
+          <Route exact path={`${AppRoutes.MOVIE_REVIEWS}/:id`}
+            render={(routeProps) => {
+              const id = +routeProps.match.params.id;
+              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              return (
+                <MoviecardReviews
+                  {...props}
+                  movieInfo={movie}
+                />
+              );
+            }}
+          />
           <Route exact path={AppRoutes.MY_LIST}>
             <MyList
               setActiveMovie={this._setActiveMovie}
@@ -157,7 +174,8 @@ class App extends React.PureComponent {
               lastCard={this.props.lastCard}
             />);
           </Route>
-          <Route exact path={`${AppRoutes.ADD_REVIEW}/:id`}
+          <PrivateRoute exact path={`${AppRoutes.ADD_REVIEW}/:id`}
+            authorizationStatus={this.props.authorizationStatus}
             render={(routeProps) => {
               const id = +routeProps.match.params.id;
               const movie = this.props.allFilmsInfo.find((film) => film.id === id);
@@ -172,9 +190,9 @@ class App extends React.PureComponent {
               );
             }}
           />
-          <Route exact path="/dev-component">
-            <Component />
-          </Route>
+          <Route
+            render = {() => <NotFound/>}
+          />
         </Switch>
       </Router>
     );

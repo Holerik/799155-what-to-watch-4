@@ -17,7 +17,7 @@ import Video from '../video/video.jsx';
 import {getFilmsByGenre} from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
 import {AuthorizationStatus} from '../../reducer/user/user.js';
-import {getReviews} from '../../reducer/review/selectors.js';
+import {getReviews, getLoadStatus} from '../../reducer/review/selectors.js';
 import {reviewInfo} from '../../reducer/review/review.js';
 import Controls from '../controls/controls.jsx';
 import AddComments from '../add-comments/add-comments.jsx';
@@ -33,10 +33,10 @@ const MoviecardReviews = React.memo(function MoviecardReviews(props) {
     setActiveMovie,
     playMovie,
     stopMovie,
-    authorizationStatus,
     reviews,
     favoriteButtonClickHandler,
     loadReviews,
+    loadStatus,
   } = props;
   if (props.play) {
     return (
@@ -50,7 +50,9 @@ const MoviecardReviews = React.memo(function MoviecardReviews(props) {
       />
     );
   }
-  loadReviews(movieInfo);
+  if (loadStatus) {
+    loadReviews(movieInfo);
+  }
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
@@ -80,7 +82,6 @@ const MoviecardReviews = React.memo(function MoviecardReviews(props) {
                 </button>
                 {<Controls
                   favoriteButtonClickHandler={favoriteButtonClickHandler}
-                  authorizationStatus={authorizationStatus}
                   movieInfo={movieInfo}
                 />}
               </div>
@@ -132,6 +133,7 @@ const mapStateToProps = (state) => ({
   movieInfo: getMovie(state),
   authorizationStatus: getAuthorizationStatus(state),
   reviews: getReviews(state),
+  loadStatus: getLoadStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -161,6 +163,7 @@ MoviecardReviews.propTypes = {
       PropTypes.exact(reviewInfo)).isRequired,
   favoriteButtonClickHandler: PropTypes.func.isRequired,
   loadReviews: PropTypes.func.isRequired,
+  loadStatus: PropTypes.bool,
 };
 
 export {MoviecardReviews};

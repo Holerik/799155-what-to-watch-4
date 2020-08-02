@@ -31,7 +31,6 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
     setActiveMovie,
     playMovie,
     stopMovie,
-    authorizationStatus,
     favoriteButtonClickHandler
   } = props;
   const genres = getFullString(movieInfo.genre, 183);
@@ -75,7 +74,6 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
               </button>
               {<Controls
                 favoriteButtonClickHandler={favoriteButtonClickHandler}
-                authorizationStatus={authorizationStatus}
                 movieInfo={movieInfo}
               />}
             </div>

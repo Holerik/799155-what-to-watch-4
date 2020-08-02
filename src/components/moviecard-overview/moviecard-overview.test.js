@@ -121,7 +121,7 @@ describe(`MoviecardOverview tests`, () => {
         favoritesCount: 0,
       },
       MOVIE: {
-        movie: undefined,
+        movie: film,
         firstCard: 0,
         lastCard: 2,
         play: false,

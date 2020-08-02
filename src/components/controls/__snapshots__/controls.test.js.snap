@@ -1,17 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Controls test <Controls /> should render correctly 1`] = `
-<div
-  className="btn btn--list movie-card__button"
->
-  <a
-    className="logo__link"
-    href="/login"
+Array [
+  <button
+    className="btn btn--list movie-card__button"
     onClick={[Function]}
+    type="button"
   >
+    <svg
+      height="20"
+      viewBox="0 0 19 20"
+      width="19"
+    >
+      <use
+        xlinkHref="#add"
+      />
+    </svg>
     <span>
       My list
     </span>
-  </a>
-</div>
+  </button>,
+  <a
+    className="btn movie-card__button"
+    href="/addreview/1"
+    onClick={[Function]}
+  >
+    Add review
+  </a>,
+]
 `;

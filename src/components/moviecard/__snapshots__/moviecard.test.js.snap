@@ -11,12 +11,17 @@ exports[`Moviecard tests Moviecard should render poster 1`] = `
     onMouseOut={[Function]}
     onMouseOver={[Function]}
   >
-    <img
-      alt="Joker poster"
-      height="175"
-      src="img/joker.jpg"
-      width="280"
-    />
+    <a
+      href=""
+      onClick={[Function]}
+    >
+      <img
+        alt="Joker poster"
+        height="175"
+        src="img/joker.jpg"
+        width="280"
+      />
+    </a>
   </div>
   <h3
     className="small-movie-card__title"

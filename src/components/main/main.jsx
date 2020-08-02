@@ -20,8 +20,7 @@ import {AuthorizationStatus} from '../../reducer/user/user.js';
 import {ShowMode} from '../../reducer/data/data.js';
 import {AppRoutes} from '../../const.js';
 import {Link} from 'react-router-dom';
-
-const MAX_GENRE_COUNT = 10;
+import {MAX_GENRE_COUNT} from '../../const.js';
 
 const VideoPlayer = withVideo(Video);
 const GenreTabs = withActiveItem(GenreList);

@@ -14,12 +14,17 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
       onMouseOut={[Function]}
       onMouseOver={[Function]}
     >
-      <img
-        alt="Joker poster"
-        height="175"
-        src="img/joker.jpg"
-        width="280"
-      />
+      <a
+        href=""
+        onClick={[Function]}
+      >
+        <img
+          alt="Joker poster"
+          height="175"
+          src="img/joker.jpg"
+          width="280"
+        />
+      </a>
     </div>
     <h3
       className="small-movie-card__title"
@@ -43,12 +48,17 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
       onMouseOut={[Function]}
       onMouseOver={[Function]}
     >
-      <img
-        alt="The Commuter poster"
-        height="175"
-        src="img/commuter.jpg"
-        width="280"
-      />
+      <a
+        href=""
+        onClick={[Function]}
+      >
+        <img
+          alt="The Commuter poster"
+          height="175"
+          src="img/commuter.jpg"
+          width="280"
+        />
+      </a>
     </div>
     <h3
       className="small-movie-card__title"
@@ -72,12 +82,17 @@ exports[`Movielist tests Movielist should render several moviecards 1`] = `
       onMouseOut={[Function]}
       onMouseOver={[Function]}
     >
-      <img
-        alt="Molly game poster"
-        height="175"
-        src="img/mollys-game.jpg"
-        width="280"
-      />
+      <a
+        href=""
+        onClick={[Function]}
+      >
+        <img
+          alt="Molly game poster"
+          height="175"
+          src="img/mollys-game.jpg"
+          width="280"
+        />
+      </a>
     </div>
     <h3
       className="small-movie-card__title"
