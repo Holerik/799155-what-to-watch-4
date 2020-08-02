@@ -3,91 +3,81 @@
 exports[`App tests App should render main screen 1`] = `
 Array [
   <section
-    className="movie-card"
+    className="movie-card movie-card--full"
   >
     <div
-      className="movie-card__bg"
-    >
-      <img
-        alt="The Grand Budapest Hotel"
-        src="img/bg-the-grand-budapest-hotel.jpg"
-      />
-    </div>
-    <h1
-      className="visually-hidden"
-    >
-      WTW
-    </h1>
-    <header
-      className="page-header movie-card__head"
+      className="movie-card__hero"
     >
       <div
-        className="logo"
+        className="movie-card__bg"
       >
-        <a
-          className="logo__link"
-          href="/"
-          onClick={[Function]}
-        >
-          <span
-            className="logo__letter logo__letter--1"
-          >
-            W
-          </span>
-          <span
-            className="logo__letter logo__letter--2"
-          >
-            T
-          </span>
-          <span
-            className="logo__letter logo__letter--3"
-          >
-            W
-          </span>
-        </a>
+        <img
+          alt="Gotham City"
+          src="img/joker-bg.jpg"
+        />
       </div>
-      <div
-        className="user-block"
+      <h1
+        className="visually-hidden"
+      >
+        WTW
+      </h1>
+      <header
+        className="page-header movie-card__head"
       >
         <div
-          className="user-block__link"
+          className="logo"
         >
           <a
             className="logo__link"
-            href="/sign-in"
+            href="/"
           >
             <span
-              className="logo__letter"
+              className="logo__letter logo__letter--1"
             >
-              Sign In
+              W
+            </span>
+            <span
+              className="logo__letter logo__letter--2"
+            >
+              T
+            </span>
+            <span
+              className="logo__letter logo__letter--3"
+            >
+              W
             </span>
           </a>
         </div>
-      </div>
-    </header>
-    <div
-      className="movie-card__wrap"
-    >
-      <div
-        className="movie-card__info"
-      >
         <div
-          className="movie-card__poster"
+          className="user-block"
         >
-          <img
-            alt="The Grand Budapest Hotel poster"
-            height="327"
-            src="img/the-grand-budapest-hotel-poster.jpg"
-            width="218"
-          />
+          <div
+            className="user-block__link"
+          >
+            <a
+              className="logo__link"
+              href="/login"
+              onClick={[Function]}
+            >
+              <span
+                className="logo__letter"
+              >
+                Sign In
+              </span>
+            </a>
+          </div>
         </div>
+      </header>
+      <div
+        className="movie-card__wrap"
+      >
         <div
           className="movie-card__desc"
         >
           <h2
             className="movie-card__title"
           >
-            The Grand Budapest Hotel
+            Joker
           </h2>
           <p
             className="movie-card__meta"
@@ -95,7 +85,7 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Thriller
+              Thriller·Crime·Drama
             </span>
             <span
               className="movie-card__year"
@@ -129,7 +119,8 @@ Array [
             >
               <a
                 className="logo__link"
-                href="/sign-in"
+                href="/login"
+                onClick={[Function]}
               >
                 <span>
                   My list
@@ -140,35 +131,131 @@ Array [
         </div>
       </div>
     </div>
+    <div
+      className="movie-card__wrap movie-card__translate-top"
+    >
+      <div
+        className="movie-card__info"
+      >
+        <div
+          className="movie-card__poster movie-card__poster--big"
+        >
+          <img
+            alt="Joker poster"
+            height="327"
+            src="img/joker.jpg"
+            width="218"
+          />
+        </div>
+        <div
+          className="movie-card__desc"
+        >
+          <nav
+            className="movie-nav movie-card__nav"
+          >
+            <ul
+              className="movie-nav__list"
+              onClick={[Function]}
+              onMouseOver={[Function]}
+            >
+               
+              <li
+                className="movie-nav__item
+                            movie-nav__item--active"
+              >
+                <a
+                  className="movie-nav__link"
+                  href="#"
+                >
+                  Overview
+                </a>
+              </li>
+              <li
+                className="movie-nav__item
+                            "
+              >
+                <a
+                  className="movie-nav__link"
+                  href="#"
+                >
+                  Details
+                </a>
+              </li>
+              <li
+                className="movie-nav__item
+                            "
+              >
+                <a
+                  className="movie-nav__link"
+                  href="#"
+                >
+                  Reviews
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div
+            className="movie-rating"
+          >
+            <div
+              className="movie-rating__score"
+            >
+              8.1
+            </div>
+            <p
+              className="movie-rating__meta"
+            >
+              <span
+                className="movie-rating__level"
+              >
+                Very good
+              </span>
+              <span
+                className="movie-rating__count"
+              >
+                950 ratings
+              </span>
+            </p>
+          </div>
+          <div
+            className="movie-card__text"
+          >
+            <p>
+              Wes Anderson's THE GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend
+            </p>
+            <p>
+              GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend. The story involves the theft and recovery of a priceless Renaissance painting and the battle for an enormous family fortune
+            </p>
+            <p
+              className="movie-card__director"
+            >
+              <strong>
+                Director: Wes Anderson
+              </strong>
+            </p>
+            <p
+              className="movie-card__starring"
+            >
+              <strong>
+                Starring: Ralph Fiennes,F. Murray Abraham,Mathieu Amalric,Adrien Brody,SWillem Dafoe,Jeff Goldblum,	Harvey Keitel,Jude Law,Bill Murray
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>,
   <div
     className="page-content"
   >
     <section
-      className="catalog"
+      className="catalog catalog--like-this"
     >
       <h2
-        className="catalog__title visually-hidden"
+        className="catalog__title"
       >
-        Catalog
+        More like this
       </h2>
-      <ul
-        className="catalog__genres-list"
-        onClick={[Function]}
-        onMouseOver={[Function]}
-      >
-        <li
-          className="catalog__genres-item
-                            catalog__genres-item--active"
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            All genres
-          </a>
-        </li>
-      </ul>
       <div
         className="catalog__movies-list"
       >
@@ -260,21 +347,6 @@ Array [
           </h3>
         </article>
       </div>
-      <div
-        className="catalog__more"
-      >
-        <div
-          className="catalog__more"
-        >
-          <button
-            className="catalog__button visually-hidden"
-            onClick={[Function]}
-            type="button"
-          >
-            Show more
-          </button>
-        </div>
-      </div>
     </section>
     <footer
       className="page-footer"
@@ -285,7 +357,6 @@ Array [
         <a
           className="logo__link logo__link--light"
           href="/"
-          onClick={[Function]}
         >
           <span
             className="logo__letter logo__letter--1"

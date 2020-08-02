@@ -1,8 +1,12 @@
 // controls.jsx
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {AuthorizationStatus} from '../../reducer/user/user.js';
 import {fullInfo} from '../../reducer/data/data.js';
+import {AppRoutes} from '../../const.js';
+import {connect} from 'react-redux';
+import {getMovie} from '../../reducer/movie/selectors.js';
 
 const Controls = React.memo(function Controls(props) {
   const {favoriteButtonClickHandler, authorizationStatus, movieInfo} = props;
@@ -17,16 +21,18 @@ const Controls = React.memo(function Controls(props) {
           </svg>
           <span>My list</span>
         </button>
-        <a href="/add-review" className="btn movie-card__button">Add review</a>
+        <Link to={`${AppRoutes.ADD_REVIEW}/${movieInfo.id}`}
+          className="btn movie-card__button">Add review
+        </Link>
       </React.Fragment>
     );
   }
   return (
     <React.Fragment>
       <div className="btn btn--list movie-card__button">
-        <a href="/sign-in" className="logo__link">
+        <Link to={`${AppRoutes.LOGIN}`} className="logo__link">
           <span>My list</span>
-        </a>
+        </Link>
       </div>
     </React.Fragment>
   );
@@ -40,4 +46,10 @@ Controls.propTypes = {
     AuthorizationStatus.NO_AUTH
   ]),
 };
-export default Controls;
+
+const mapStateToProps = (state) => ({
+  movieInfo: getMovie(state),
+});
+
+export {Controls};
+export default connect(mapStateToProps)(Controls);

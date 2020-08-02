@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Controls test <Controls /> should render correctly 1`] = `
+<div
+  className="btn btn--list movie-card__button"
+>
+  <a
+    className="logo__link"
+    href="/login"
+    onClick={[Function]}
+  >
+    <span>
+      My list
+    </span>
+  </a>
+</div>
+`;

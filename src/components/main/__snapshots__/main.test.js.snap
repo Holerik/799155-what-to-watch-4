@@ -27,7 +27,6 @@ Array [
         <a
           className="logo__link"
           href="/"
-          onClick={[Function]}
         >
           <span
             className="logo__letter logo__letter--1"
@@ -114,7 +113,8 @@ Array [
             >
               <a
                 className="logo__link"
-                href="/sign-in"
+                href="/login"
+                onClick={[Function]}
               >
                 <span>
                   My list
@@ -148,7 +148,8 @@ Array [
         >
           <a
             className="catalog__genres-link"
-            href="#"
+            href="/"
+            onClick={[Function]}
           >
             All genres
           </a>
@@ -270,7 +271,6 @@ Array [
         <a
           className="logo__link logo__link--light"
           href="/"
-          onClick={[Function]}
         >
           <span
             className="logo__letter logo__letter--1"

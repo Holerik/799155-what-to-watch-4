@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../reducer/movie/movie.js';
 import {ShowMode} from '../../reducer/data/data.js';
-import {getCardsCount, getFavoritesCount} from '../../reducer/data/selectors.js';
+import {getFavoriteFilms, getFilmsByGenre} from '../../reducer/data/selectors.js';
 import {getLastCardNumber} from '../../reducer/movie/selectors.js';
 
 const ShowMore = React.memo(function ShowMore(props) {
@@ -20,8 +20,8 @@ const ShowMore = React.memo(function ShowMore(props) {
 
 const mapStateToProps = (state) => ({
   lastCard: getLastCardNumber(state),
-  cardsCount: getCardsCount(state),
-  favoritesCount: getFavoritesCount(state),
+  cardsCount: getFilmsByGenre(state).length,
+  favoritesCount: getFavoriteFilms(state).length,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,6 +1,6 @@
 // app.jsx
 import React, {Component} from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Main from '../main/main.jsx';
@@ -27,6 +27,7 @@ import {
   getGenre,
   getFilmsByGenre,
   getGenresList,
+  getMoviesList,
 } from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus, getAuthorInfo} from '../../reducer/user/selectors.js';
 import SignIn from '../sign-in/sign-in.jsx';
@@ -35,7 +36,9 @@ import {
 } from '../../reducer/review/review.js';
 import withAddReview from '../../hocs/with-addreview/with-addreview.jsx';
 import AddReview from '../add-review/add-review.jsx';
-import {ShowMode, Operation as DataOperation} from '../../reducer/data/data.js';
+import {Operation as DataOperation} from '../../reducer/data/data.js';
+import {AppRoutes} from '../../const.js';
+import history from '../../history.js';
 
 const AddReviewText = withAddReview(AddReview);
 const tabItems = [`Overview`, `Details`, `Reviews`];
@@ -48,11 +51,14 @@ class App extends React.PureComponent {
     this._setActiveGenre = this._setActiveGenre.bind(this);
     this._setActiveMovie = this._setActiveMovie.bind(this);
     this._onSignIn = this._onSignIn.bind(this);
+    this._onAddReviewText = this._onAddReviewText.bind(this);
+    this._changeFavoriteStatus = this._changeFavoriteStatus.bind(this);
+
   }
 
   _onSignIn(authData) {
     this.props.login(authData);
-    location.href = `/`;
+    location.href = AppRoutes.ROOT;
   }
 
   _onMovieTitleClick(movie) {
@@ -61,6 +67,7 @@ class App extends React.PureComponent {
 
   _onAddReviewText(movie, comment) {
     this.props.onAddReviewComment(movie, comment);
+    history.goBack();
   }
 
   _setActiveMovie(activeMovieId) {
@@ -78,89 +85,98 @@ class App extends React.PureComponent {
     this.props.setCardsCount(this.props.filmsInfo.length);
   }
 
-  _renderApp(mode) {
+  _changeFavoriteStatus(movie) {
+    this.props.changeFavoriteStatus(movie);
+    const film = this.props.allFilmsInfo.find((item) => item.id === movie.id);
+    this.props.resetFavoriteMovie(film);
+  }
+
+  _renderMainScreen() {
     if (this.props.movie === undefined) {
-      switch (mode) {
-        case ShowMode.GENRE_MODE:
-          return (
-            <Main
-              promoMovie={this.props.promo}
-              setActiveMovie={this._setActiveMovie}
-              onSelectGenre={this._setActiveGenre}
-              genre={this.props.genre}
-              firstCard={this.props.firstCard}
-              lastCard={this.props.lastCard}
-              favoriteButtonClickHandler={this.props.changeFavoriteStatus}
-            />);
-        case ShowMode.FAVORITE_MODE:
-          return (
-            <MyList
-              setActiveMovie={this._setActiveMovie}
-              firstCard={this.props.firstCard}
-              lastCard={this.props.lastCard}
-            />);
-      }
+      return (
+        <Main
+          promoMovie={this.props.promo}
+          setActiveMovie={this._setActiveMovie}
+          onSelectGenre={this._setActiveGenre}
+          genre={this.props.genre}
+          firstCard={this.props.firstCard}
+          lastCard={this.props.lastCard}
+          favoriteButtonClickHandler={this.props.changeFavoriteStatus}
+        />);
     }
-    const props = {
-      movieInfo: this.props.movie,
-      setActiveItem: this._setActivePage,
-      tabItems,
-      setActiveMovie: this._setActiveMovie,
-      favoriteButtonClickHandler: this.props.changeFavoriteStatus,
-      loadReviews: this.props.loadReviews
-    };
     switch (this.props.page) {
       case 0:
-        return (
-          <MoviecardOverview
-            {...props}
-          />
-        );
+        return history.push(AppRoutes.MOVIE_OVERVIEW);
       case 1:
-        return (
-          <MoviecardDetails
-            {...props}
-          />
-        );
+        return history.push(AppRoutes.MOVIE_DETAILS);
       case 2:
-        return (
-          <MoviecardReviews
-            {...props}
-          />
-        );
+        return history.push(AppRoutes.MOVIE_REVIEWS);
     }
     return null;
   }
 
   render() {
+    const props = {
+      movieInfo: this.props.movie,
+      setActiveItem: this._setActivePage,
+      tabItems,
+      setActiveMovie: this._setActiveMovie,
+      favoriteButtonClickHandler: this._changeFavoriteStatus,
+      loadReviews: this.props.loadReviews
+    };
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
-          <Route exact path="/">
-            {this._renderApp(ShowMode.GENRE_MODE)}
+          <Route exact path={AppRoutes.ROOT}>
+            {this._renderMainScreen()}
           </Route>
-          <Route exact path="/sign-in">
+          <Route exact path={AppRoutes.LOGIN}>
             <SignIn
               onSubmit={this._onSignIn}
             />
           </Route>
-          <Route exact path="/my-list">
-            {this._renderApp(ShowMode.FAVORITE_MODE)}
-          </Route>
-          <Route exact path="/add-review">
-            <AddReviewText
-              onSubmit={this._onAddReviewText}
-              movieInfo={this.props.filmsInfo[0]}
-              avatar={this.props.authorInfo.avatar}
-              setPage={this.props.setPage}
-              setMovie={this.props.setMovie}
+          <Route exact path={`${AppRoutes.MOVIE_OVERVIEW}`}>
+            <MoviecardOverview
+              {...props}
             />
           </Route>
+          <Route exact path={`${AppRoutes.MOVIE_DETAILS}`}>
+            <MoviecardDetails
+              {...props}
+            />
+          </Route>
+          <Route exact path={`${AppRoutes.MOVIE_REVIEWS}`}>
+            <MoviecardReviews
+              {...props}
+            />
+          </Route>
+          <Route exact path={AppRoutes.MY_LIST}>
+            <MyList
+              setActiveMovie={this._setActiveMovie}
+              firstCard={this.props.firstCard}
+              lastCard={this.props.lastCard}
+            />);
+          </Route>
+          <Route exact path={`${AppRoutes.ADD_REVIEW}/:id`}
+            render={(routeProps) => {
+              const id = +routeProps.match.params.id;
+              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              return (
+                <AddReviewText
+                  onSubmit={this._onAddReviewText}
+                  movieInfo={movie}
+                  avatar={`../${this.props.authorInfo.avatar}`}
+                  setPage={this.props.setPage}
+                  setMovie={this.props.setMovie}
+                />
+              );
+            }}
+          />
           <Route exact path="/dev-component">
             <Component />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 }
@@ -171,6 +187,8 @@ App.propTypes = {
     name: PropTypes.string,
   }),
   filmsInfo: PropTypes.arrayOf(
+      PropTypes.exact(fullInfo)).isRequired,
+  allFilmsInfo: PropTypes.arrayOf(
       PropTypes.exact(fullInfo)).isRequired,
   movie: PropTypes.exact(fullInfo),
   promo: PropTypes.exact(fullInfo).isRequired,
@@ -194,6 +212,7 @@ App.propTypes = {
   lastCard: PropTypes.number,
   onAddReviewComment: PropTypes.func.isRequired,
   setAuthorInfo: PropTypes.func,
+  resetFavoriteMovie: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -207,6 +226,7 @@ const mapStateToProps = (state) => ({
   promo: getPromoMovie(state),
   firstCard: getFirstCardNumber(state),
   lastCard: getLastCardNumber(state),
+  allFilmsInfo: getMoviesList(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -237,6 +257,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadReviews(movie) {
     dispatch(ReviewOperation.loadReviews(movie));
+  },
+  onAddReviewComment(movie, review) {
+    dispatch(ReviewOperation.pushComment(movie, review));
+  },
+  resetFavoriteMovie(movie) {
+    dispatch(MovieCreator.resetMovie(movie));
   },
 });
 

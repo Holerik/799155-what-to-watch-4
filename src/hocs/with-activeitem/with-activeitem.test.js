@@ -39,6 +39,7 @@ describe(`withActiveItem tests`, () => {
         currentActiveItem={0}
         setActiveItem={() => {}}
         maxItemsCount={3}
+        id={0}
       />), {
       createNodeMock() {
         return {};

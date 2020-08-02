@@ -125,7 +125,7 @@ describe(`App tests`, () => {
       },
       MOVIE: {
         page: 0,
-        movie: undefined,
+        movie: promoMovie,
         firstCard: 0,
         lastCard: 2,
         play: false,
@@ -160,7 +160,8 @@ describe(`App tests`, () => {
           <App
             authorInfo={{avatar: `img/avatar.jpg`, name: `Nina`}}
             filmsInfo= {films}
-            movie = {undefined}
+            allFilmsInfo= {films}
+            movie = {promoMovie}
             promo = {promoMovie}
             page = {0}
             genre = {`All genres`}
@@ -171,6 +172,7 @@ describe(`App tests`, () => {
             setMovie = {() => {}}
             setPromo = {() => {}}
             setGenre = {() => {}}
+            resetFavoriteMovie = {() => {}}
             login= {() => {}}
             setCardsCount={() => {}}
             changeFavoriteStatus={() => {}}

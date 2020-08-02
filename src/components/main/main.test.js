@@ -2,9 +2,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
+import {Router} from 'react-router-dom';
 import configureStore from "redux-mock-store";
 import {Main} from './main.jsx';
 import {AuthorizationStatus} from '../../reducer/user/user.js';
+import history from '../../history.js';
 
 const mockStore = configureStore([]);
 
@@ -139,21 +141,23 @@ describe(`Main tests`, () => {
     });
     const tree = renderer.create(
         <Provider store={store}>
-          <Main
-            promoMovie={promoMovie}
-            filmsInfo={films}
-            setActiveMovie={() => {}}
-            onSelectGenre={() => {}}
-            genre={`All genres`}
-            genresList={[`All genres`]}
-            firstCard={0}
-            lastCard={2}
-            play={false}
-            playMovie={() => {}}
-            stopMovie={() => {}}
-            favoriteButtonClickHandler={() => {}}
-            authorizationStatus={AuthorizationStatus.NO_AUTH}
-          />
+          <Router history={history}>
+            <Main
+              promoMovie={promoMovie}
+              filmsInfo={films}
+              setActiveMovie={() => {}}
+              onSelectGenre={() => {}}
+              genre={`All genres`}
+              genresList={[`All genres`]}
+              firstCard={0}
+              lastCard={2}
+              play={false}
+              playMovie={() => {}}
+              stopMovie={() => {}}
+              favoriteButtonClickHandler={() => {}}
+              authorizationStatus={AuthorizationStatus.NO_AUTH}
+            />
+          </Router>
         </Provider>
     ).toJSON();
     expect(tree).toMatchSnapshot();
