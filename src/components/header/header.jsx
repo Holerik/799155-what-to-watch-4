@@ -30,7 +30,7 @@ const Header = React.memo(function Header(props) {
         {props.authorizationStatus === AuthorizationStatus.AUTH &&
           <Link to={AppRoutes.MY_LIST}>
             <div className="user-block__avatar">
-              <img src={`../${avatar}`} alt="User avatar" width="63" height="63"/>
+              <img src={`/${avatar}`} alt="User avatar" width="63" height="63"/>
             </div>
           </Link>}
         {props.authorizationStatus === AuthorizationStatus.NO_AUTH &&

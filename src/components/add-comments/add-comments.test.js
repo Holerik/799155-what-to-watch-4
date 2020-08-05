@@ -4,8 +4,8 @@ import renderer from 'react-test-renderer';
 import AddComments from './add-comments.jsx';
 
 const mockReview = {
-  id: -1,
-  authorId: -1,
+  id: 1,
+  authorId: 1,
   author: ``,
   rating: `0`,
   date: `2020-07-24T14:16:23.037Z`,

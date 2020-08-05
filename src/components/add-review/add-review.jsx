@@ -99,7 +99,7 @@ class AddReview extends React.PureComponent {
 
               <div className="user-block">
                 <div className="user-block__avatar">
-                  <img src={`../${avatar}`} alt="User avatar" width="63" height="63" />
+                  <img src={`/${avatar}`} alt="User avatar" width="63" height="63" />
                 </div>
               </div>
             </header>

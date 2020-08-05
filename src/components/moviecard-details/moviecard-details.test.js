@@ -4,7 +4,6 @@ import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {MoviecardDetails} from './moviecard-details.jsx';
-import {AuthorizationStatus} from '../../reducer/user/user.js';
 import history from '../../history.js';
 import {Router} from 'react-router-dom';
 
@@ -153,10 +152,8 @@ describe(`MoviecardDetails tests`, () => {
               setActiveMovie={() => {}}
               play={false}
               playMovie={() => {}}
-              stopMovie={() => {}}
               genre={`All genres`}
               favoriteButtonClickHandler={() => {}}
-              authorizationStatus={AuthorizationStatus.NO_AUTH}
             />
           </Router>
         </Provider>

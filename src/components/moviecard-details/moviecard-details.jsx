@@ -12,16 +12,13 @@ import Footer from '../footer/footer.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 import {ActionCreator} from '../../reducer/movie/movie.js';
-import {getPlayState, getMovie} from '../../reducer/movie/selectors.js';
-import withVideo from '../../hocs/with-video/with-video.jsx';
-import Video from '../video/video.jsx';
+import {getPlayState} from '../../reducer/movie/selectors.js';
 import {getFilmsByGenre} from '../../reducer/data/selectors.js';
-import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
-import {AuthorizationStatus} from '../../reducer/user/user.js';
 import Controls from '../controls/controls.jsx';
+import {AppRoutes} from '../../const.js';
+import history from '../../history.js';
 
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
-const VideoPlayer = withVideo(Video);
 const PageTabs = withActiveItem(Tabs);
 
 const MoviecardDetails = React.memo(function MoviecardDetails(props) {
@@ -30,21 +27,11 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
     filmsInfo,
     setActiveMovie,
     playMovie,
-    stopMovie,
     favoriteButtonClickHandler
   } = props;
   const genres = getFullString(movieInfo.genre, 183);
   if (props.play) {
-    return (
-      <VideoPlayer
-        src={movieInfo.src}
-        isMuted={false}
-        poster={movieInfo.poster}
-        width={480}
-        isPlaying={true}
-        onStopPlayMovie={stopMovie}
-      />
-    );
+    return history.push(`${AppRoutes.PLAY_VIDEO}/${movieInfo.id}`);
   }
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -74,7 +61,6 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
               </button>
               {<Controls
                 favoriteButtonClickHandler={favoriteButtonClickHandler}
-                movieInfo={movieInfo}
               />}
             </div>
           </div>
@@ -143,24 +129,15 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
 const mapStateToProps = (state) => ({
   play: getPlayState(state),
   filmsInfo: getFilmsByGenre(state),
-  movieInfo: getMovie(state),
-  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   playMovie: () => {
     dispatch(ActionCreator.playMovie());
   },
-  stopMovie: () => {
-    dispatch(ActionCreator.stopMovie());
-  }
 });
 
 MoviecardDetails.propTypes = {
-  authorizationStatus: PropTypes.oneOf([
-    AuthorizationStatus.AUTH,
-    AuthorizationStatus.NO_AUTH
-  ]),
   movieInfo: PropTypes.exact(fullInfo).isRequired,
   setActiveItem: PropTypes.func.isRequired,
   tabItems: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -168,7 +145,6 @@ MoviecardDetails.propTypes = {
       PropTypes.exact(fullInfo)).isRequired,
   setActiveMovie: PropTypes.func.isRequired,
   playMovie: PropTypes.func.isRequired,
-  stopMovie: PropTypes.func.isRequired,
   play: PropTypes.bool.isRequired,
   favoriteButtonClickHandler: PropTypes.func.isRequired,
 };

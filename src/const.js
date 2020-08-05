@@ -8,6 +8,7 @@ export const AppRoutes = {
   MOVIE_DETAILS: `/details`,
   ADD_REVIEW: `/addreview`,
   MY_LIST: `/mylist`,
+  PLAY_VIDEO: `/play`,
 };
 
 export const MIN_REVIEW_LENGTH = 50;

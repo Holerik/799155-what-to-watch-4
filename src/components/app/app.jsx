@@ -41,8 +41,11 @@ import {AppRoutes} from '../../const.js';
 import history from '../../history.js';
 import PrivateRoute from '../private-route/private-route.jsx';
 import NotFound from '../not-found/not-found.jsx';
+import Video from '../video/video.jsx';
+import withVideo from '../../hocs/with-video/with-video.jsx';
 
 const AddReviewText = withAddReview(AddReview);
+const VideoPlayer = withVideo(Video);
 const tabItems = [`Overview`, `Details`, `Reviews`];
 
 class App extends React.PureComponent {
@@ -84,8 +87,8 @@ class App extends React.PureComponent {
 
   _changeFavoriteStatus(movie) {
     this.props.changeFavoriteStatus(movie);
-    const film = this.props.allFilmsInfo.find((item) => item.id === movie.id);
-    this.props.resetFavoriteMovie(film);
+    //    const film = this.props.allFilmsInfo.find((item) => item.id === movie.id);
+    //    this.props.resetFavoriteMovie(film);
   }
 
   _renderMainScreen() {
@@ -133,7 +136,7 @@ class App extends React.PureComponent {
           </Route>
           <Route exact path={`${AppRoutes.MOVIE_OVERVIEW}/:id`}
             render={(routeProps) => {
-              const id = +routeProps.match.params.id;
+              const id = Number(routeProps.match.params.id);
               const movie = this.props.allFilmsInfo.find((film) => film.id === id);
               return (
                 <MoviecardOverview
@@ -145,7 +148,7 @@ class App extends React.PureComponent {
           />
           <Route exact path={`${AppRoutes.MOVIE_DETAILS}/:id`}
             render={(routeProps) => {
-              const id = +routeProps.match.params.id;
+              const id = Number(routeProps.match.params.id);
               const movie = this.props.allFilmsInfo.find((film) => film.id === id);
               return (
                 <MoviecardDetails
@@ -157,7 +160,7 @@ class App extends React.PureComponent {
           />
           <Route exact path={`${AppRoutes.MOVIE_REVIEWS}/:id`}
             render={(routeProps) => {
-              const id = +routeProps.match.params.id;
+              const id = Number(routeProps.match.params.id);
               const movie = this.props.allFilmsInfo.find((film) => film.id === id);
               return (
                 <MoviecardReviews
@@ -177,7 +180,7 @@ class App extends React.PureComponent {
           <PrivateRoute exact path={`${AppRoutes.ADD_REVIEW}/:id`}
             authorizationStatus={this.props.authorizationStatus}
             render={(routeProps) => {
-              const id = +routeProps.match.params.id;
+              const id = Number(routeProps.match.params.id);
               const movie = this.props.allFilmsInfo.find((film) => film.id === id);
               return (
                 <AddReviewText
@@ -190,9 +193,25 @@ class App extends React.PureComponent {
               );
             }}
           />
-          <Route
-            render = {() => <NotFound/>}
+          <Route exact path={`${AppRoutes.PLAY_VIDEO}/:id`}
+            render={(routeProps) => {
+              const id = Number(routeProps.match.params.id);
+              const movie = this.props.promo.id === id ? this.props.promo : this.props.allFilmsInfo.find((film) => film.id === id);
+              return (
+                <VideoPlayer
+                  src={movie.src}
+                  isMuted={false}
+                  poster={movie.poster}
+                  width={480}
+                  isPlaying={true}
+                  onStopPlayMovie={this.props.stopMovie}
+                />
+              );
+            }}
           />
+          <Route>
+            <NotFound/>
+          </Route>
         </Switch>
       </Router>
     );
@@ -231,6 +250,7 @@ App.propTypes = {
   onAddReviewComment: PropTypes.func.isRequired,
   setAuthorInfo: PropTypes.func,
   resetFavoriteMovie: PropTypes.func.isRequired,
+  stopMovie: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -282,6 +302,10 @@ const mapDispatchToProps = (dispatch) => ({
   resetFavoriteMovie(movie) {
     dispatch(MovieCreator.resetMovie(movie));
   },
+  stopMovie: () => {
+    dispatch(MovieCreator.stopMovie());
+    history.goBack();
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

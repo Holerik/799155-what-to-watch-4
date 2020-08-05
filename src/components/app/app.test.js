@@ -148,7 +148,6 @@ describe(`App tests`, () => {
       setMovie: () => {},
       setPromo: () => {},
       setGenre: () => {},
-      playMovie: () => {},
       stopMovie: () => {},
       login: () => {},
       setCardsCount: () => {},
@@ -179,6 +178,7 @@ describe(`App tests`, () => {
             authorizationStatus={AuthorizationStatus.NO_AUTH}
             onAddReviewComment={() => {}}
             loadReviews={() => {}}
+            stopMovie={() => {}}
           />
         </Provider>, {
           createNodeMock: () => {
