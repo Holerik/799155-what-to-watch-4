@@ -114,19 +114,31 @@ Array [
                 Play
               </span>
             </button>
-            <div
+            <button
               className="btn btn--list movie-card__button"
+              onClick={[Function]}
+              type="button"
             >
-              <a
-                className="logo__link"
-                href="/login"
-                onClick={[Function]}
+              <svg
+                height="20"
+                viewBox="0 0 19 20"
+                width="19"
               >
-                <span>
-                  My list
-                </span>
-              </a>
-            </div>
+                <use
+                  xlinkHref="#add"
+                />
+              </svg>
+              <span>
+                My list
+              </span>
+            </button>
+            <a
+              className="btn movie-card__button"
+              href="/addreview/1"
+              onClick={[Function]}
+            >
+              Add review
+            </a>
           </div>
         </div>
       </div>
@@ -200,7 +212,7 @@ Array [
             <div
               className="movie-rating__score"
             >
-              8.1
+              4.3
             </div>
             <p
               className="movie-rating__meta"
@@ -208,12 +220,12 @@ Array [
               <span
                 className="movie-rating__level"
               >
-                Very good
+                Normal
               </span>
               <span
                 className="movie-rating__count"
               >
-                950 ratings
+                150 ratings
               </span>
             </p>
           </div>
@@ -221,23 +233,23 @@ Array [
             className="movie-card__text"
           >
             <p>
-              Wes Anderson's THE GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend
+              The origin tale of the Joker (Joaquin Phoenix) – one of the most iconic villains in comic book history.
             </p>
             <p>
-              GRAND BUDAPEST HOTEL recounts the adventures of Gustave H, a legendary concierge at a famous European hotel between the wars, and Zero Moustafa, the lobby boy who becomes his most trusted friend. The story involves the theft and recovery of a priceless Renaissance painting and the battle for an enormous family fortune
+              Arthur Fleck (Joaquin Phoenix) isn’t happy with his life. He struggles to make money as a part-time clown while sharing a rundown apartment with his ailing mom (Frances Conroy). But Arthur lives in a city struck by hard times where a decent, honest living is difficult to come by. He also suffers from a condition that causes him to break into uncontrollable laughter. None of this stops Arthur from dreaming big. He aspires to be a stand-up comedian and attempts to write jokes in his diary. Caught in between it all, Arthur slowly begins to lose his grip on sanity
             </p>
             <p
               className="movie-card__director"
             >
               <strong>
-                Director: Wes Anderson
+                Director: Todd Phillips
               </strong>
             </p>
             <p
               className="movie-card__starring"
             >
               <strong>
-                Starring: Ralph Fiennes,F. Murray Abraham,Mathieu Amalric,Adrien Brody,SWillem Dafoe,Jeff Goldblum,	Harvey Keitel,Jude Law,Bill Murray
+                Starring: Joaquin Phoenix,Zazie Beetz,Robert De Niro,Bryan Callen,Shea Whigham,Frances Conroy,Glenn Fleshler,Brett Cullen,Marc Maron
               </strong>
             </p>
           </div>
@@ -269,12 +281,17 @@ Array [
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
-            <img
-              alt="Joker poster"
-              height="175"
-              src="img/joker.jpg"
-              width="280"
-            />
+            <a
+              href=""
+              onClick={[Function]}
+            >
+              <img
+                alt="Joker poster"
+                height="175"
+                src="img/joker.jpg"
+                width="280"
+              />
+            </a>
           </div>
           <h3
             className="small-movie-card__title"
@@ -298,12 +315,17 @@ Array [
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
-            <img
-              alt="The Commuter poster"
-              height="175"
-              src="img/commuter.jpg"
-              width="280"
-            />
+            <a
+              href=""
+              onClick={[Function]}
+            >
+              <img
+                alt="The Commuter poster"
+                height="175"
+                src="img/commuter.jpg"
+                width="280"
+              />
+            </a>
           </div>
           <h3
             className="small-movie-card__title"
@@ -327,12 +349,17 @@ Array [
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
-            <img
-              alt="Molly game poster"
-              height="175"
-              src="img/mollys-game.jpg"
-              width="280"
-            />
+            <a
+              href=""
+              onClick={[Function]}
+            >
+              <img
+                alt="Molly game poster"
+                height="175"
+                src="img/mollys-game.jpg"
+                width="280"
+              />
+            </a>
           </div>
           <h3
             className="small-movie-card__title"

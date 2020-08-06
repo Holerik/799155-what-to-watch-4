@@ -12,18 +12,15 @@ import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
 import GenreList from '../genre-list/genre-list.jsx';
 import {ActionCreator} from '../../reducer/movie/movie.js';
 import {getPlayState} from '../../reducer/movie/selectors.js';
-import withVideo from '../../hocs/with-video/with-video.jsx';
-import Video from '../video/video.jsx';
 import {getGenresList, getFilmsByGenre} from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
 import {AuthorizationStatus} from '../../reducer/user/user.js';
 import {ShowMode} from '../../reducer/data/data.js';
 import {AppRoutes} from '../../const.js';
 import {Link} from 'react-router-dom';
+import {MAX_GENRE_COUNT} from '../../const.js';
+import history from '../../history.js';
 
-const MAX_GENRE_COUNT = 10;
-
-const VideoPlayer = withVideo(Video);
 const GenreTabs = withActiveItem(GenreList);
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
 
@@ -38,7 +35,6 @@ const Main = React.memo(function Main(props) {
     firstCard,
     lastCard,
     playMovie,
-    stopMovie,
     authorizationStatus,
     favoriteButtonClickHandler
   } = props;
@@ -48,16 +44,7 @@ const Main = React.memo(function Main(props) {
   const activeItem = genresList.indexOf(genre);
 
   if (props.play) {
-    return (
-      <VideoPlayer
-        src={promoMovie.src}
-        isMuted={false}
-        poster={promoMovie.poster}
-        width={480}
-        isPlaying={true}
-        onStopPlayMovie={stopMovie}
-      />
-    );
+    return history.push(`${AppRoutes.PLAY_VIDEO}/${promoMovie.id}`);
   }
   return (
     <React.Fragment>
@@ -149,9 +136,6 @@ const mapDispatchToProps = (dispatch) => ({
   playMovie: () => {
     dispatch(ActionCreator.playMovie());
   },
-  stopMovie: () => {
-    dispatch(ActionCreator.stopMovie());
-  }
 });
 
 Main.propTypes = {
@@ -164,7 +148,6 @@ Main.propTypes = {
   genresList: PropTypes.arrayOf(PropTypes.string).isRequired,
   firstCard: PropTypes.number.isRequired,
   playMovie: PropTypes.func.isRequired,
-  stopMovie: PropTypes.func.isRequired,
   play: PropTypes.bool.isRequired,
   lastCard: PropTypes.number.isRequired,
   authorizationStatus: PropTypes.oneOf([

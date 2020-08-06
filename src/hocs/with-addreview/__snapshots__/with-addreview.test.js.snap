@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Addreview test <AddReview /> should render correctly 1`] = `
+exports[`withAddReview tests Should correctly render review page 1`] = `
 <section
   className="movie-card movie-card--full"
 >

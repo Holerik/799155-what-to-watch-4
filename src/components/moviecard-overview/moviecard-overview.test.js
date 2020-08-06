@@ -4,7 +4,6 @@ import renderer from 'react-test-renderer';
 import {MoviecardOverview} from './moviecard-overview.jsx';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {AuthorizationStatus} from '../../reducer/user/user.js';
 import history from '../../history.js';
 import {Router} from 'react-router-dom';
 
@@ -121,7 +120,7 @@ describe(`MoviecardOverview tests`, () => {
         favoritesCount: 0,
       },
       MOVIE: {
-        movie: undefined,
+        movie: film,
         firstCard: 0,
         lastCard: 2,
         play: false,
@@ -152,10 +151,8 @@ describe(`MoviecardOverview tests`, () => {
               setActiveMovie={() => {}}
               play={false}
               playMovie={() => {}}
-              stopMovie={() => {}}
               genre={`All genres`}
               favoriteButtonClickHandler={() => {}}
-              authorizationStatus={AuthorizationStatus.NO_AUTH}
             />
           </Router>
         </Provider>

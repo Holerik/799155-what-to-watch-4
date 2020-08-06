@@ -4,7 +4,6 @@ import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {MoviecardReviews} from './moviecard-reviews.jsx';
-import {AuthorizationStatus} from '../../reducer/user/user.js';
 import history from '../../history.js';
 import {Router} from 'react-router-dom';
 
@@ -170,9 +169,7 @@ describe(`MoviecardReviews tests`, () => {
               setActiveMovie={() => {}}
               play={false}
               playMovie={() => {}}
-              stopMovie={() => {}}
               favoriteButtonClickHandler={() => {}}
-              authorizationStatus={AuthorizationStatus.NO_AUTH}
               loadReviews={() => {}}
               reviews={[mockReview]}
             />

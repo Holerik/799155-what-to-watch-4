@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import Moviecard from '../moviecard/moviecard.jsx';
 import {fullInfo} from '../../reducer/data/data.js';
 import {MOVIE_CARDS_ON_PAGE} from '../../reducer/movie/movie.js';
-
-const TIME_INTERVAL = 1000; // ms
+import {TIME_INTERVAL} from '../../const.js';
 
 class Movielist extends React.PureComponent {
   constructor(props) {

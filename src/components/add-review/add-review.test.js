@@ -29,8 +29,9 @@ const movie = {
   favorite: false,
 };
 
-it(`<AddReview /> should render correctly`, () => {
-  const tree = renderer
+describe(`Addreview test`, () => {
+  it(`<AddReview /> should render correctly`, () => {
+    const tree = renderer
     .create(<AddReview
       movieInfo={movie}
       avatar={`img/avatar.jpg`}
@@ -40,6 +41,6 @@ it(`<AddReview /> should render correctly`, () => {
       onChangeLength={() => {}}
     />)
     .toJSON();
-  expect(tree).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
+  });
 });
-

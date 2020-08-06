@@ -8,4 +8,17 @@ export const AppRoutes = {
   MOVIE_DETAILS: `/details`,
   ADD_REVIEW: `/addreview`,
   MY_LIST: `/mylist`,
+  PLAY_VIDEO: `/play`,
 };
+
+export const MIN_REVIEW_LENGTH = 50;
+export const MAX_REVIEW_LENGTH = 400;
+
+export const STARS_COUNT = 5;
+export const COMMENT_ERROR = `comment--error`;
+
+export const MAX_GENRE_COUNT = 10;
+
+export const TIME_INTERVAL = 1000; // ms
+
+

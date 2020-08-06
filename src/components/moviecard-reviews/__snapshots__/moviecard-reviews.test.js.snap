@@ -98,19 +98,31 @@ Array [
                 Play
               </span>
             </button>
-            <div
+            <button
               className="btn btn--list movie-card__button"
+              onClick={[Function]}
+              type="button"
             >
-              <a
-                className="logo__link"
-                href="/login"
-                onClick={[Function]}
+              <svg
+                height="20"
+                viewBox="0 0 19 20"
+                width="19"
               >
-                <span>
-                  My list
-                </span>
-              </a>
-            </div>
+                <use
+                  xlinkHref="#add"
+                />
+              </svg>
+              <span>
+                My list
+              </span>
+            </button>
+            <a
+              className="btn movie-card__button"
+              href="/addreview/1"
+              onClick={[Function]}
+            >
+              Add review
+            </a>
           </div>
         </div>
       </div>
@@ -247,12 +259,17 @@ Array [
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
-            <img
-              alt="Joker poster"
-              height="175"
-              src="img/joker.jpg"
-              width="280"
-            />
+            <a
+              href=""
+              onClick={[Function]}
+            >
+              <img
+                alt="Joker poster"
+                height="175"
+                src="img/joker.jpg"
+                width="280"
+              />
+            </a>
           </div>
           <h3
             className="small-movie-card__title"
@@ -276,12 +293,17 @@ Array [
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
-            <img
-              alt="The Commuter poster"
-              height="175"
-              src="img/commuter.jpg"
-              width="280"
-            />
+            <a
+              href=""
+              onClick={[Function]}
+            >
+              <img
+                alt="The Commuter poster"
+                height="175"
+                src="img/commuter.jpg"
+                width="280"
+              />
+            </a>
           </div>
           <h3
             className="small-movie-card__title"
@@ -305,12 +327,17 @@ Array [
             onMouseOut={[Function]}
             onMouseOver={[Function]}
           >
-            <img
-              alt="Molly game poster"
-              height="175"
-              src="img/mollys-game.jpg"
-              width="280"
-            />
+            <a
+              href=""
+              onClick={[Function]}
+            >
+              <img
+                alt="Molly game poster"
+                height="175"
+                src="img/mollys-game.jpg"
+                width="280"
+              />
+            </a>
           </div>
           <h3
             className="small-movie-card__title"

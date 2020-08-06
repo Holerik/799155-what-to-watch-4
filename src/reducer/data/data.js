@@ -1,6 +1,8 @@
 // data.js
 import PropTypes from 'prop-types';
 import {extend} from '../../utils.js';
+import {ActionCreator as MovieCreator} from '../movie/movie.js';
+import NameSpace from '../name-space/name-space.js';
 
 export const fullInfo = {
   id: PropTypes.number.isRequired,
@@ -273,6 +275,10 @@ const Operation = {
     return api.post(`/favorite/${movie.id}/${!movie.favorite ? 1 : 0}`)
     .then(() => {
       dispatch(ActionCreator.changeFavoriteStatus(movie));
+      if (movie.id !== getState()[NameSpace.DATA].promo.id) {
+        const film = getState()[NameSpace.DATA].moviesList.find((item) => item.id === movie.id);
+        dispatch(MovieCreator.resetMovie(film));
+      }
     });
   },
 };

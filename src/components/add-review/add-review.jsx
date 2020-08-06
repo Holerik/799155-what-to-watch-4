@@ -3,12 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {fullInfo} from '../../reducer/data/data.js';
 import Rating from '../rating/rating.jsx';
-
-const MIN_REVIEW_LENGTH = 50;
-const MAX_REVIEW_LENGTH = 400;
-
-const STARS_COUNT = 10;
-const COMMENT_ERROR = `comment--error`;
+import {
+  MIN_REVIEW_LENGTH,
+  MAX_REVIEW_LENGTH,
+  STARS_COUNT,
+  COMMENT_ERROR,
+} from '../../const.js';
 
 class AddReview extends React.PureComponent {
   constructor(props) {
@@ -99,7 +99,7 @@ class AddReview extends React.PureComponent {
 
               <div className="user-block">
                 <div className="user-block__avatar">
-                  <img src={avatar} alt="User avatar" width="63" height="63" />
+                  <img src={`/${avatar}`} alt="User avatar" width="63" height="63" />
                 </div>
               </div>
             </header>
