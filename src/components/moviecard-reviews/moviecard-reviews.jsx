@@ -26,6 +26,9 @@ const PageTabs = withActiveItem(Tabs);
 class MoviecardReviews extends React.PureComponent {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
     if (this.props.loadStatus) {
       this.props.loadReviews(this.props.movieInfo);
     }

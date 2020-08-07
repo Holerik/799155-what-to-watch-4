@@ -87,8 +87,6 @@ class App extends React.PureComponent {
 
   _changeFavoriteStatus(movie) {
     this.props.changeFavoriteStatus(movie);
-    //    const film = this.props.allFilmsInfo.find((item) => item.id === movie.id);
-    //    this.props.resetFavoriteMovie(film);
   }
 
   _renderMainScreen() {
@@ -101,7 +99,7 @@ class App extends React.PureComponent {
           genre={this.props.genre}
           firstCard={this.props.firstCard}
           lastCard={this.props.lastCard}
-          favoriteButtonClickHandler={this.props.changeFavoriteStatus}
+          favoriteButtonClickHandler={this._changeFavoriteStatus}
         />);
     }
     switch (this.props.page) {
@@ -113,6 +111,11 @@ class App extends React.PureComponent {
         return history.push(`${AppRoutes.MOVIE_REVIEWS}/${this.props.movie.id}`);
     }
     return null;
+  }
+
+  _getMovie(routeProps) {
+    const id = Number(routeProps.match.params.id);
+    return this.props.allFilmsInfo.find((film) => film.id === id);
   }
 
   render() {
@@ -136,8 +139,7 @@ class App extends React.PureComponent {
           </Route>
           <Route exact path={`${AppRoutes.MOVIE_OVERVIEW}/:id`}
             render={(routeProps) => {
-              const id = Number(routeProps.match.params.id);
-              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              const movie = this._getMovie(routeProps);
               return (
                 <MoviecardOverview
                   {...props}
@@ -148,8 +150,7 @@ class App extends React.PureComponent {
           />
           <Route exact path={`${AppRoutes.MOVIE_DETAILS}/:id`}
             render={(routeProps) => {
-              const id = Number(routeProps.match.params.id);
-              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              const movie = this._getMovie(routeProps);
               return (
                 <MoviecardDetails
                   {...props}
@@ -160,8 +161,7 @@ class App extends React.PureComponent {
           />
           <Route exact path={`${AppRoutes.MOVIE_REVIEWS}/:id`}
             render={(routeProps) => {
-              const id = Number(routeProps.match.params.id);
-              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              const movie = this._getMovie(routeProps);
               return (
                 <MoviecardReviews
                   {...props}
