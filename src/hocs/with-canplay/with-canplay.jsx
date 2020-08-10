@@ -21,8 +21,8 @@ const withCanPlay = (Component) => {
         <Component
           {...this.props}
           canPlay={this.state.canPlay}
-          mouseClickHandler={this.props.onMouseClick}
-          mouseOverHandler={this.props.onMouseOver}
+          onMouseClick={this.props.mouseClickHandler}
+          onMouseOver={this.props.mouseOverHandler}
           onCanPlay={this._onCanPlay}
         >
         </Component>
@@ -31,8 +31,8 @@ const withCanPlay = (Component) => {
   }
 
   WithCanPlay.propTypes = {
-    onMouseClick: PropTypes.func.isRequired,
-    onMouseOver: PropTypes.func.isRequired,
+    mouseClickHandler: PropTypes.func.isRequired,
+    mouseOverHandler: PropTypes.func.isRequired,
   };
 
   return WithCanPlay;

@@ -5,22 +5,22 @@ import PropTypes from 'prop-types';
 class Tabs extends React.PureComponent {
   constructor(props) {
     super(props);
-    this._tabMouseOverHandler = this._tabMouseOverHandler.bind(this);
-    this._tabClickHandler = this._tabClickHandler.bind(this);
+    this._onMouseOverTab = this._onMouseOverTab.bind(this);
+    this._onMouseClickTab = this._onMouseClickTab.bind(this);
   }
 
-  _tabMouseOverHandler(evt) {
+  _onMouseOverTab(evt) {
     const index = this.props.listItems.findIndex((item) => {
       return item === evt.target.text;
     });
-    this.props.onMouseOver(index);
+    this.props.mouseOverHandler(index);
   }
 
-  _tabClickHandler(evt) {
+  _onMouseClickTab(evt) {
     const index = this.props.listItems.findIndex((item) => {
       return item === evt.target.text;
     });
-    this.props.onMouseClick(index);
+    this.props.mouseClickHandler(index);
   }
 
   render() {
@@ -30,8 +30,8 @@ class Tabs extends React.PureComponent {
       <React.Fragment>
         <nav className="movie-nav movie-card__nav">
           <ul className="movie-nav__list"
-            onClick={this._tabClickHandler}
-            onMouseOver={this._tabMouseOverHandler}
+            onClick={this._onMouseClickTab}
+            onMouseOver={this._onMouseOverTab}
           >
             <React.Fragment> {
               listItems.map((item, index) => {
@@ -57,8 +57,8 @@ class Tabs extends React.PureComponent {
 Tabs.propTypes = {
   activeItem: PropTypes.number.isRequired,
   listItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onMouseClick: PropTypes.func.isRequired,
-  onMouseOver: PropTypes.func.isRequired,
+  mouseClickHandler: PropTypes.func.isRequired,
+  mouseOverHandler: PropTypes.func.isRequired,
 };
 
 export default Tabs;

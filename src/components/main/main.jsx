@@ -31,12 +31,12 @@ const Main = React.memo(function Main(props) {
     onSelectGenre,
     setActiveMovie,
     genre,
-    genresList,
     firstCard,
     lastCard,
-    playMovie,
+    favoriteButtonClickHandler,
     authorizationStatus,
-    favoriteButtonClickHandler
+    genresList,
+    playMovie
   } = props;
   const setGenre = (index) => {
     onSelectGenre(genresList[index]);

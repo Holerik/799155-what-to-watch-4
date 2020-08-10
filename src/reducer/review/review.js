@@ -1,6 +1,7 @@
 // review.js
 import PropTypes from 'prop-types';
 import {extend} from '../../utils.js';
+import history from '../../history.js';
 
 export const reviewInfo = {
   id: PropTypes.number.isRequired,
@@ -86,6 +87,10 @@ const Operation = {
     })
     .then(() => {
       dispatch(ActionCreator.setLoadStatus(true));
+      history.goBack();
+    },
+    () => {
+      dispatch(ActionCreator.setLoadStatus(false));
     });
   },
 };

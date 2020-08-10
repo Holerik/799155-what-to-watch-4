@@ -10,12 +10,18 @@ import {
   COMMENT_ERROR,
 } from '../../const.js';
 
+
 class AddReview extends React.PureComponent {
   constructor(props) {
     super(props);
     this._initState = this._initState.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
-    this._checkReviewLength = this._checkReviewLength.bind(this);
+    this._checkReviewLengthAndRating = this._checkReviewLengthAndRating.bind(this);
+    this._ratingClickHandler = this._ratingClickHandler.bind(this);
+    this.submitIsBlocked = true;
+    this.rating = 0;
+    this._submitClicked = false;
+    this._lengthIsOk = false;
   }
 
   _initState() {
@@ -23,33 +29,29 @@ class AddReview extends React.PureComponent {
     this.props.setMovie(undefined);
   }
 
-  _checkReviewLength() {
+  _checkReviewLengthAndRating() {
     const review = document.addReview.reviewText;
-    const isSubmitBlocked = review.value.length < MIN_REVIEW_LENGTH ||
-      review.value.length > MAX_REVIEW_LENGTH;
-    if (isSubmitBlocked) {
-      if (!review.classList.contains(COMMENT_ERROR)) {
-        review.classList.add(COMMENT_ERROR);
-      }
+    const textLength = review.value.length;
+    this._lengthIsOk = textLength > MIN_REVIEW_LENGTH &&
+      textLength < MAX_REVIEW_LENGTH;
+    if (this.rating === 0 || !this._lengthIsOk) {
+      this.submitIsBlocked = true;
     } else {
-      if (review.classList.contains(COMMENT_ERROR)) {
-        review.classList.remove(COMMENT_ERROR);
-      }
+      this.submitIsBlocked = false;
     }
-    document.querySelector(`.add-review__btn`).disabled = isSubmitBlocked;
-    this.props.onChangeLength(review.value.length);
+    if (this._submitClicked) {
+      this.submitIsBlocked = this.loadStatus;
+    }
+    this.props.onChangeLength(textLength);
   }
 
   submitHandler(evt) {
     evt.preventDefault();
-    const group = document.addReview.rating;
-    const radios = [...group];
-    const index = radios.findIndex((radio) => radio.checked) + 1;
     this.props.onSubmit(this.props.movieInfo, {
       comment: document.addReview.reviewText.value,
-      rating: index,
+      rating: this.rating,
     });
-    return false;
+    this._submitClicked = true;
   }
 
   _createMoreRatingFragments(count) {
@@ -60,9 +62,15 @@ class AddReview extends React.PureComponent {
           <Rating
             key={index}
             index={index++}
+            onClick={this._ratingClickHandler}
           />);
     }
     return items;
+  }
+
+  _ratingClickHandler(evt) {
+    this.rating = Number(evt.target.defaultValue);
+    this.submitIsBlocked = !this._lengthIsOk;
   }
 
   render() {
@@ -118,12 +126,15 @@ class AddReview extends React.PureComponent {
               </div>
 
               <div className="add-review__text">
-                <textarea className="add-review__textarea"
-                  name="reviewText" onInput={this._checkReviewLength}
-                  id="review-text" placeholder="Review text"></textarea>
+                <textarea className={`add-review__textarea
+                  ${this.submitIsBlocked ? COMMENT_ERROR : ``}`}
+                name="reviewText" onInput={this._checkReviewLengthAndRating}
+                id="review-text" placeholder="Review text">
+                </textarea>
+
                 <div className="add-review__submit">
                   <button className="add-review__btn"
-                    type="submit" disabled>Post</button>
+                    type="submit" disabled={this.submitIsBlocked}>Post</button>
                 </div>
 
               </div>
@@ -136,6 +147,7 @@ class AddReview extends React.PureComponent {
   }
 }
 
+
 AddReview.propTypes = {
   movieInfo: PropTypes.exact(fullInfo).isRequired,
   avatar: PropTypes.string.isRequired,
@@ -143,6 +155,8 @@ AddReview.propTypes = {
   setMovie: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChangeLength: PropTypes.func.isRequired,
+  loadStatus: PropTypes.bool,
+  textLength: PropTypes.number,
 };
 
 export default AddReview;

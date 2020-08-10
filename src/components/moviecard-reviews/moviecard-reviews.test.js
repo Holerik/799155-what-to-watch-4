@@ -172,6 +172,7 @@ describe(`MoviecardReviews tests`, () => {
               favoriteButtonClickHandler={() => {}}
               loadReviews={() => {}}
               reviews={[mockReview]}
+              loadStatus={false}
             />
           </Router>
         </Provider>

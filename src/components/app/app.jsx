@@ -28,12 +28,14 @@ import {
   getFilmsByGenre,
   getGenresList,
   getMoviesList,
+  getFavoritesCount,
 } from '../../reducer/data/selectors.js';
 import {getAuthorizationStatus, getAuthorInfo} from '../../reducer/user/selectors.js';
 import SignIn from '../sign-in/sign-in.jsx';
 import {
   Operation as ReviewOperation,
 } from '../../reducer/review/review.js';
+import {getLoadStatus} from '../../reducer/review/selectors.js';
 import withAddReview from '../../hocs/with-addreview/with-addreview.jsx';
 import AddReview from '../add-review/add-review.jsx';
 import {Operation as DataOperation} from '../../reducer/data/data.js';
@@ -43,6 +45,7 @@ import PrivateRoute from '../private-route/private-route.jsx';
 import NotFound from '../not-found/not-found.jsx';
 import Video from '../video/video.jsx';
 import withVideo from '../../hocs/with-video/with-video.jsx';
+import {extend} from '../../utils.js';
 
 const AddReviewText = withAddReview(AddReview);
 const VideoPlayer = withVideo(Video);
@@ -62,12 +65,11 @@ class App extends React.PureComponent {
 
   _onSignIn(authData) {
     this.props.login(authData);
-    location.href = AppRoutes.ROOT;
+    history.push(AppRoutes.ROOT);
   }
 
   _onAddReviewText(movie, comment) {
     this.props.onAddReviewComment(movie, comment);
-    history.goBack();
   }
 
   _setActiveMovie(activeMovieId) {
@@ -86,9 +88,36 @@ class App extends React.PureComponent {
   }
 
   _changeFavoriteStatus(movie) {
-    this.props.changeFavoriteStatus(movie);
-    //    const film = this.props.allFilmsInfo.find((item) => item.id === movie.id);
-    //    this.props.resetFavoriteMovie(film);
+    const {promo, favoritesCount, allFilmsInfo} = this.props;
+    let favorites = favoritesCount;
+    let payload = {};
+    if (promo.id === movie.id) {
+      favorites = promo.favorite ? favorites - 1 : favorites + 1;
+      payload = {
+        film: movie,
+        promoMovie: extend(promo, {
+          favorite: !promo.favorite,
+        }),
+        allFilms: allFilmsInfo,
+        favoritesCount: favorites,
+      };
+    } else {
+      payload = {
+        film: movie,
+        promoMovie: promo,
+        allFilms: allFilmsInfo.map((item) => {
+          if (movie.id === item.id) {
+            favorites = movie.favorite ? favorites-- : favorites++;
+            return extend(item, {
+              favorite: !movie.favorite
+            });
+          }
+          return item;
+        }),
+        favoritesCount: favorites,
+      };
+    }
+    this.props.changeFavoriteStatus(payload);
   }
 
   _renderMainScreen() {
@@ -101,7 +130,7 @@ class App extends React.PureComponent {
           genre={this.props.genre}
           firstCard={this.props.firstCard}
           lastCard={this.props.lastCard}
-          favoriteButtonClickHandler={this.props.changeFavoriteStatus}
+          favoriteButtonClickHandler={this._changeFavoriteStatus}
         />);
     }
     switch (this.props.page) {
@@ -113,6 +142,14 @@ class App extends React.PureComponent {
         return history.push(`${AppRoutes.MOVIE_REVIEWS}/${this.props.movie.id}`);
     }
     return null;
+  }
+
+  _getMovie(routeProps) {
+    const id = Number(routeProps.match.params.id);
+    if (id === this.props.promo.id) {
+      return this.props.promo;
+    }
+    return this.props.allFilmsInfo.find((film) => film.id === id);
   }
 
   render() {
@@ -136,8 +173,7 @@ class App extends React.PureComponent {
           </Route>
           <Route exact path={`${AppRoutes.MOVIE_OVERVIEW}/:id`}
             render={(routeProps) => {
-              const id = Number(routeProps.match.params.id);
-              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              const movie = this._getMovie(routeProps);
               return (
                 <MoviecardOverview
                   {...props}
@@ -148,8 +184,7 @@ class App extends React.PureComponent {
           />
           <Route exact path={`${AppRoutes.MOVIE_DETAILS}/:id`}
             render={(routeProps) => {
-              const id = Number(routeProps.match.params.id);
-              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              const movie = this._getMovie(routeProps);
               return (
                 <MoviecardDetails
                   {...props}
@@ -160,8 +195,7 @@ class App extends React.PureComponent {
           />
           <Route exact path={`${AppRoutes.MOVIE_REVIEWS}/:id`}
             render={(routeProps) => {
-              const id = Number(routeProps.match.params.id);
-              const movie = this.props.allFilmsInfo.find((film) => film.id === id);
+              const movie = this._getMovie(routeProps);
               return (
                 <MoviecardReviews
                   {...props}
@@ -170,13 +204,18 @@ class App extends React.PureComponent {
               );
             }}
           />
-          <Route exact path={AppRoutes.MY_LIST}>
-            <MyList
-              setActiveMovie={this._setActiveMovie}
-              firstCard={this.props.firstCard}
-              lastCard={this.props.lastCard}
-            />);
-          </Route>
+          <PrivateRoute exact path={AppRoutes.MY_LIST}
+            authorizationStatus={this.props.authorizationStatus}
+            render={() => {
+              return (
+                <MyList
+                  setActiveMovie={this._setActiveMovie}
+                  firstCard={this.props.firstCard}
+                  lastCard={this.props.lastCard}
+                />
+              );
+            }}
+          />
           <PrivateRoute exact path={`${AppRoutes.ADD_REVIEW}/:id`}
             authorizationStatus={this.props.authorizationStatus}
             render={(routeProps) => {
@@ -186,7 +225,7 @@ class App extends React.PureComponent {
                 <AddReviewText
                   onSubmit={this._onAddReviewText}
                   movieInfo={movie}
-                  avatar={`../${this.props.authorInfo.avatar}`}
+                  avatar={`/${this.props.authorInfo.avatar}`}
                   setPage={this.props.setPage}
                   setMovie={this.props.setMovie}
                 />
@@ -229,7 +268,6 @@ App.propTypes = {
       PropTypes.exact(fullInfo)).isRequired,
   movie: PropTypes.exact(fullInfo),
   promo: PropTypes.exact(fullInfo).isRequired,
-  play: PropTypes.bool,
   page: PropTypes.number,
   genre: PropTypes.string,
   genresList: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -251,6 +289,8 @@ App.propTypes = {
   setAuthorInfo: PropTypes.func,
   resetFavoriteMovie: PropTypes.func.isRequired,
   stopMovie: PropTypes.func.isRequired,
+  favoritesCount: PropTypes.number,
+  loadStatus: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
@@ -265,6 +305,8 @@ const mapStateToProps = (state) => ({
   firstCard: getFirstCardNumber(state),
   lastCard: getLastCardNumber(state),
   allFilmsInfo: getMoviesList(state),
+  favoritesCount: getFavoritesCount(state),
+  loadStatus: getLoadStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -287,8 +329,8 @@ const mapDispatchToProps = (dispatch) => ({
   login(authData) {
     dispatch(UserOperation.login(authData));
   },
-  changeFavoriteStatus(movie) {
-    dispatch(DataOperation.changeFavoriteStatus(movie));
+  changeFavoriteStatus(payload) {
+    dispatch(DataOperation.changeFavoriteStatus(payload));
   },
   setCardsCount(count) {
     dispatch(DataCreator.setCardsCount(count));

@@ -140,26 +140,10 @@ const reducer = (state = initialState, action) => {
         return state;
       }
     case ActionType.CHANGE_FAVORITE_STATUS:
-      let favorites = state.favoritesCount;
-      if (state.promo.id === action.payload) {
-        favorites = state.promo.favorite ? favorites-- : favorites++;
-        return extend(state, {
-          promo: extend(state.promo, {
-            favorite: state.promo.id === action.payload ?
-              !state.promo.favorite : state.promo.favorite,
-          }),
-          favoritesCount: favorites,
-        });
-      }
       return extend(state, {
-        moviesList: state.moviesList.map((movie) => {
-          if (movie.id === action.payload) {
-            favorites = movie.favorite ? favorites-- : favorites++;
-            return extend(movie, {favorite: !movie.favorite});
-          }
-          return movie;
-        }),
-        favoritesCount: favorites,
+        promo: action.payload.promoMovie,
+        moviesList: action.payload.allFilms,
+        favoritesCount: action.payload.favorites,
       });
   }
   return state;
@@ -191,10 +175,10 @@ const ActionCreator = {
       payload: list,
     };
   },
-  changeFavoriteStatus: (movie) => {
+  changeFavoriteStatus: (payload) => {
     return {
       type: ActionType.CHANGE_FAVORITE_STATUS,
-      payload: movie.id,
+      payload,
     };
   },
   setCardsCount: (count) => {
@@ -271,12 +255,12 @@ const Operation = {
         dispatch(ActionCreator.changeFavoritesCount(promoMovie.favorite));
       });
   },
-  changeFavoriteStatus: (movie) => (dispatch, getState, api) => {
-    return api.post(`/favorite/${movie.id}/${!movie.favorite ? 1 : 0}`)
+  changeFavoriteStatus: (payload) => (dispatch, getState, api) => {
+    return api.post(`/favorite/${payload.film.id}/${!payload.film.favorite ? 1 : 0}`)
     .then(() => {
-      dispatch(ActionCreator.changeFavoriteStatus(movie));
-      if (movie.id !== getState()[NameSpace.DATA].promo.id) {
-        const film = getState()[NameSpace.DATA].moviesList.find((item) => item.id === movie.id);
+      dispatch(ActionCreator.changeFavoriteStatus(payload));
+      if (payload.film.id !== getState()[NameSpace.DATA].promo.id) {
+        const film = getState()[NameSpace.DATA].moviesList.find((item) => item.id === payload.film.id);
         dispatch(MovieCreator.resetMovie(film));
       }
     });

@@ -7,18 +7,18 @@ const withActiveItem = (Component) => {
   class WithActiveItem extends React.PureComponent {
     constructor(props) {
       super(props);
-      this._onMouseClick = this._onMouseClick.bind(this);
-      this._onMouseOver = this._onMouseOver.bind(this);
+      this._mouseClickHandler = this._mouseClickHandler.bind(this);
+      this._mouseOverHandler = this._mouseOverHandler.bind(this);
       this.state = {
         activeItem: props.currentActiveItem,
       };
     }
 
-    _onMouseOver(index) {
+    _mouseOverHandler(index) {
       this.setState({activeItem: index});
     }
 
-    _onMouseClick(item) {
+    _mouseClickHandler(item) {
       this.props.setActiveItem(item);
     }
 
@@ -30,8 +30,8 @@ const withActiveItem = (Component) => {
         <Component
           {...this.props}
           activeItem={this.state.activeItem}
-          onMouseClick={this._onMouseClick}
-          onMouseOver={this._onMouseOver}
+          mouseClickHandler={this._mouseClickHandler}
+          mouseOverHandler={this._mouseOverHandler}
         >
         </Component>
       );

@@ -15,7 +15,7 @@ import {ActionCreator} from '../../reducer/movie/movie.js';
 import {getPlayState} from '../../reducer/movie/selectors.js';
 import {getFilmsByGenre} from '../../reducer/data/selectors.js';
 import Controls from '../controls/controls.jsx';
-import {AppRoutes} from '../../const.js';
+import {AppRoutes, PageNumbers} from '../../const.js';
 import history from '../../history.js';
 
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
@@ -75,7 +75,7 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
 
           <div className="movie-card__desc">
             <PageTabs
-              currentActiveItem={1}
+              currentActiveItem={PageNumbers.DETAILS}
               listItems={props.tabItems}
               setActiveItem={props.setActiveItem}
             />

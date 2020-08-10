@@ -7,28 +7,29 @@ import {AppRoutes} from '../../const.js';
 class GenreList extends React.PureComponent {
   constructor(props) {
     super(props);
-    this._tabMouseOverHandler = this._tabMouseOverHandler.bind(this);
-    this._tabClickHandler = this._tabClickHandler.bind(this);
+    this._onMouseOverTab = this._onMouseOverTab.bind(this);
+    this._onMouseClickTab = this._onMouseClickTab.bind(this);
   }
 
-  _tabMouseOverHandler(evt) {
+  _onMouseOverTab(evt) {
     const index = this.props.listItems.indexOf(evt.target.text);
-    this.props.onMouseOver(index);
+    this.props.mouseOverHandler(index);
   }
 
-  _tabClickHandler() {
-    this.props.onMouseClick(this.props.activeItem);
+  _onMouseClickTab(evt) {
+    const index = this.props.listItems.indexOf(evt.target.text);
+    this.props.mouseClickHandler(index);
   }
 
   render() {
-    const {currentActiveItem, activeItem, listItems} = this.props;
+    const {currentActiveItem, listItems} = this.props;
     return (
       <ul className="catalog__genres-list"
-        onClick={this._tabClickHandler}
-        onMouseOver={this._tabMouseOverHandler}
+        onClick={this._onMouseClickTab}
+        onMouseOver={this._onMouseOverTab}
       >
         {listItems.slice(0, this.props.maxItemsCount).map((item, index) => {
-          const itemIsActive = currentActiveItem === index || activeItem === index;
+          const itemIsActive = currentActiveItem === index;
           return (
             <React.Fragment key={index}>
               <li className= {`catalog__genres-item
@@ -43,11 +44,10 @@ class GenreList extends React.PureComponent {
 }
 
 GenreList.propTypes = {
-  activeItem: PropTypes.number.isRequired,
   currentActiveItem: PropTypes.number.isRequired,
   listItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onMouseOver: PropTypes.func.isRequired,
-  onMouseClick: PropTypes.func.isRequired,
+  mouseOverHandler: PropTypes.func.isRequired,
+  mouseClickHandler: PropTypes.func.isRequired,
   maxItemsCount: PropTypes.number.isRequired,
 };
 

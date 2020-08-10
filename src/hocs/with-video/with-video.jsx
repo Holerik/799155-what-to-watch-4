@@ -10,7 +10,7 @@ const formatDuration = (duration) => {
   return time;
 };
 
-const onSetFullScreen = (evt) => {
+const setFullScreenHandler = (evt) => {
   evt.preventDefault();
   if (document.fullscreenElement) {
     document.exitFullscreen();
@@ -32,17 +32,11 @@ const withVideo = (Component) => {
         duration: ``,
       };
       this._videoRef = React.createRef();
-      this._onPlayButtonClick = this._onPlayButtonClick.bind(this);
-      this._onExitButtonClick = this._onExitButtonClick.bind(this);
+      this.playButtonClickHandler = this.playButtonClickHandler.bind(this);
+      this.exitButtonClickHandler = this.exitButtonClickHandler.bind(this);
     }
 
-    _muteHandler() {
-      this.setState((prevState) => (this.setState({isMuted: !prevState.isMuted})));
-      const video = this._videoRef.current;
-      video.muted = this.state.isMuted;
-    }
-
-    _onPlayButtonClick(evt) {
+    playButtonClickHandler(evt) {
       evt.preventDefault();
       const video = this._videoRef.current;
       if (this.state.isPlaying) {
@@ -54,7 +48,7 @@ const withVideo = (Component) => {
       }
     }
 
-    _onExitButtonClick(evt) {
+    exitButtonClickHandler(evt) {
       evt.preventDefault();
       if (this.state.isPlaying) {
         this.setState({isPlaying: false});
@@ -122,9 +116,9 @@ const withVideo = (Component) => {
       return (
         <Component
           {...this.props}
-          fullScreenButtonHandler={onSetFullScreen}
-          playButtonClickHandler={this._onPlayButtonClick}
-          exitButtonClickHandler={this._onExitButtonClick}
+          onFullScreenButtonClick={setFullScreenHandler}
+          onPlayButtonClick={this.playButtonClickHandler}
+          onExitButtonClick={this.exitButtonClickHandler}
           progress={this.state.progress}
           duration={this.state.duration}
           isPlaying={this.state.isPlaying}

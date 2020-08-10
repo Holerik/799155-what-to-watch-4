@@ -17,7 +17,7 @@ import {getReviews, getLoadStatus} from '../../reducer/review/selectors.js';
 import {reviewInfo} from '../../reducer/review/review.js';
 import Controls from '../controls/controls.jsx';
 import AddComments from '../add-comments/add-comments.jsx';
-import {AppRoutes} from '../../const.js';
+import {AppRoutes, PageNumbers} from '../../const.js';
 import history from '../../history.js';
 
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
@@ -26,6 +26,9 @@ const PageTabs = withActiveItem(Tabs);
 class MoviecardReviews extends React.PureComponent {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
     if (this.props.loadStatus) {
       this.props.loadReviews(this.props.movieInfo);
     }
@@ -92,7 +95,7 @@ class MoviecardReviews extends React.PureComponent {
 
               <div className="movie-card__desc">
                 <PageTabs
-                  currentActiveItem={2}
+                  currentActiveItem={PageNumbers.REVIEWS}
                   listItems={this.props.tabItems}
                   setActiveItem={this.props.setActiveItem}
                 />

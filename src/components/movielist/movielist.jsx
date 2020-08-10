@@ -3,15 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moviecard from '../moviecard/moviecard.jsx';
 import {fullInfo} from '../../reducer/data/data.js';
-import {MOVIE_CARDS_ON_PAGE} from '../../reducer/movie/movie.js';
+import {MOVIE_CARDS_ON_PAGE} from '../../const.js';
 import {TIME_INTERVAL} from '../../const.js';
 
 class Movielist extends React.PureComponent {
   constructor(props) {
     super(props);
-    this._movieCardActivateHandler = this._movieCardActivateHandler.bind(this);
-    this._movieCardOutHandler = this._movieCardOutHandler.bind(this);
-    this._movieCardClickHandler = this._movieCardClickHandler.bind(this);
+    this.onMovieCardActivate = this.onMovieCardActivate.bind(this);
+    this.onMovieCardOut = this.onMovieCardOut.bind(this);
+    this.onMovieTitleClick = this.onMovieTitleClick.bind(this);
     this._waitTimeInterval = this._waitTimeInterval.bind(this);
     this._lastTimeOut = null;
     this._activeMovieId = -1;
@@ -45,10 +45,10 @@ class Movielist extends React.PureComponent {
     this.props.onCanPlay(true);
   }
 
-  _movieCardActivateHandler(evt) {
+  onMovieCardActivate(evt) {
     const filmCard = this._getActiveFilmCard(evt);
     this._activeMovieId = (filmCard === undefined ? -1 : filmCard.id);
-    this.props.mouseOverHandler(this._activeMovieId);
+    this.props.onMouseOver(this._activeMovieId);
     if (this._lastTimeOut) {
       clearTimeout(this._lastTimeOut);
     }
@@ -57,18 +57,18 @@ class Movielist extends React.PureComponent {
     }, TIME_INTERVAL);
   }
 
-  _movieCardOutHandler() {
+  onMovieCardOut() {
     this._activeMovieId = -1;
     this.props.onCanPlay(false);
     clearTimeout(this._lastTimeOut);
     this._lastTimeOut = null;
   }
 
-  _movieCardClickHandler(evt) {
+  onMovieTitleClick(evt) {
     evt.preventDefault();
     const filmCard = this._getClickedFilmCard(evt);
     if (filmCard !== undefined) {
-      this.props.mouseClickHandler(filmCard.id);
+      this.props.onMouseClick(filmCard.id);
     }
   }
 
@@ -80,9 +80,9 @@ class Movielist extends React.PureComponent {
           .map((filmInfo) => (
             <Moviecard
               movie={filmInfo}
-              onMovieCardActivate={this._movieCardActivateHandler}
-              onMovieCardOut={this._movieCardOutHandler}
-              onMovieTitleClick={this._movieCardClickHandler}
+              movieCardActivateHandler={this.onMovieCardActivate}
+              movieCardOutHandler={this.onMovieCardOut}
+              movieTitleClickHandler={this.onMovieTitleClick}
               canPlayVideo={this.props.canPlay}
               activeMovieId={this._activeMovieId}
               key={filmInfo.id}
@@ -98,8 +98,8 @@ Movielist.propTypes = {
   listItems: PropTypes.arrayOf(
       PropTypes.exact(fullInfo)).isRequired,
   setActiveItem: PropTypes.func.isRequired,
-  mouseOverHandler: PropTypes.func.isRequired,
-  mouseClickHandler: PropTypes.func.isRequired,
+  onMouseOver: PropTypes.func.isRequired,
+  onMouseClick: PropTypes.func.isRequired,
   onCanPlay: PropTypes.func.isRequired,
   canPlay: PropTypes.bool.isRequired,
 };

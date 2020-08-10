@@ -18,7 +18,7 @@ describe(`ShowMore e2e tests`, () => {
           favoritesCount={0}
           lastCard={0}
           ShowMode={ShowMode.GENRE_MODE}
-          showMoreClickHandler={showMoreClickHandler}
+          onShowMoreButtonClick={showMoreClickHandler}
         />
     );
     const button = main.find(`button.catalog__button`);

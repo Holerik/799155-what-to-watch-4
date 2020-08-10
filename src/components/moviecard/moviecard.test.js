@@ -33,9 +33,9 @@ describe(`Moviecard tests`, () => {
     .create(
         <Moviecard
           movie={filmInfo}
-          onMovieCardActivate={() => {}}
-          onMovieCardOut={() => {}}
-          onMovieTitleClick={() => {}}
+          movieCardActivateHandler={() => {}}
+          movieCardOutHandler={() => {}}
+          movieTitleClickHandler={() => {}}
           canPlayVideo={false}
           activeMovieId={-1}
         />

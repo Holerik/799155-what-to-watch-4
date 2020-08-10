@@ -121,6 +121,7 @@ exports[`Addreview test <AddReview /> should render correctly 1`] = `
             className="rating__input"
             id="star-1"
             name="rating"
+            onClick={[Function]}
             type="radio"
             value="1"
           />
@@ -134,6 +135,7 @@ exports[`Addreview test <AddReview /> should render correctly 1`] = `
             className="rating__input"
             id="star-2"
             name="rating"
+            onClick={[Function]}
             type="radio"
             value="2"
           />
@@ -147,6 +149,7 @@ exports[`Addreview test <AddReview /> should render correctly 1`] = `
             className="rating__input"
             id="star-3"
             name="rating"
+            onClick={[Function]}
             type="radio"
             value="3"
           />
@@ -160,6 +163,7 @@ exports[`Addreview test <AddReview /> should render correctly 1`] = `
             className="rating__input"
             id="star-4"
             name="rating"
+            onClick={[Function]}
             type="radio"
             value="4"
           />
@@ -173,6 +177,7 @@ exports[`Addreview test <AddReview /> should render correctly 1`] = `
             className="rating__input"
             id="star-5"
             name="rating"
+            onClick={[Function]}
             type="radio"
             value="5"
           />
@@ -188,7 +193,8 @@ exports[`Addreview test <AddReview /> should render correctly 1`] = `
         className="add-review__text"
       >
         <textarea
-          className="add-review__textarea"
+          className="add-review__textarea
+                  comment--error"
           id="review-text"
           name="reviewText"
           onInput={[Function]}

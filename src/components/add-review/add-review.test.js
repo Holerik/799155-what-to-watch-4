@@ -39,6 +39,8 @@ describe(`Addreview test`, () => {
       setMovie={() => {}}
       onSubmit={() => {}}
       onChangeLength={() => {}}
+      textLength={0}
+      loadStatus={false}
     />)
     .toJSON();
     expect(tree).toMatchSnapshot();
