@@ -43,9 +43,9 @@ describe(`Moviecard e2e tests`, () => {
     const movieCard = shallow(
         <Moviecard
           movie={filmInfo}
-          onMovieCardActivate={onMovieCardActivate}
-          onMovieCardOut={onMovieCardOut}
-          onMovieTitleClick={onMovieTitleClick}
+          movieCardActivateHandler={onMovieCardActivate}
+          movieCardOutHandler={onMovieCardOut}
+          movieTitleClickHandler={onMovieTitleClick}
           canPlayVideo={canPlayVideo}
           activeMovieId={activeMovieId}
         />

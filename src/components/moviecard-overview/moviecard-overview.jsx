@@ -13,7 +13,7 @@ import {ActionCreator} from '../../reducer/movie/movie.js';
 import {getPlayState} from '../../reducer/movie/selectors.js';
 import {getFilmsByGenre} from '../../reducer/data/selectors.js';
 import Controls from '../controls/controls.jsx';
-import {AppRoutes} from '../../const.js';
+import {AppRoutes, PageNumbers, RatingLevels} from '../../const.js';
 import history from '../../history.js';
 
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
@@ -27,23 +27,21 @@ export const getFullString = (data, delimiter) => {
   return result.slice(1);
 };
 
-export const getRatingLevel = (rating) => {
-  const level = [`Bad`, `Normal`, `Good`, `Very good`, `Awesome`];
-  const fRating = parseFloat(rating);
-  let index = 4;
-  if (fRating < 10) {
-    index = 3;
+export const getLevelNameByRating = (rating) => {
+  const levelRating = parseFloat(rating);
+  if (levelRating === RatingLevels.AWESOME) {
+    return `Awesome`;
   }
-  if (fRating < 8) {
-    index = 2;
+  if (levelRating > RatingLevels.VERY_GOOD) {
+    return `Very good`;
   }
-  if (fRating < 5) {
-    index = 1;
+  if (levelRating > RatingLevels.GOOD) {
+    return `Good`;
   }
-  if (fRating < 3) {
-    index = 0;
+  if (levelRating > RatingLevels.NORMAL) {
+    return `Normal`;
   }
-  return level[index];
+  return `Bad`;
 };
 
 const MoviecardOverview = React.memo(function MoviecardOverview(props) {
@@ -52,10 +50,13 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
     setActiveMovie,
     playMovie,
     filmsInfo,
-    favoriteButtonClickHandler
+    favoriteButtonClickHandler,
+    play,
+    setActiveItem,
+    tabItems
   } = props;
-  movieInfo.rating.level = getRatingLevel(movieInfo.rating.score);
-  if (props.play) {
+  movieInfo.rating.level = getLevelNameByRating(movieInfo.rating.score);
+  if (play) {
     return history.push(`${AppRoutes.PLAY_VIDEO}/${movieInfo.id}`);
   }
   return (
@@ -101,9 +102,9 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
 
             <div className="movie-card__desc">
               <PageTabs
-                currentActiveItem={0}
-                listItems={props.tabItems}
-                setActiveItem={props.setActiveItem}
+                currentActiveItem={PageNumbers.OVIERVIEW}
+                listItems={tabItems}
+                setActiveItem={setActiveItem}
               />
               <div className="movie-rating">
                 <div className="movie-rating__score">{movieInfo.rating.score}</div>

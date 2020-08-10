@@ -13,7 +13,7 @@ const Video = React.memo(function Video(props) {
         {children}
         <button type="button" className={`player__exit ${isMuted ? `visually-hidden` : ``}`}
           onClick={(evt) => {
-            props.exitButtonClickHandler(evt);
+            props.onExitButtonClick(evt);
           }}
         >Exit</button>
 
@@ -30,7 +30,7 @@ const Video = React.memo(function Video(props) {
           <div className="player__controls-row">
             <button type="button" className="player__play"
               onClick={(evt) => {
-                props.playButtonClickHandler(evt);
+                props.onPlayButtonClick(evt);
               }}
             >
               <svg
@@ -51,7 +51,7 @@ const Video = React.memo(function Video(props) {
 
             <button type="button" className="player__full-screen"
               onClick={(evt) => {
-                props.fullScreenButtonHandler(evt);
+                props.onFullScreenButtonClick(evt);
               }}
             >
               <svg viewBox="0 0 27 27" width="27" height="27">
@@ -69,9 +69,9 @@ const Video = React.memo(function Video(props) {
 Video.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isMuted: PropTypes.bool.isRequired,
-  exitButtonClickHandler: PropTypes.func,
-  fullScreenButtonHandler: PropTypes.func,
-  playButtonClickHandler: PropTypes.func,
+  onExitButtonClick: PropTypes.func,
+  onFullScreenButtonClick: PropTypes.func,
+  onPlayButtonClick: PropTypes.func,
   progress: PropTypes.number,
   duration: PropTypes.string,
   children: PropTypes.oneOfType([

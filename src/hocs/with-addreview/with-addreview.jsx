@@ -27,8 +27,9 @@ const withAddReview = (Component) => {
           setPage={this.props.setPage}
           setMovie={this.props.setMovie}
           onSubmit={this.props.onSubmit}
-        >
-        </Component>
+          loadStatus={this.props.loadStatus}
+          textLength={this.state.textLength}
+        />
       );
     }
   }
@@ -39,6 +40,7 @@ const withAddReview = (Component) => {
     setPage: PropTypes.func.isRequired,
     setMovie: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    loadStatus: PropTypes.bool,
   };
 
   return WithAddReview;

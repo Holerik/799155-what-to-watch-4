@@ -6,6 +6,7 @@ Array [
     className="rating__input"
     id="star-0"
     name="rating"
+    onClick={[Function]}
     type="radio"
     value="0"
   />,

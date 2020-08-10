@@ -1,7 +1,6 @@
 // movie.js
 import {extend} from '../../utils.js';
-
-export const MOVIE_CARDS_ON_PAGE = 8;
+import {MOVIE_CARDS_ON_PAGE} from '../../const.js';
 
 const ActionType = {
   SET_MOVIE: `SET_MOVIE`,
@@ -47,11 +46,11 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.PLAY_MOVIE:
       return extend(state, {
-        play: action.payload,
+        play: true,
       });
     case ActionType.STOP_MOVIE:
       return extend(state, {
-        play: action.payload,
+        play: false,
       });
     case ActionType.RESET_MOVIE:
       return extend(state, {
@@ -76,11 +75,9 @@ const ActionCreator = {
   }),
   playMovie: () => ({
     type: ActionType.PLAY_MOVIE,
-    payload: true,
   }),
   stopMovie: () => ({
     type: ActionType.STOP_MOVIE,
-    payload: false,
   }),
   resetMovie: (movie) => ({
     type: ActionType.RESET_MOVIE,

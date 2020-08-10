@@ -8,6 +8,7 @@ it(`<Rating /> should render correctly`, () => {
   const tree = renderer
     .create(<Rating
       index={0}
+      onClick={() => {}}
     />)
     .toJSON();
   expect(tree).toMatchSnapshot();

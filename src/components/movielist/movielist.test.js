@@ -82,8 +82,8 @@ describe(`Movielist tests`, () => {
         <Movielist
           listItems={filmsInfo}
           setActiveItem={() => {}}
-          mouseOverHandler={() => {}}
-          mouseClickHandler={() => {}}
+          onMouseOver={() => {}}
+          onMouseClick={() => {}}
           onCanPlay={() => {}}
           canPlay={false}
         />

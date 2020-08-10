@@ -1,5 +1,7 @@
 // const.js
 
+export const MOVIE_CARDS_ON_PAGE = 8;
+
 export const AppRoutes = {
   ROOT: `/`,
   LOGIN: `/login`,
@@ -21,4 +23,15 @@ export const MAX_GENRE_COUNT = 10;
 
 export const TIME_INTERVAL = 1000; // ms
 
+export const PageNumbers = {
+  OVIERVIEW: 0,
+  DETAILS: 1,
+  REVIEWS: 2,
+};
 
+export const RatingLevels = {
+  NORMAL: 3,
+  GOOD: 5,
+  VERY_GOOD: 8,
+  AWESOME: 10,
+};

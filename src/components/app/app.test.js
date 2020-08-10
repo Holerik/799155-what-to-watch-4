@@ -179,6 +179,7 @@ describe(`App tests`, () => {
             onAddReviewComment={() => {}}
             loadReviews={() => {}}
             stopMovie={() => {}}
+            loadStatus={false}
           />
         </Provider>, {
           createNodeMock: () => {

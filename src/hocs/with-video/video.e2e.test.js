@@ -10,17 +10,17 @@ Enzyme.configure({
 });
 
 const Player = (props) => {
-  const {playButtonClickHandler, children} = props;
+  const {onPlayButtonClick, children} = props;
   return (
     <div>
       {children}
-      <button type="button" onClick={playButtonClickHandler}/>
+      <button type="button" onClick={onPlayButtonClick}/>
     </div>
   );
 };
 
 Player.propTypes = {
-  playButtonClickHandler: PropTypes.func,
+  onPlayButtonClick: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
