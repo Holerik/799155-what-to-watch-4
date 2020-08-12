@@ -50,7 +50,7 @@ const Main = React.memo(function Main(props) {
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={`${promoMovie.background}`} alt={`${promoMovie.altBackground}`} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -58,11 +58,11 @@ const Main = React.memo(function Main(props) {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={`${promoMovie.poster}`} alt={`${promoMovie.altPoster}`} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="movie-card__title">{`${promoMovie.title}`}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{promoMovie.genre[0]}</span>
                 <span className="movie-card__year">{promoMovie.year}</span>
@@ -146,9 +146,9 @@ Main.propTypes = {
   onSelectGenre: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
   genresList: PropTypes.arrayOf(PropTypes.string).isRequired,
-  firstCard: PropTypes.number.isRequired,
   playMovie: PropTypes.func.isRequired,
   play: PropTypes.bool.isRequired,
+  firstCard: PropTypes.number.isRequired,
   lastCard: PropTypes.number.isRequired,
   authorizationStatus: PropTypes.oneOf([
     AuthorizationStatus.AUTH,

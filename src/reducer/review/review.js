@@ -1,7 +1,6 @@
 // review.js
 import PropTypes from 'prop-types';
 import {extend} from '../../utils.js';
-import history from '../../history.js';
 
 export const reviewInfo = {
   id: PropTypes.number.isRequired,
@@ -12,7 +11,7 @@ export const reviewInfo = {
   text: PropTypes.string.isRequired,
 };
 
-const mockReview = {
+export const mockReview = {
   id: -1,
   authorId: -1,
   author: ``,
@@ -24,11 +23,13 @@ const mockReview = {
 const ActionType = {
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   SET_LOAD_STATUS: `SET_LOAD_STATUS`,
+  SET_SUBMIT_BLOCK: `SET_SUBMIT_BLOCK`,
 };
 
 const initialState = {
   reviews: [mockReview],
-  loadStatus: true,
+  loadStatus: false,
+  submitIsBlocked: false,
 };
 
 const ActionCreator = {
@@ -44,6 +45,12 @@ const ActionCreator = {
       payload: status,
     };
   },
+  setSubmitBlock: (blocked) => {
+    return {
+      type: ActionType.SET_SUBMIT_BLOCK,
+      payload: blocked,
+    };
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -55,6 +62,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_LOAD_STATUS:
       return extend(state, {
         loadStatus: action.payload,
+      });
+    case ActionType.SET_SUBMIT_BLOCK:
+      return extend(state, {
+        submitIsBlocked: action.payload,
       });
   }
   return state;
@@ -77,7 +88,7 @@ const Operation = {
         };
       });
       dispatch(ActionCreator.loadReviews(reviews));
-      dispatch(ActionCreator.setLoadStatus(false));
+      dispatch(ActionCreator.setLoadStatus(true));
     });
   },
   pushComment: (movie, review) => (dispatch, getState, api) => {
@@ -87,10 +98,11 @@ const Operation = {
     })
     .then(() => {
       dispatch(ActionCreator.setLoadStatus(true));
-      history.goBack();
+      dispatch(ActionCreator.setSubmitBlock(false));
     },
     () => {
       dispatch(ActionCreator.setLoadStatus(false));
+      dispatch(ActionCreator.setSubmitBlock(false));
     });
   },
 };

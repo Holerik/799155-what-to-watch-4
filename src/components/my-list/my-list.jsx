@@ -9,7 +9,7 @@ import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import withActiveItem from '../../hocs/with-activeitem/with-activeitem.jsx';
 import withCanPlay from '../../hocs/with-canplay/with-canplay.jsx';
-import {getFavoriteFilms} from '../../reducer/data/selectors.js';
+import {getFavoriteFilms, getFavoritesCount} from '../../reducer/data/selectors.js';
 import {ShowMode} from '../../reducer/data/data.js';
 
 const MovieTabs = withActiveItem(withCanPlay(MovieList));
@@ -44,6 +44,7 @@ const MyList = React.memo(function MyList(props) {
 
 const mapStateToProps = (state) => ({
   filmsInfo: getFavoriteFilms(state),
+  favoritesCount: getFavoritesCount(state),
 });
 
 MyList.propTypes = {
@@ -52,6 +53,7 @@ MyList.propTypes = {
   setActiveMovie: PropTypes.func.isRequired,
   firstCard: PropTypes.number.isRequired,
   lastCard: PropTypes.number.isRequired,
+  favoritesCount: PropTypes.number,
 };
 
 export {MyList};

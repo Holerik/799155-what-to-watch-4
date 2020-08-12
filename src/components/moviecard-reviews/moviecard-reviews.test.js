@@ -173,6 +173,8 @@ describe(`MoviecardReviews tests`, () => {
               loadReviews={() => {}}
               reviews={[mockReview]}
               loadStatus={false}
+              firstCard={0}
+              lastCard={2}
             />
           </Router>
         </Provider>

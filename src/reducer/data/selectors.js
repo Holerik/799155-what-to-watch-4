@@ -1,7 +1,7 @@
 // selectors.js
 import {createSelector} from 'reselect';
 import NameSpace from '../name-space/name-space.js';
-import {ALL_GENRES} from '../data/data.js';
+import {ALL_GENRES} from '../../const.js';
 import {getMovie} from '../movie/selectors.js';
 
 const NAME_SPACE = NameSpace.DATA;
@@ -51,12 +51,8 @@ export const getFavoriteFilms = createSelector(
     getMoviesList,
     getPromoMovie,
     (moviesList, promo) => {
-      const result = moviesList.filter((movie) => movie.favorite);
-      if (promo !== undefined && promo.favorite) {
-        if (!moviesList.find((movie) => movie.id === promo.id)) {
-          result.push(promo);
-        }
-      }
+      const result = moviesList.filter((movie) => movie.id !== promo.id ?
+        movie.favorite : promo.favorite);
       return result;
     }
 );

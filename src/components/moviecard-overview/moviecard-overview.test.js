@@ -153,6 +153,8 @@ describe(`MoviecardOverview tests`, () => {
               playMovie={() => {}}
               genre={`All genres`}
               favoriteButtonClickHandler={() => {}}
+              firstCard={0}
+              lastCard={2}
             />
           </Router>
         </Provider>

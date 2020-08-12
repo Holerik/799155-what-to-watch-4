@@ -1,5 +1,6 @@
 // user.js
 import {extend} from '../../utils.js';
+import {SERVER_ADRESS_PREFIX} from '../../const.js';
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,
@@ -45,7 +46,7 @@ const reducer = (state = initilalState, action) => {
         authorId: action.payload.id,
         authorName: action.payload.name,
         authorEmail: action.payload.email,
-        avatar: action.payload.avatar_url,
+        avatar: SERVER_ADRESS_PREFIX + action.payload.avatar_url,
       });
   }
   return state;
@@ -54,7 +55,8 @@ const reducer = (state = initilalState, action) => {
 const Operation = {
   checkAuth: () => (dispatch, getState, api) => {
     return api.get(`/login`)
-      .then(() => {
+      .then((response) => {
+        dispatch(ActionCreator.setAuthorInfo(response.data));
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
       });
   },

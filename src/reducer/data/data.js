@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {extend} from '../../utils.js';
 import {ActionCreator as MovieCreator} from '../movie/movie.js';
 import NameSpace from '../name-space/name-space.js';
+import {ALL_GENRES} from '../../const.js';
 
 export const fullInfo = {
   id: PropTypes.number.isRequired,
@@ -29,8 +30,6 @@ export const fullInfo = {
   reviews: PropTypes.arrayOf(PropTypes.number),
   favorite: PropTypes.bool,
 };
-
-export const ALL_GENRES = `All genres`;
 
 export const mockMovie = {
   id: -1,
@@ -127,23 +126,23 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         cardsCount: action.payload,
       });
-    case ActionType.SET_FAVORITES_COUNT:
-      return extend(state, {
-        favoritesCount: action.payload,
-      });
-    case ActionType.CHANGE_FAVORITES_COUNT:
-      if (action.payload) {
-        return extend(state, {
-          favoritesCount: state.favoritesCount++,
-        });
-      } else {
-        return state;
-      }
     case ActionType.CHANGE_FAVORITE_STATUS:
       return extend(state, {
         promo: action.payload.promoMovie,
         moviesList: action.payload.allFilms,
-        favoritesCount: action.payload.favorites,
+        favoritesCount: action.payload.favoritesCount,
+      });
+    case ActionType.CHANGE_FAVORITES_COUNT:
+      if (action.payload) {
+        return extend(state, {
+          favoritesCount: state.favoritesCount + 1,
+        });
+      } else {
+        return state;
+      }
+    case ActionType.SET_FAVORITES_COUNT:
+      return extend(state, {
+        favoritesCount: action.payload,
       });
   }
   return state;
@@ -181,10 +180,10 @@ const ActionCreator = {
       payload,
     };
   },
-  setCardsCount: (count) => {
+  changeFavoritesCount: (favorite) => {
     return {
-      type: ActionType.SET_CARDS_COUNT,
-      payload: count,
+      type: ActionType.CHANGE_FAVORITES_COUNT,
+      payload: favorite,
     };
   },
   setFavoritesCount: (count) => {
@@ -193,10 +192,10 @@ const ActionCreator = {
       payload: count,
     };
   },
-  changeFavoritesCount: (increase) => {
+  setCardsCount: (count) => {
     return {
-      type: ActionType.CHANGE_FAVORITES_COUNT,
-      payload: increase,
+      type: ActionType.SET_CARDS_COUNT,
+      payload: count,
     };
   },
 };

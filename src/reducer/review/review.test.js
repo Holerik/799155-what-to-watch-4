@@ -1,7 +1,7 @@
 // review.test.js
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../api.js';
-import {ActionType, Operation} from './review.js';
+import {ActionType, Operation, mockReview, reducer} from './review.js';
 
 const api = createAPI(() => {});
 
@@ -72,7 +72,88 @@ describe(`Review operation tests`, () => {
           type: ActionType.LOAD_REVIEWS,
           payload: reviews,
         });
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.SET_LOAD_STATUS,
+          payload: true,
+        });
+      });
+  });
+  it(`Should make a correct API call to push comments`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const review = {
+      rating: 1,
+      comment: ``,
+    };
+    const pushComment = Operation.pushComment(movie, review);
+
+    apiMock
+    .onPost(`/comments/1`)
+    .reply(200);
+
+    return pushComment(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.SET_LOAD_STATUS,
+          payload: true,
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.SET_SUBMIT_BLOCK,
+          payload: false,
+        });
       });
   });
 });
 
+describe(`Review reducer tests`, () => {
+  it(`Reducer without paramters should return initialState`, () => {
+    expect(reducer(void 0, {})).toEqual({
+      reviews: [mockReview],
+      loadStatus: false,
+      submitIsBlocked: false,
+    });
+  });
+  it(`Reducer should set load status`, () => {
+    expect(reducer({
+      reviews: [],
+      loadStatus: false,
+      submitIsBlocked: false,
+    }, {
+      type: ActionType.SET_LOAD_STATUS,
+      payload: true,
+    })).toEqual({
+      reviews: [],
+      loadStatus: true,
+      submitIsBlocked: false,
+    });
+  });
+  it(`Reducer should set submit block status`, () => {
+    expect(reducer({
+      reviews: [],
+      loadStatus: false,
+      submitIsBlocked: false,
+    }, {
+      type: ActionType.SET_SUBMIT_BLOCK,
+      payload: true,
+    })).toEqual({
+      reviews: [],
+      loadStatus: false,
+      submitIsBlocked: true,
+    });
+  });
+  it(`Reducer should load reviews`, () => {
+    expect(reducer({
+      reviews: [],
+      loadStatus: false,
+      submitIsBlocked: false,
+    }, {
+      type: ActionType.LOAD_REVIEWS,
+      payload: [mockReview],
+    })).toEqual({
+      reviews: [mockReview],
+      loadStatus: false,
+      submitIsBlocked: false,
+    });
+  });
+});

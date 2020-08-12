@@ -7,26 +7,26 @@ import {AppRoutes} from '../../const.js';
 class GenreList extends React.PureComponent {
   constructor(props) {
     super(props);
-    this._onMouseOverTab = this._onMouseOverTab.bind(this);
-    this._onMouseClickTab = this._onMouseClickTab.bind(this);
+    this.onMouseOverTab = this.onMouseOverTab.bind(this);
+    this.onMouseClickTab = this.onMouseClickTab.bind(this);
   }
 
-  _onMouseOverTab(evt) {
+  onMouseOverTab(evt) {
     const index = this.props.listItems.indexOf(evt.target.text);
-    this.props.mouseOverHandler(index);
+    this.props.onMouseOver(index);
   }
 
-  _onMouseClickTab(evt) {
+  onMouseClickTab(evt) {
     const index = this.props.listItems.indexOf(evt.target.text);
-    this.props.mouseClickHandler(index);
+    this.props.onMouseClick(index);
   }
 
   render() {
     const {currentActiveItem, listItems} = this.props;
     return (
       <ul className="catalog__genres-list"
-        onClick={this._onMouseClickTab}
-        onMouseOver={this._onMouseOverTab}
+        onClick={this.onMouseClickTab}
+        onMouseOver={this.onMouseOverTab}
       >
         {listItems.slice(0, this.props.maxItemsCount).map((item, index) => {
           const itemIsActive = currentActiveItem === index;
@@ -46,8 +46,8 @@ class GenreList extends React.PureComponent {
 GenreList.propTypes = {
   currentActiveItem: PropTypes.number.isRequired,
   listItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-  mouseOverHandler: PropTypes.func.isRequired,
-  mouseClickHandler: PropTypes.func.isRequired,
+  onMouseOver: PropTypes.func.isRequired,
+  onMouseClick: PropTypes.func.isRequired,
   maxItemsCount: PropTypes.number.isRequired,
 };
 

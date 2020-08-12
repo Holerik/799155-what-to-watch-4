@@ -10,7 +10,7 @@ import MoviecardReviews from '../moviecard-reviews/moviecard-reviews.jsx';
 import MyList from '../my-list/my-list.jsx';
 import {fullInfo} from '../../reducer/data/data.js';
 import {ActionCreator as DataCreator} from '../../reducer/data/data.js';
-import {ActionCreator as MovieCreator, MOVIE_CARDS_ON_PAGE} from '../../reducer/movie/movie.js';
+import {ActionCreator as MovieCreator} from '../../reducer/movie/movie.js';
 import {
   ActionCreator as UserCreator,
   AuthorizationStatus,
@@ -34,18 +34,21 @@ import {getAuthorizationStatus, getAuthorInfo} from '../../reducer/user/selector
 import SignIn from '../sign-in/sign-in.jsx';
 import {
   Operation as ReviewOperation,
+  ActionCreator as ReviewCreator,
 } from '../../reducer/review/review.js';
-import {getLoadStatus} from '../../reducer/review/selectors.js';
+import {getLoadStatus, getSubmitBlock} from '../../reducer/review/selectors.js';
 import withAddReview from '../../hocs/with-addreview/with-addreview.jsx';
 import AddReview from '../add-review/add-review.jsx';
 import {Operation as DataOperation} from '../../reducer/data/data.js';
 import {AppRoutes} from '../../const.js';
 import history from '../../history.js';
 import PrivateRoute from '../private-route/private-route.jsx';
+import LoginRoute from '../login-route/login-route.jsx';
 import NotFound from '../not-found/not-found.jsx';
 import Video from '../video/video.jsx';
 import withVideo from '../../hocs/with-video/with-video.jsx';
 import {extend} from '../../utils.js';
+import {MOVIE_CARDS_ON_PAGE} from '../../const.js';
 
 const AddReviewText = withAddReview(AddReview);
 const VideoPlayer = withVideo(Video);
@@ -60,7 +63,6 @@ class App extends React.PureComponent {
     this._onSignIn = this._onSignIn.bind(this);
     this._onAddReviewText = this._onAddReviewText.bind(this);
     this._changeFavoriteStatus = this._changeFavoriteStatus.bind(this);
-
   }
 
   _onSignIn(authData) {
@@ -76,6 +78,10 @@ class App extends React.PureComponent {
     const movie = this.props.filmsInfo.find((film) => film.id === activeMovieId);
     this.props.setMovie(movie);
     this.props.setGenre(movie.genre[0]);
+    this.props.setLimitCardsNumbers({
+      first: 0,
+      max: MOVIE_CARDS_ON_PAGE
+    });
   }
 
   _setActivePage(page) {
@@ -85,6 +91,10 @@ class App extends React.PureComponent {
   _setActiveGenre(genre) {
     this.props.setGenre(genre);
     this.props.setCardsCount(this.props.filmsInfo.length);
+    this.props.setLimitCardsNumbers({
+      first: 0,
+      max: MOVIE_CARDS_ON_PAGE
+    });
   }
 
   _changeFavoriteStatus(movie) {
@@ -103,7 +113,6 @@ class App extends React.PureComponent {
       };
     } else {
       payload = {
-        film: movie,
         promoMovie: promo,
         allFilms: allFilmsInfo.map((item) => {
           if (movie.id === item.id) {
@@ -114,6 +123,7 @@ class App extends React.PureComponent {
           }
           return item;
         }),
+        film: allFilmsInfo.find((item) => item.id === movie.id),
         favoritesCount: favorites,
       };
     }
@@ -133,15 +143,7 @@ class App extends React.PureComponent {
           favoriteButtonClickHandler={this._changeFavoriteStatus}
         />);
     }
-    switch (this.props.page) {
-      case 0:
-        return history.push(`${AppRoutes.MOVIE_OVERVIEW}/${this.props.movie.id}`);
-      case 1:
-        return history.push(`${AppRoutes.MOVIE_DETAILS}/${this.props.movie.id}`);
-      case 2:
-        return history.push(`${AppRoutes.MOVIE_REVIEWS}/${this.props.movie.id}`);
-    }
-    return null;
+    return history.push(`${AppRoutes.MOVIE}/${this.props.movie.id}`);
   }
 
   _getMovie(routeProps) {
@@ -158,7 +160,9 @@ class App extends React.PureComponent {
       tabItems,
       setActiveMovie: this._setActiveMovie,
       favoriteButtonClickHandler: this._changeFavoriteStatus,
-      loadReviews: this.props.loadReviews
+      loadReviews: this.props.loadReviews,
+      firstCard: this.props.firstCard,
+      lastCard: this.props.lastCard,
     };
     return (
       <Router history={history}>
@@ -166,42 +170,43 @@ class App extends React.PureComponent {
           <Route exact path={AppRoutes.ROOT}>
             {this._renderMainScreen()}
           </Route>
-          <Route exact path={AppRoutes.LOGIN}>
-            <SignIn
-              onSubmit={this._onSignIn}
-            />
-          </Route>
-          <Route exact path={`${AppRoutes.MOVIE_OVERVIEW}/:id`}
-            render={(routeProps) => {
-              const movie = this._getMovie(routeProps);
+          <LoginRoute exact path={AppRoutes.LOGIN}
+            authorizationStatus={this.props.authorizationStatus}
+            render={() => {
               return (
-                <MoviecardOverview
-                  {...props}
-                  movieInfo={movie}
-                />
-              );
+                <SignIn
+                  onSubmit={this._onSignIn}
+                />);
             }}
           />
-          <Route exact path={`${AppRoutes.MOVIE_DETAILS}/:id`}
+
+          <Route exact path={`${AppRoutes.MOVIE}/:id`}
             render={(routeProps) => {
               const movie = this._getMovie(routeProps);
-              return (
-                <MoviecardDetails
-                  {...props}
-                  movieInfo={movie}
-                />
-              );
-            }}
-          />
-          <Route exact path={`${AppRoutes.MOVIE_REVIEWS}/:id`}
-            render={(routeProps) => {
-              const movie = this._getMovie(routeProps);
-              return (
-                <MoviecardReviews
-                  {...props}
-                  movieInfo={movie}
-                />
-              );
+              switch (this.props.page) {
+                case 0:
+                  return (
+                    <MoviecardOverview
+                      {...props}
+                      movieInfo={movie}
+                    />
+                  );
+                case 1:
+                  return (
+                    <MoviecardDetails
+                      {...props}
+                      movieInfo={movie}
+                    />
+                  );
+                case 2:
+                  return (
+                    <MoviecardReviews
+                      {...props}
+                      movieInfo={movie}
+                    />
+                  );
+              }
+              return null;
             }}
           />
           <PrivateRoute exact path={AppRoutes.MY_LIST}
@@ -216,7 +221,7 @@ class App extends React.PureComponent {
               );
             }}
           />
-          <PrivateRoute exact path={`${AppRoutes.ADD_REVIEW}/:id`}
+          <PrivateRoute exact path={`${AppRoutes.MOVIE}/:id/review`}
             authorizationStatus={this.props.authorizationStatus}
             render={(routeProps) => {
               const id = Number(routeProps.match.params.id);
@@ -225,9 +230,10 @@ class App extends React.PureComponent {
                 <AddReviewText
                   onSubmit={this._onAddReviewText}
                   movieInfo={movie}
-                  avatar={`/${this.props.authorInfo.avatar}`}
+                  avatar={`${this.props.authorInfo.avatar}`}
                   setPage={this.props.setPage}
                   setMovie={this.props.setMovie}
+                  submitIsBlocked={this.props.reviewSubmitStatus}
                 />
               );
             }}
@@ -285,12 +291,14 @@ App.propTypes = {
   ]),
   firstCard: PropTypes.number,
   lastCard: PropTypes.number,
+  setLimitCardsNumbers: PropTypes.func.isRequired,
   onAddReviewComment: PropTypes.func.isRequired,
   setAuthorInfo: PropTypes.func,
   resetFavoriteMovie: PropTypes.func.isRequired,
   stopMovie: PropTypes.func.isRequired,
   favoritesCount: PropTypes.number,
-  loadStatus: PropTypes.bool,
+  loadReviewStatus: PropTypes.bool,
+  reviewSubmitStatus: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
@@ -306,16 +314,22 @@ const mapStateToProps = (state) => ({
   lastCard: getLastCardNumber(state),
   allFilmsInfo: getMoviesList(state),
   favoritesCount: getFavoritesCount(state),
-  loadStatus: getLoadStatus(state),
+  loadReviewStatus: getLoadStatus(state),
+  reviewSubmitStatus: getSubmitBlock(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setLimitCardsNumbers(limits) {
+    dispatch(MovieCreator.setFirstCardNumber({
+      firstNumber: limits.first,
+      maxNumber: limits.max
+    }));
+  },
   setAuthorInfo(authInfo) {
     dispatch(UserCreator.setAuthorInfo(authInfo));
   },
   setGenre(genre) {
     dispatch(DataCreator.setCurrentGenre(genre));
-    dispatch(MovieCreator.setFirstCardNumber({firstNumber: 0, maxNumber: MOVIE_CARDS_ON_PAGE}));
   },
   setMovie(movie) {
     dispatch(MovieCreator.setMovie(movie));
@@ -336,9 +350,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataCreator.setCardsCount(count));
   },
   loadReviews(movie) {
+    dispatch(ReviewCreator.setLoadStatus(false));
     dispatch(ReviewOperation.loadReviews(movie));
   },
   onAddReviewComment(movie, review) {
+    dispatch(ReviewCreator.setSubmitBlock(true));
+    dispatch(ReviewCreator.setLoadStatus(false));
     dispatch(ReviewOperation.pushComment(movie, review));
   },
   resetFavoriteMovie(movie) {

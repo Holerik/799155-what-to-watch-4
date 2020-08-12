@@ -20,7 +20,6 @@ class AddReview extends React.PureComponent {
     this._ratingClickHandler = this._ratingClickHandler.bind(this);
     this.submitIsBlocked = true;
     this.rating = 0;
-    this._submitClicked = false;
     this._lengthIsOk = false;
   }
 
@@ -39,9 +38,6 @@ class AddReview extends React.PureComponent {
     } else {
       this.submitIsBlocked = false;
     }
-    if (this._submitClicked) {
-      this.submitIsBlocked = this.loadStatus;
-    }
     this.props.onChangeLength(textLength);
   }
 
@@ -51,7 +47,7 @@ class AddReview extends React.PureComponent {
       comment: document.addReview.reviewText.value,
       rating: this.rating,
     });
-    this._submitClicked = true;
+    this.submitIsBlocked = true;
   }
 
   _createMoreRatingFragments(count) {
@@ -74,7 +70,8 @@ class AddReview extends React.PureComponent {
   }
 
   render() {
-    const {avatar, movieInfo} = this.props;
+    const {avatar, movieInfo, submitIsBlocked} = this.props;
+    const blockSubmit = submitIsBlocked || this.submitIsBlocked;
     return (
       <React.Fragment>
         <section className="movie-card movie-card--full">
@@ -107,7 +104,7 @@ class AddReview extends React.PureComponent {
 
               <div className="user-block">
                 <div className="user-block__avatar">
-                  <img src={`/${avatar}`} alt="User avatar" width="63" height="63" />
+                  <img src={`${avatar}`} alt="User avatar" width="63" height="63" />
                 </div>
               </div>
             </header>
@@ -127,14 +124,14 @@ class AddReview extends React.PureComponent {
 
               <div className="add-review__text">
                 <textarea className={`add-review__textarea
-                  ${this.submitIsBlocked ? COMMENT_ERROR : ``}`}
+                  ${blockSubmit ? COMMENT_ERROR : ``}`}
                 name="reviewText" onInput={this._checkReviewLengthAndRating}
                 id="review-text" placeholder="Review text">
                 </textarea>
 
                 <div className="add-review__submit">
                   <button className="add-review__btn"
-                    type="submit" disabled={this.submitIsBlocked}>Post</button>
+                    type="submit" disabled={blockSubmit}>Post</button>
                 </div>
 
               </div>
@@ -155,8 +152,8 @@ AddReview.propTypes = {
   setMovie: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChangeLength: PropTypes.func.isRequired,
-  loadStatus: PropTypes.bool,
   textLength: PropTypes.number,
+  submitIsBlocked: PropTypes.bool,
 };
 
 export default AddReview;

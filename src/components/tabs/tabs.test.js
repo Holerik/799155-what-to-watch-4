@@ -11,8 +11,8 @@ it(`Tabs should render correctly`, () => {
         <Tabs
           activeItem={0}
           listItems={tabItems}
-          mouseClickHandler={() => {}}
-          mouseOverHandler={() => {}}
+          onMouseClick={() => {}}
+          onMouseOver={() => {}}
         />)
     .toJSON();
   expect(tree).toMatchSnapshot();

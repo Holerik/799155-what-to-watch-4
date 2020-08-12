@@ -10,3 +10,7 @@ export const getReviews = (state) => {
 export const getLoadStatus = (state) => {
   return state[NAME_SPACE].loadStatus;
 };
+
+export const getSubmitBlock = (state) => {
+  return state[NAME_SPACE].submitIsBlocked;
+};

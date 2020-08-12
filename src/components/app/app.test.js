@@ -180,6 +180,7 @@ describe(`App tests`, () => {
             loadReviews={() => {}}
             stopMovie={() => {}}
             loadStatus={false}
+            setLimitCardsNumbers={() => {}}
           />
         </Provider>, {
           createNodeMock: () => {

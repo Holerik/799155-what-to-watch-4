@@ -2,12 +2,20 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../api.js';
 import {reducer, ActionType, ActionCreator, Operation} from './user.js';
+import {SERVER_ADRESS_PREFIX} from '../../const.js';
 
 const api = createAPI(() => {});
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
+};
+
+const mockInfo = {
+  id: 1,
+  name: `Ivan`,
+  email: `ivan@mail.com`,
+  [`avatar_url`]: `/wtw/static/img/1.img`,
 };
 
 describe(`User reducer tests`, () => {
@@ -48,17 +56,17 @@ describe(`User reducer tests`, () => {
     }, {
       type: ActionType.SET_AUTHOR_INFORMATION,
       payload: {
-        id: -1,
-        name: ``,
-        email: ``,
-        [`avatar_url`]: `img/hero.jpg`,
+        id: 1,
+        name: `Ivan`,
+        email: `ivan@mail.com`,
+        [`avatar_url`]: `/img/hero.jpg`,
       },
     })).toEqual({
       authorizationStatus: AuthorizationStatus.NO_AUTH,
-      authorId: -1,
-      authorName: ``,
-      authorEmail: ``,
-      avatar: `img/hero.jpg`,
+      authorId: 1,
+      authorName: `Ivan`,
+      authorEmail: `ivan@mail.com`,
+      avatar: SERVER_ADRESS_PREFIX + `/img/hero.jpg`,
     });
   });
   it(`ActionCreator for requiring authorization return correct action`, () => {
@@ -79,12 +87,16 @@ describe(`User Operation tests`, () => {
 
     apiMock
     .onGet(`/login`)
-    .reply(200);
+    .reply(200, mockInfo);
 
     return checkAuth(dispatch, () => {}, api).then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenNthCalledWith(
           1,
+          ActionCreator.setAuthorInfo(mockInfo)
+      );
+      expect(dispatch).toHaveBeenNthCalledWith(
+          2,
           ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)
       );
     });
@@ -103,6 +115,5 @@ describe(`User Operation tests`, () => {
           ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)
       );
     });
-
   });
 });

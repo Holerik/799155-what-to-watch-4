@@ -132,13 +132,6 @@ Array [
                 My list
               </span>
             </button>
-            <a
-              className="btn movie-card__button"
-              href="/addreview/1"
-              onClick={[Function]}
-            >
-              Add review
-            </a>
           </div>
         </div>
       </div>

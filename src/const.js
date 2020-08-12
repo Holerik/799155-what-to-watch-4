@@ -1,16 +1,14 @@
 // const.js
 
 export const MOVIE_CARDS_ON_PAGE = 8;
+export const SERVER_ADRESS_PREFIX = `https://4.react.pages.academy`;
 
 export const AppRoutes = {
   ROOT: `/`,
   LOGIN: `/login`,
-  MOVIE_OVERVIEW: `/overview`,
-  MOVIE_REVIEWS: `/reviews`,
-  MOVIE_DETAILS: `/details`,
-  ADD_REVIEW: `/addreview`,
+  MOVIE: `/films`,
   MY_LIST: `/mylist`,
-  PLAY_VIDEO: `/play`,
+  PLAY_VIDEO: `/player`,
 };
 
 export const MIN_REVIEW_LENGTH = 50;
@@ -35,3 +33,5 @@ export const RatingLevels = {
   VERY_GOOD: 8,
   AWESOME: 10,
 };
+
+export const ALL_GENRES = `All genres`;

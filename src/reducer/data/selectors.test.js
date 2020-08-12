@@ -11,7 +11,7 @@ import {
 } from './selectors';
 
 const promoMovie = {
-  id: 1,
+  id: 4,
   title: `Joker`,
   poster: `img/joker.jpg`,
   altPoster: `Joker poster`,
@@ -132,18 +132,19 @@ describe(`Data selectors tests`, () => {
     expect(getFilmsByGenre({
       DATA: {
         moviesList: films,
-        genre: `Action`
+        genre: `Action`,
+        promo: promoMovie,
       },
       MOVIE: {
         movie: promoMovie,
-      }
+      },
     })).toEqual([films[1]]);
   });
   it(`getFavoriteFilms must return favorite movies`, () => {
     expect(getFavoriteFilms({
       DATA: {
         moviesList: films,
-        promo: undefined,
+        promo: promoMovie,
       }
     })).toEqual([films[2]]);
   });

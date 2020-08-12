@@ -6,13 +6,13 @@ const withCanPlay = (Component) => {
   class WithCanPlay extends React.PureComponent {
     constructor(props) {
       super(props);
-      this._onCanPlay = this._onCanPlay.bind(this);
+      this.canPlayHandler = this.canPlayHandler.bind(this);
       this.state = {
         canPlay: false,
       };
     }
 
-    _onCanPlay(play) {
+    canPlayHandler(play) {
       this.setState({canPlay: play});
     }
 
@@ -21,9 +21,9 @@ const withCanPlay = (Component) => {
         <Component
           {...this.props}
           canPlay={this.state.canPlay}
-          onMouseClick={this.props.mouseClickHandler}
-          onMouseOver={this.props.mouseOverHandler}
-          onCanPlay={this._onCanPlay}
+          onMouseClick={this.props.onMouseClick}
+          onMouseOver={this.props.onMouseOver}
+          onCanPlay={this.canPlayHandler}
         >
         </Component>
       );
@@ -31,8 +31,8 @@ const withCanPlay = (Component) => {
   }
 
   WithCanPlay.propTypes = {
-    mouseClickHandler: PropTypes.func.isRequired,
-    mouseOverHandler: PropTypes.func.isRequired,
+    onMouseClick: PropTypes.func.isRequired,
+    onMouseOver: PropTypes.func.isRequired,
   };
 
   return WithCanPlay;

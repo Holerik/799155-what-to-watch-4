@@ -53,7 +53,9 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
     favoriteButtonClickHandler,
     play,
     setActiveItem,
-    tabItems
+    tabItems,
+    firstCard,
+    lastCard
   } = props;
   movieInfo.rating.level = getLevelNameByRating(movieInfo.rating.score);
   if (play) {
@@ -129,7 +131,7 @@ const MoviecardOverview = React.memo(function MoviecardOverview(props) {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <MovieTabs
-            listItems={filmsInfo}
+            listItems={filmsInfo.slice(firstCard, lastCard + 1)}
             setActiveItem={setActiveMovie}
           />
         </section>
@@ -160,6 +162,8 @@ MoviecardOverview.propTypes = {
   playMovie: PropTypes.func.isRequired,
   play: PropTypes.bool.isRequired,
   favoriteButtonClickHandler: PropTypes.func.isRequired,
+  firstCard: PropTypes.number.isRequired,
+  lastCard: PropTypes.number.isRequired,
 };
 
 export {MoviecardOverview};

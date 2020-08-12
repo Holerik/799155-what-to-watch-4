@@ -29,8 +29,8 @@ it(`GenreList should render genres list correctly`, () => {
               activeItem={0}
               currentActiveItem={0}
               listItems={genresList}
-              mouseOverHandler={() => {}}
-              mouseClickHandler={() => {}}
+              onMouseOver={() => {}}
+              onMouseClick={() => {}}
               maxItemsCount={genresList.length}
             />
           </Router>

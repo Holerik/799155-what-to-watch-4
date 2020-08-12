@@ -10,10 +10,10 @@ const withAddReview = (Component) => {
       this.state = {
         textLength: 0,
       };
-      this._changeTextLength = this._changeTextLength.bind(this);
+      this.changeTextLengthHandler = this.changeTextLengthHandler.bind(this);
     }
 
-    _changeTextLength(length) {
+    changeTextLengthHandler(length) {
       this.setState({textLength: length});
     }
 
@@ -21,7 +21,7 @@ const withAddReview = (Component) => {
       return (
         <Component
           {...this.props}
-          onChangeLength={this._changeTextLength}
+          onChangeLength={this.changeTextLengthHandler}
           movieInfo={this.props.movieInfo}
           avatar={this.props.avatar}
           setPage={this.props.setPage}

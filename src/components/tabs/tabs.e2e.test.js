@@ -18,8 +18,8 @@ describe(`Tabs e2e tests`, () => {
         <Tabs
           activeItem={0}
           listItems={tabItems}
-          mouseClickHandler={onMouseClick}
-          mouseOverHandler={onMouseOver}
+          onMouseClick={onMouseClick}
+          onMouseOver={onMouseOver}
         />
     );
     const tablist = wrapper.find(`.movie-nav__list`);

@@ -1,8 +1,8 @@
 // selectors.test.js
-import {getReviews} from './selectors.js';
+import {getReviews, getLoadStatus, getSubmitBlock} from './selectors.js';
 
 describe(`Review selectors tests`, () => {
-  it(`getRevies should return reviews`, () => {
+  it(`getReviews should return reviews`, () => {
     const comments = [
       {
         id: 1,
@@ -14,5 +14,11 @@ describe(`Review selectors tests`, () => {
       }
     ];
     expect(getReviews({REVIEW: {reviews: comments}})).toEqual(comments);
+  });
+  it(`getLoadStatus should return load status`, () => {
+    expect(getLoadStatus({REVIEW: {loadStatus: true}})).toEqual(true);
+  });
+  it(`getSubmitBlock should return block status`, () => {
+    expect(getSubmitBlock({REVIEW: {submitIsBlocked: false}})).toEqual(false);
   });
 });

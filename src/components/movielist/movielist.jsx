@@ -3,8 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moviecard from '../moviecard/moviecard.jsx';
 import {fullInfo} from '../../reducer/data/data.js';
-import {MOVIE_CARDS_ON_PAGE} from '../../const.js';
-import {TIME_INTERVAL} from '../../const.js';
+import {TIME_INTERVAL, MOVIE_CARDS_ON_PAGE} from '../../const.js';
 
 class Movielist extends React.PureComponent {
   constructor(props) {
@@ -15,8 +14,6 @@ class Movielist extends React.PureComponent {
     this._waitTimeInterval = this._waitTimeInterval.bind(this);
     this._lastTimeOut = null;
     this._activeMovieId = -1;
-    this._movieCardFirstOnPage = 0;
-    this._movieCardLastOnPage = this._movieCardFirstOnPage + MOVIE_CARDS_ON_PAGE;
   }
 
   componentWillUnmount() {
@@ -76,7 +73,7 @@ class Movielist extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="catalog__movies-list">
-          {this.props.listItems.slice(this._movieCardFirstOnPage, this._movieCardLastOnPage)
+          {this.props.listItems.slice(0, MOVIE_CARDS_ON_PAGE)
           .map((filmInfo) => (
             <Moviecard
               movie={filmInfo}

@@ -11,7 +11,7 @@ describe(`ShowMore tests`, () => {
       cardsCount={16}
       favoritesCount={0}
       lastCard={0}
-      onShowMoreButtonClick={() => {}}
+      showMoreButtonClickHandler={() => {}}
       showMode={ShowMode.GENRE_MODE}
     />)
     .toJSON();

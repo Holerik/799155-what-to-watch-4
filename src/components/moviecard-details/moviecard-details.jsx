@@ -27,7 +27,9 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
     filmsInfo,
     setActiveMovie,
     playMovie,
-    favoriteButtonClickHandler
+    favoriteButtonClickHandler,
+    firstCard,
+    lastCard
   } = props;
   const genres = getFullString(movieInfo.genre, 183);
   if (props.play) {
@@ -117,7 +119,7 @@ const MoviecardDetails = React.memo(function MoviecardDetails(props) {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
         <MovieTabs
-          listItems={filmsInfo}
+          listItems={filmsInfo.slice(firstCard, lastCard + 1)}
           setActiveItem={setActiveMovie}
         />
       </section>
@@ -147,6 +149,8 @@ MoviecardDetails.propTypes = {
   playMovie: PropTypes.func.isRequired,
   play: PropTypes.bool.isRequired,
   favoriteButtonClickHandler: PropTypes.func.isRequired,
+  firstCard: PropTypes.number.isRequired,
+  lastCard: PropTypes.number.isRequired,
 };
 
 export {MoviecardDetails};

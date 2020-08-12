@@ -48,6 +48,8 @@ class MoviecardReviews extends React.PureComponent {
       playMovie,
       reviews,
       favoriteButtonClickHandler,
+      firstCard,
+      lastCard
     } = this.props;
     if (this.props.play) {
       return history.push(`${AppRoutes.PLAY_VIDEO}/${movieInfo.id}`);
@@ -115,7 +117,7 @@ class MoviecardReviews extends React.PureComponent {
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
             <MovieTabs
-              listItems={filmsInfo}
+              listItems={filmsInfo.slice(firstCard, lastCard + 1)}
               setActiveItem={setActiveMovie}
             />
           </section>
@@ -153,6 +155,8 @@ MoviecardReviews.propTypes = {
   favoriteButtonClickHandler: PropTypes.func.isRequired,
   loadReviews: PropTypes.func.isRequired,
   loadStatus: PropTypes.bool,
+  firstCard: PropTypes.number.isRequired,
+  lastCard: PropTypes.number.isRequired,
 };
 
 export {MoviecardReviews};
